@@ -1,0 +1,23 @@
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+    readonly VITE_SOME_KEY: string; // Añade aquí todas tus variables de entorno
+
+    readonly VITE_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID: string;
+    readonly VITE_AWS_COGNITO_USER_POOL_ID: string;
+    readonly VITE_AWS_COGNITO_REGION: string;
+    readonly VITE_AWS_COGNITO_DOMAIN: string;
+    
+    readonly VITE_GOOGLE_CLIENT_ID: string;
+    readonly VITE_GOOGLE_API_KEY: string;
+    readonly VITE_GOOGLE_SCOPES: string;
+    
+    readonly VITE_AWS_ACCESS_KEY_ID: string;
+    readonly VITE_AWS_SECRET_ACCESS_KEY: string;
+    readonly VITE_AWS_REGION: string;
+    readonly VITE_AWS_BUCKET_NAME: string;
+}
+
+interface ImportMeta {
+    readonly env: ImportMetaEnv;
+}
