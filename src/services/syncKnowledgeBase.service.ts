@@ -1,4 +1,4 @@
-import { INFERENCE_API_DOMAIN } from "@src/config/env";
+import { IABOGADO_API_URL } from "@src/config/env";
 
 class SyncKnowledgeBase {
     private idToken: string | null;
