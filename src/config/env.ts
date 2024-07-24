@@ -1,9 +1,7 @@
-export const INFERENCE_API_DOMAIN = "https://phhz2fa35i.execute-api.us-west-2.amazonaws.com"
+export const IABOGADO_API_URL = import.meta.env.VITE_IABOGADO_API_URL;
 
 export const AWS_COGNITO_USER_POOL_WEB_CLIENT_ID = import.meta.env.VITE_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID;
 export const AWS_COGNITO_USER_POOL_ID = import.meta.env.VITE_AWS_COGNITO_USER_POOL_ID;
-export const AWS_COGNITO_REGION = import.meta.env.VITE_AWS_COGNITO_REGION;
-export const AWS_COGNITO_DOMAIN = import.meta.env.VITE_AWS_COGNITO_DOMAIN;
 
 export const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 export const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;

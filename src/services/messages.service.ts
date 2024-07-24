@@ -1,11 +1,12 @@
-import { INFERENCE_API_DOMAIN } from "../config/env";
+import { IABOGADO_API_URL } from "@src/config/env";
 
 class MessageService {
-    constructor() {}
+    constructor() { }
 
     async sendMessage(message: string): Promise<any> {
         try {
-            const response = await fetch(`https://phhz2fa35i.execute-api.us-west-2.amazonaws.com/inference`, {
+            const response = await fetch(
+                `${IABOGADO_API_URL}/inference`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

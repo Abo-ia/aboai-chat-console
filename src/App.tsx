@@ -8,11 +8,13 @@ import VerifyEmail from '@src/views/auth/VerifyEmail';
 import { fetchAuthSession } from "aws-amplify/auth";
 import { Amplify } from 'aws-amplify';
 
+import { AWS_COGNITO_USER_POOL_ID, AWS_COGNITO_USER_POOL_WEB_CLIENT_ID } from '@src/config/env';
+
 Amplify.configure({
     Auth: {
         Cognito: {
-            userPoolClientId: "",
-            userPoolId: "",
+            userPoolClientId: AWS_COGNITO_USER_POOL_WEB_CLIENT_ID,
+            userPoolId: AWS_COGNITO_USER_POOL_ID,
             loginWith: {
                 oauth: {
                     domain: "",
@@ -59,6 +61,7 @@ const App: React.FC = () => {
         <Router>
             <Routes>
                 <Route path="/" element={<PrivateRoute element={<ChatView />} />} />
+                <Route path="/" element={<ChatView />} />
                 <Route path="/auth/signin" element={<SignIn />} />
                 <Route path="/auth/signup" element={<SignUp />} />
                 <Route path="/auth/verify-email" element={<VerifyEmail />} />
@@ -68,3 +71,5 @@ const App: React.FC = () => {
 }
 
 export default App;
+
+

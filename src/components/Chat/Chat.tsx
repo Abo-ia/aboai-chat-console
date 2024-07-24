@@ -25,6 +25,7 @@ const Chat = () => {
         setIsLoading(true);
 
         const response = await messageService.sendMessage(input);
+        console.log(response);
 
         setIsLoading(false);
 
