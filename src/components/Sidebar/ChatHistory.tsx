@@ -1,4 +1,17 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { fetchAuthSession } from "aws-amplify/auth";
+import ConversationsHistoryService from '@src/services/conversationsHistory.service';
+
+type ChatSidebarProps = {
+    loadConversation: (conversationId: string) => void;
+};
+
+interface MenuItem {
+    conversationId: string;
+    conversation_name: string;
+}
+
 
 const ChatHistory = () => {
     const chatHistory = [
@@ -6,6 +19,59 @@ const ChatHistory = () => {
         { id: 2, name: "Conversación 2", lastMessage: "¿Puedes ayudarme con un proyecto?" },
         { id: 3, name: "Conversación 3", lastMessage: "Claro, ¿en qué necesitas ayuda?" },
     ];
+
+
+    const [selectedId, setSelectedId] = useState<string>('');
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+    const [userId, setUserId] = useState('');
+
+    useEffect(() => {
+        const getUserId = () => {
+            for (const key in localStorage) {
+                if (key.startsWith('CognitoIdentityServiceProvider') && key.endsWith('LastAuthUser')) {
+                    return localStorage.getItem(key);
+                }
+            }
+            return null;
+        };
+
+        const storedUserId = getUserId();
+        if (storedUserId) {
+            setUserId(storedUserId);
+            getConversationsHistory(storedUserId);
+        } else {
+            console.error('User ID not found in local storage.');
+        }
+    }, []);
+
+    const getConversationsHistory = async (userId: string) => {
+        try {
+            const session = await fetchAuthSession();
+            const idToken = session?.tokens?.idToken?.toString() as string;
+
+            const messageService = new ConversationsHistoryService(idToken);
+            const response = await messageService.getConversationsHistory(userId);
+            
+            let conversations = [];
+            if (response && response.body) {
+                const responseBody = JSON.parse(response.body);
+                conversations = responseBody;
+            }
+
+            const sortedData = conversations.sort((a: { timestamp: string | number | Date; }, b: { timestamp: string | number | Date; }) => {
+                const timestampA = new Date(a.timestamp).getTime();
+                const timestampB = new Date(b.timestamp).getTime();
+                return timestampB - timestampA;
+            });
+            setMenuItems(sortedData.map((item: { conversationId: string, conversation_name: string }) => ({
+                conversationId: item.conversationId,
+                conversation_name: item.conversation_name,
+            })));
+
+        } catch (error) {
+            console.error('Error getting conversations history:', error);
+        }
+    };
 
     return (
         <div className={`bg-indigo-darker text-purple-lighter flex-none w-64 pb-6 transform transition-transform duration-300 bg-custom-dark`}>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MessageService from '../../services/messages.service';
 import { FaCircleNotch, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import LoadingComponent from '@src/components/LoadingComponent/LoadingComponent';
+import Modal from '@src/components/Modals/ReferencesModal';
 
 interface Message {
     sender: string;
@@ -121,93 +123,6 @@ const Chat = () => {
                 <Modal content={modalContent} onClose={closeModal} />
             )}
         </React.Fragment>
-    );
-};
-
-const LoadingComponent: React.FC = () => {
-    const [messageIndex, setMessageIndex] = useState(0);
-    const messages = [
-        "Recuperando documentos relevantes",
-        "Analizando contenido",
-        "Sintetizando respuesta",
-        "Finalizando salida"
-    ];
-
-    const totalDuration = 18000;
-    const messageDuration = totalDuration / messages.length;
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setMessageIndex((prevIndex) => (prevIndex + 1) % messages.length);
-        }, messageDuration);
-
-        return () => clearInterval(interval);
-    }, [messageDuration]);
-
-    return (
-        <div className="flex flex-col items-center justify-center p-4">
-            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-                <div className="flex items-center justify-center mb-4">
-                    <FaCircleNotch className="text-neutral-800 animate-spin text-3xl" />
-                </div>
-                <h2 className="text-lg font-bold text-center text-gray-800 mb-4">
-                    Procesando solicitud
-                </h2>
-                <ul className="space-y-2 text-center">
-                    {messages.map((message, index) => (
-                        <li key={index} className={index === messageIndex ? "text-green-700 font-semibold flex items-center justify-center" : "text-gray-600"}>
-                            {message}
-                            {index === messageIndex && (
-                                <span className="ml-2 animate-pulse text-green-600">
-                                    <FaCircleNotch className="animate-spin" />
-                                </span>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
-};
-
-const Modal: React.FC<{ content: any[]; onClose: () => void }> = ({ content, onClose }) => (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-black opacity-50 absolute inset-0" onClick={onClose}></div>
-        <div className="bg-white rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
-            <h2 className="text-2xl font-bold mb-4">Referencias</h2>
-            {content.map((ref, index) => (
-                <ReferenceItem key={index} content={ref} />
-            ))}
-            <button
-                onClick={onClose}
-                className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
-            >
-                Cerrar
-            </button>
-        </div>
-    </div>
-);
-
-const ReferenceItem: React.FC<{ content: any }> = ({ content }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const fileName = content.location.s3Location.uri.split('s3://iabogado-bucket/')[1];
-
-    return (
-        <div className="mb-1">
-            <p
-                className="flex items-center text-neutral-500 gap-2 cursor-pointer"
-                onClick={() => setIsOpen(!isOpen)}
-            >
-                {isOpen ? <FaChevronUp /> : <FaChevronDown />}
-                <span
-                    className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold"
-                >
-                    {fileName}
-                </span>
-
-            </p>
-            {isOpen && <p className="mt-2">{content.content.text}</p>}
-        </div>
     );
 };
 
