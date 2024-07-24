@@ -34,10 +34,10 @@ const LoadingComponent: React.FC = () => {
                 </h2>
                 <ul className="space-y-2 text-center">
                     {messages.map((message, index) => (
-                        <li key={index} className={index === messageIndex ? "text-green-700 font-semibold flex items-center justify-center" : "text-gray-600"}>
+                        <li key={index} className={index === messageIndex ? "text-indigo-700 font-semibold flex items-center justify-center" : "text-gray-600"}>
                             {message}
                             {index === messageIndex && (
-                                <span className="ml-2 animate-pulse text-green-600">
+                                <span className="ml-2 animate-pulse text-indigo-600">
                                     <FaCircleNotch className="animate-spin" />
                                 </span>
                             )}

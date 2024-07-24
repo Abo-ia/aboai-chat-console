@@ -1,24 +1,62 @@
+import { counter } from "@fortawesome/fontawesome-svg-core";
 import { IABOGADO_API_URL } from "@src/config/env";
 
 class MessageService {
-    constructor() { }
+    private idToken: string | null;
 
-    async sendMessage(message: string): Promise<any> {
+    constructor(idToken: string) {
+        this.idToken = idToken;
+    }
+
+    async createConversation(userId: string, message: string): Promise<any> {
         try {
-            const response = await fetch(
-                `${IABOGADO_API_URL}/inference`, {
+            const response = await fetch(`${IABOGADO_API_URL}/query-dynamodb-table`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.idToken}`
                 },
                 body: JSON.stringify({
-                    user_query: message,
+                    userId,
+                    instruction: 'CREATE_CONVERSATION',
+                    conversationName: message,
                 }),
             });
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error('Error sending message:', error);
+            console.error('Error creating conversation:', error);
+            throw error;
+        }
+    }    
+
+    async sendMessage(message: string, userId: string, conversationId: string): Promise<any> {
+        try {
+            if (!this.idToken) {
+                throw new Error("Missing idToken. Authentication may be required.");
+            }
+    
+            const response = await fetch(`${IABOGADO_API_URL}/inference`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.idToken}`
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    conversationId: conversationId,
+                    instruction: 'ADD_MESSAGE',
+                    prompt: message,
+                    timestamp: new Date().toISOString(),
+                }),
+            });
+    
+            const data = await response.json(); 
+            const output = JSON.parse(data.body);
+
+            return output;
+        } catch (error) {
+            console.error("Error in sendMessage:", error);
             throw error;
         }
     }

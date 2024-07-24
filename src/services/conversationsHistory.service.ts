@@ -7,28 +7,6 @@ class ConversationsHistoryService {
         this.idToken = idToken;
     }
 
-    async createConversation(userId: string, message: string): Promise<any> {
-        try {
-            const response = await fetch(`${IABOGADO_API_URL}/query-dynamodb-table`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.idToken}`
-                },
-                body: JSON.stringify({
-                    userId,
-                    instruction: 'CREATE_CONVERSATION',
-                    conversationName: message,
-                }),
-            });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('Error creating conversation:', error);
-            throw error;
-        }
-    }    
-
     async getConversationsHistory(userId: string): Promise<any> {
         try {
             const response = await fetch(`${IABOGADO_API_URL}/query-dynamodb-table`, {
