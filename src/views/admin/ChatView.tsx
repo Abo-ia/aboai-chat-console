@@ -12,12 +12,11 @@ import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
 
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-interface Message {
+type Message = {
     prompt: string;
-    chatResponse?: string;
-    references: Reference[];
+    chat_response?: string;
     timestamp: string;
-}
+};
 
 interface Reference {
     content: {
@@ -82,12 +81,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         }
     }, [messages]);
 
-    type Message = {
-        prompt: string;
-        chat_response?: string;
-        timestamp: string;
-    };
-
     const loadConversation = async (conversationId: string) => {
         try {
             setMessages([]);
@@ -101,8 +94,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             setConversationId(conversationId);
 
             const validMessages = response.filter((message: Message) => message.chat_response !== undefined);
-
-            console.log('validMessages:', validMessages);
 
             const sortedMessages = validMessages.sort((a: Message, b: Message) => {
                 return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(); // Ordenar por fecha ascendente
@@ -170,26 +161,22 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             }
 
             const response = await messageService.sendMessage(message, userId, currentConversationId);
-            console.log('response:', response);
-            const body = JSON.parse(response.body);
+            const responseBody = response
 
-            if (body.bedrock_response && body.bedrock_response.chat_response) {
-                setMessages((prevMessages) => [
-                    ...prevMessages,
-                    {
-                        references: body.bedrock_response.references_list,
-                        query: textInput,
-                        response: body.bedrock_response.chat_response,
-                    },
-                ]);
-            } else {
-                console.error("Unexpected response structure or missing chat_response:", body);
-            }
-
-            setDocumentReferences(body?.bedrock_response?.references_list);
+            setMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                    query: message,
+                    response: response?.bedrock_response.chat_response,
+                    references: response?.bedrock_response.retrieved_references,
+                    timestamp: new Date().toISOString(),
+                },
+            ]);
+            
+            setDocumentReferences(responseBody?.bedrock_response.retrieved_references || []);  
             setIsLoading(false);
         } catch (error) {
-            console.error("Error sending message:", error);
+            console.error('Error sending message:', error);
             setIsLoading(false);
         }
     };
