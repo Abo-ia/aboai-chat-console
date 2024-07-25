@@ -41,7 +41,7 @@ type ChatDashboardProps = {
 const ChatView: React.FC<ChatDashboardProps> = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+    const [modalReferences, setModalReferences] = useState<Reference[]>([]);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -194,15 +194,10 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         }
     };
 
-    const showReferences = (references: string[], query: string) => {
-        if (references.length === 0) {
-            setActiveQuestion(query);
-            setDocumentReferences([{ file_key: 'No references found for this message.', bucket_name: 'N/A', pages: [] }]);
-        }
-        else {
-            setActiveQuestion(query);
-            setDocumentReferences(references);
-        }
+    const showReferences = (references: Reference[], query: string) => {
+        setActiveQuestion(query);
+        setDocumentReferences(references);
+        setIsModalOpen(true);
     };
 
     const formatResponseAsBullets = (response: string) => {
@@ -275,6 +270,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                             {msg.references && msg.references.length > 0 && (
                                                                 <button
                                                                     className="bg-indigo-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-indigo-200 transition-colors duration-300 text-sm font-semibold"
+                                                                    onClick={() => showReferences(msg.references, msg.query)}
                                                                 >
                                                                     Mostrar referencias.
                                                                 </button>
@@ -341,7 +337,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     </div>
                 </div>
                 {isModalOpen && (
-                    <Modal content={documentReferences} onClose={closeModal} />
+                    <ReferencesModal content={documentReferences} onClose={closeModal} />
                 )}
             </div>
 
@@ -350,7 +346,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     )
 }
 
-const Modal: React.FC<{ content: Reference[]; onClose: () => void }> = ({ content, onClose }) => (
+const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> = ({ content, onClose }) => (
     <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="bg-black opacity-50 absolute inset-0" onClick={onClose}></div>
         <div className="bg-white rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
@@ -378,9 +374,8 @@ const ReferenceItem: React.FC<{ content: Reference }> = ({ content }) => {
                 className="flex items-center text-neutral-500 gap-2 cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {isOpen ? <FaChevronUp /> : <FaChevronDown />}
                 <span
-                    className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold"
+                    className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold border-b border-indigo-200"
                 >
                     {fileName}
                 </span>
