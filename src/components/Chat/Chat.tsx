@@ -7,9 +7,6 @@ import ConversationsHistoryService from "@src/services/conversationsHistory.serv
 import LoadingComponent from "@src/components/LoadingComponent/LoadingComponent";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
-type ChatDashboardProps = {
-    conversation: any;
-};
 
 interface Message {
     prompt: string;
@@ -33,7 +30,7 @@ interface Reference {
     };
 }
 
-const ChatDashboard: React.FC<ChatDashboardProps> = () => {
+const ChatDashboard: React.FC = () => {
     const [textInput, setTextInput] = useState<string>("");
     const [activeQuestion, setActiveQuestion] = useState<string>("");
     const [messages, setMessages] = useState<Message[]>([]);
@@ -129,7 +126,7 @@ const ChatDashboard: React.FC<ChatDashboardProps> = () => {
                 }
             }
         } catch (error) {
-            console.error('Error getting conversation:', error);
+            console.error('Chat: Error getting conversation:', error);
         }
     };
 
@@ -159,6 +156,7 @@ const ChatDashboard: React.FC<ChatDashboardProps> = () => {
 
             const response = await messageService.sendMessage(message, userId, currentConversationId);
             const bedrockResponse = response.bedrock_response;
+            console.log('bedrockResponse:', bedrockResponse);
             const chatResponse = bedrockResponse.chat_response;
             const retrievedReferences = bedrockResponse.retrieved_references;
 

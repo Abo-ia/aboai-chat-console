@@ -1,21 +1,22 @@
-import React from 'react';
+import React from 'react'
+
 import { AppContext } from '@src/context/AppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const SidebarIcons = () => {
     const appContext = React.useContext(AppContext);
-
     const handleSignOut = () => {
         localStorage.clear();
         window.location.href = '/auth/signin';
     };
 
+    
     return (
         <div className="text-purple-lighter flex flex-col justify-between h-full w-24 p-6 bg-custom-darkest transition-transform duration-300">
             <div>
                 <div className="cursor-pointer mb-4">
-                    <div 
+                    <div
                         onClick={() => appContext?.setShowModal(true)}
                         className="h-10 w-10 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">
                         <img
@@ -39,7 +40,7 @@ const SidebarIcons = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default SidebarIcons;
+export default SidebarIcons

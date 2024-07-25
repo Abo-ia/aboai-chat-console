@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import ChatView from '@src/views/admin/Chat';
+import ChatView from '@src/views/admin/ChatView';
 import SignIn from '@src/views/auth/SignIn';
 import SignUp from '@src/views/auth/Signup';
 import VerifyEmail from '@src/views/auth/VerifyEmail';
@@ -60,8 +60,8 @@ const App: React.FC = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<PrivateRoute element={<ChatView />} />} />
-                <Route path="/" element={<ChatView />} />
+                <Route path="/" element={<PrivateRoute element={<ChatView conversation={''}/>} />} />
+                <Route path="/" element={<ChatView conversation={''}/>} />
                 <Route path="/auth/signin" element={<SignIn />} />
                 <Route path="/auth/signup" element={<SignUp />} />
                 <Route path="/auth/verify-email" element={<VerifyEmail />} />

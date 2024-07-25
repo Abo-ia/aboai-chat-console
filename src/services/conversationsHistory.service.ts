@@ -23,7 +23,7 @@ class ConversationsHistoryService {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error('Error getting conversations history:', error);
+            console.error('Service: Error getting conversations history:', error);
             throw error;
         }
     }    
@@ -46,7 +46,7 @@ class ConversationsHistoryService {
             const body = JSON.parse(data.body);
             return body;
         } catch (error) {
-            console.error('Error getting conversation:', error);
+            console.error('Service: Error getting conversation:', error);
             throw error;
         }
     }
