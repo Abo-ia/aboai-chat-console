@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,7 +16,7 @@ interface Message {
     prompt: string;
     chatResponse?: string;
     references: Reference[];
-    timeline: string;
+    timestamp: string;
 }
 
 interface Reference {
@@ -85,7 +85,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     type Message = {
         prompt: string;
         chat_response?: string;
-        timeline: string;
+        timestamp: string;
     };
 
     const loadConversation = async (conversationId: string) => {
@@ -105,7 +105,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             console.log('validMessages:', validMessages);
 
             const sortedMessages = validMessages.sort((a: Message, b: Message) => {
-                return new Date(a.timeline).getTime() - new Date(b.timeline).getTime(); // Ordenar por fecha ascendente
+                return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(); // Ordenar por fecha ascendente
             });
 
             const messagePromises = sortedMessages.map(async (message: Message) => {
@@ -124,7 +124,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                             references: referencesList,
                             query: message.prompt,
                             response: specificPart,
-                            timeline: message.timeline,
+                            timestamp: message.timestamp,
                         },
                     ]);
                     return { prompt: message.prompt, references: referencesList };
@@ -250,34 +250,62 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                 <div className="flex flex-col flex-auto flex-shrink-0 h-full p-4">
                                     <div className="flex flex-col h-full overflow-x-auto relative mb-4">
                                         <div className="flex flex-col h-full start-of-life">
-                                            <div className="gap-y-2">
-                                                {messages.map((msg, index) => (
-                                                    <div key={index} className={`flex items-start mb-4 text-sm`}>
-                                                        <img
-                                                            src='https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png'
-                                                            className="w-10 h-10 rounded-full mr-3"
-                                                            alt='Avatar'
-                                                        />
-                                                        <div className={`flex-1 overflow-hidden`}>
-                                                            <div>
-                                                                <span className="font-bold">...</span>
-                                                                <span className="text-grey text-xs ml-2">{new Date(msg.timeline).toLocaleTimeString()}</span>
+                                            <div className="gap-y-1">
+                                                {messages.map((msg, index) => {
+                                                    // timestamp-format: 2024-07-25T04:25:36.734Z
+                                                    const date = new Date(msg.timestamp).toLocaleTimeString();
+
+                                                    return (
+                                                        <div key={index} className="flex items-start mb-4 text-sm w-3/4">
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <div className="mt-1 p-3 rounded-lg shadow-sm bg-white">
+                                                                    {/* Usuario */}
+                                                                    <div className="flex items-start gap-2.5 mb-4">
+                                                                        <img
+                                                                            className="w-8 h-8 rounded-full"
+                                                                            src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
+                                                                            alt="User Avatar"
+                                                                        />
+                                                                        <div className="flex flex-col w-full leading-1.5">
+                                                                            <div className="flex items-center space-x-2">
+                                                                                <span className="text-sm font-semibold text-gray-900">Tú</span>
+                                                                                <span className="text-sm font-normal text-gray-500">{date}</span>
+                                                                            </div>
+                                                                            <p className="text-sm font-normal py-2 text-gray-900">{msg.query}</p>
+                                                                            <span className="text-sm font-normal text-gray-500">Enviado</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Asistente de IA */}
+                                                                    <div className="flex items-start gap-2.5">
+                                                                        <img
+                                                                            className="w-8 h-8 rounded-full"
+                                                                            src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
+                                                                            alt="Assistant Avatar"
+                                                                        />
+                                                                        <div className="flex flex-col w-full leading-1.5">
+                                                                            <div className="flex items-center space-x-2">
+                                                                                <span className="text-sm font-semibold text-gray-900">Asistente</span>
+                                                                                <span className="text-sm font-normal text-gray-500">{date}</span>
+                                                                            </div>
+                                                                            <p className="text-sm font-normal py-2 text-gray-900">{msg.response}</p>
+                                                                            <span className="text-sm font-normal text-gray-500">Entregado</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {msg.references && msg.references.length > 0 && (
+                                                                    <button
+                                                                        className="bg-indigo-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-indigo-200 transition-colors duration-300 text-sm font-semibold"
+                                                                        onClick={() => showReferences(msg.references, msg.query)}
+                                                                    >
+                                                                        Mostrar referencias.
+                                                                    </button>
+                                                                )}
                                                             </div>
-                                                            <div className="mt-1 p-3 bg-gray-100 rounded-lg shadow-sm">
-                                                                <p className="text-black leading-normal"><strong>Pregunta:</strong> {msg.query}</p>
-                                                                <p className="text-black leading-normal mt-1"><strong>Respuesta:</strong> {msg.response}</p>
-                                                            </div>
-                                                            {msg.references && msg.references.length > 0 && (
-                                                                <button
-                                                                    className="bg-indigo-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-indigo-200 transition-colors duration-300 text-sm font-semibold"
-                                                                    onClick={() => showReferences(msg.references, msg.query)}
-                                                                >
-                                                                    Mostrar referencias.
-                                                                </button>
-                                                            )}
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    )
+                                                })}
+
+
                                                 <div ref={messagesEndRef}></div>
                                                 {isLoading && <LoadingComponent />}
                                             </div>
@@ -310,7 +338,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                 }}
                                                 className="flex items-center justify-center bg-slate-600 text-white h-10 px-4 rounded-lg hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
                                             >
-                                                <span className="mr-2">Send</span>
+                                                <span className="mr-2">Enviar</span>
                                                 <span className="transform rotate-45">
                                                     <svg
                                                         className="w-5 h-5"
@@ -346,23 +374,37 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     )
 }
 
-const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> = ({ content, onClose }) => (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-black opacity-50 absolute inset-0" onClick={onClose}></div>
-        <div className="bg-white rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
-            <h2 className="text-2xl font-bold mb-4">Referencias</h2>
-            {content.map((ref, index) => (
-                <ReferenceItem key={index} content={ref} />
-            ))}
-            <button
-                onClick={onClose}
-                className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
-            >
-                Cerrar
-            </button>
+const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> = ({ content, onClose }) => {
+    const uniqueReferences = useMemo(() => {
+        const seen = new Set();
+        return content.filter(ref => {
+            const identifier = `${ref.location.s3Location.uri}-${ref.content.text}`;
+            if (seen.has(identifier)) {
+                return false;
+            }
+            seen.add(identifier);
+            return true;
+        });
+    }, [content]);
+
+    return (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-black opacity-50 absolute inset-0" onClick={onClose}></div>
+            <div className="bg-white rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
+                <h2 className="text-2xl font-bold mb-4">Referencias</h2>
+                {uniqueReferences.map((ref, index) => (
+                    <ReferenceItem key={index} content={ref} />
+                ))}
+                <button
+                    onClick={onClose}
+                    className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
+                >
+                    Cerrar
+                </button>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const ReferenceItem: React.FC<{ content: Reference }> = ({ content }) => {
     const [isOpen, setIsOpen] = useState(false);

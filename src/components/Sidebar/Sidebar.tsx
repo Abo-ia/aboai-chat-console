@@ -32,16 +32,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     return (
         <div className="relative group block mb-1">
             <div
-                className={`flex justify-between items-center cursor-pointer px-4 rounded-lg transition-all ${selected ? 'bg-indigo-600 text-white' : 'group-hover:bg-indigo-100 group-hover:text-indigo-600'
-                    }`}
+                className={`flex justify-between items-center cursor-pointer px-4 py-2 rounded-lg transition-all ${selected ? 'bg-indigo-600 text-white' : 'group-hover:bg-indigo-100 group-hover:text-indigo-600'}`}
                 onClick={handleClick}
             >
-                <p className={`truncate ${selected ? 'text-white' : 'text-white group-hover:text-indigo-600'}`}>
-                    {conversationName}
-                </p>
-                <span className={`text-3xl mb-2 ${selected ? 'text-green-300' : 'text-gray-800 group-hover:text-green-300'}`}>
-                    ...
-                </span>
+                <p className={`truncate ${selected ? 'text-white' : 'text-white group-hover:text-indigo-600'}`}>{conversationName}</p>
+                <span className={`text-3xl mb-2 ${selected ? 'text-green-300' : 'text-gray-800 group-hover:text-green-300'}`}>...</span>
             </div>
         </div>
     );
