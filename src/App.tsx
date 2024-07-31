@@ -57,11 +57,31 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
 };
 
 const App: React.FC = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const session = await fetchAuthSession();
+                const idToken = session?.tokens?.idToken?.toString();
+                setIsAuthenticated(!!idToken);
+            } catch (error) {
+                setIsAuthenticated(false);
+            }
+        };
+
+        checkAuth();
+    }, []);
+
+    if (isAuthenticated === null) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Router>
             <Routes>
+                {isAuthenticated && <Route path="*" element={<Navigate to="/" />} />}
                 <Route path="/" element={<PrivateRoute element={<ChatView conversation={''}/>} />} />
-                <Route path="/" element={<ChatView conversation={''}/>} />
                 <Route path="/auth/signin" element={<SignIn />} />
                 <Route path="/auth/signup" element={<SignUp />} />
                 <Route path="/auth/verify-email" element={<VerifyEmail />} />
@@ -71,5 +91,3 @@ const App: React.FC = () => {
 }
 
 export default App;
-
-
