@@ -38,7 +38,9 @@ type ChatDashboardProps = {
 };
 
 const ChatView: React.FC<ChatDashboardProps> = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(
+        window.innerWidth > 768 ? true : false
+    );
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [modalReferences, setModalReferences] = useState<Reference[]>([]);
 
@@ -172,8 +174,8 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     timestamp: new Date().toISOString(),
                 },
             ]);
-            
-            setDocumentReferences(responseBody?.bedrock_response.retrieved_references || []);  
+
+            setDocumentReferences(responseBody?.bedrock_response.retrieved_references || []);
             setIsLoading(false);
         } catch (error) {
             console.error('Error sending message:', error);
@@ -205,9 +207,11 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
     return (
         <div className="font-sans antialiased h-screen flex">
-            <Sidebar
-                loadConversation={loadConversation}
-                isSidebarOpen={isSidebarOpen} />
+            {isSidebarOpen &&
+                <Sidebar
+                    loadConversation={loadConversation}
+                    isSidebarOpen={isSidebarOpen} />
+            }
 
             <div className="flex-1 flex flex-col bg-white overflow-hidden">
                 <div className="border-b flex px-6 py-2 items-center flex-none">
@@ -219,31 +223,31 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     <div className="flex flex-col">
                         <h3 className="text-grey-darkest mb-1 font-extrabold">#general</h3>
                         <div className="text-grey-dark text-sm truncate">
-                            Información general
+                            {activeQuestion}
                         </div>
                     </div>
-                    <div className="ml-auto flex items-center space-x-4">
-                        <div className="relative">
-                            <input type="search" placeholder="Buscar" className="appearance-none border border-grey rounded-lg pl-8 pr-4 py-2" />
-                            <FontAwesomeIcon icon={faSearch} className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                    {isSidebarOpen &&
+                        <div className="ml-auto flex items-center space-x-4">
+                            <div className="relative">
+                                <input type="search" placeholder="Buscar" className="appearance-none border border-grey rounded-lg pl-8 pr-4 py-2" />
+                                <FontAwesomeIcon icon={faSearch} className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
                 <div className="flex">
                     <div className="col-chat-area w-1/3 grow h-[91vh]">
                         <div className="flex flex-row h-full w-full overflow-x-hidden">
                             <div className="flex flex-col flex-auto h-full p-6">
-                                <div className="flex flex-col flex-auto flex-shrink-0 h-full p-4">
+                                <div className="flex flex-col flex-auto flex-shrink-0 h-full">
                                     <div className="flex flex-col h-full overflow-x-auto relative mb-4">
                                         <div className="flex flex-col h-full start-of-life">
                                             <div className="gap-y-1">
                                                 {messages.map((msg, index) => {
-                                                    // timestamp-format: 2024-07-25T04:25:36.734Z
                                                     const date = new Date(msg.timestamp).toLocaleTimeString();
-
                                                     return (
-                                                        <div key={index} className="flex items-start mb-4 text-sm w-3/4">
+                                                        <div key={index} className="flex items-start mb-4 text-sm lg:w-3/4">
                                                             <div className="flex-1 overflow-hidden">
                                                                 <div className="mt-1 p-3 rounded-lg shadow-sm bg-white">
                                                                     {/* Usuario */}
