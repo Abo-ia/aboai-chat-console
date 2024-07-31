@@ -6,7 +6,7 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import MessageService from '@src/services/messages.service';
 import ConversationsHistoryService from '@src/services/conversationsHistory.service';
 
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "@src/components/Sidebar/Sidebar";
 import LoadingComponent from "@src/components/LoadingComponent/LoadingComponent";
 import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
 
@@ -267,20 +267,20 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                         </div>
                                                                     </div>
                                                                     {/* Asistente de IA */}
-                                                                    <div className="flex items-start gap-2.5">
-                                                                        <img
-                                                                            className="w-8 h-8 rounded-full"
-                                                                            src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
-                                                                            alt="Assistant Avatar"
-                                                                        />
-                                                                        <div className="flex flex-col w-full leading-1.5">
+                                                                    <div className="flex flex-col gap-2.5">
+                                                                        <div className="flex flex-col w-full leading-1.5 items-end">
                                                                             <div className="flex items-center space-x-2">
-                                                                                <span className="text-sm font-semibold text-gray-900">Asistente</span>
                                                                                 <span className="text-sm font-normal text-gray-500">{date}</span>
+                                                                                <span className="text-sm font-semibold text-gray-900">Asistente</span>
+                                                                                <img
+                                                                                    className="w-8 h-8 rounded-full"
+                                                                                    src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
+                                                                                    alt="Assistant Avatar"
+                                                                                />
                                                                             </div>
-                                                                            <p className="text-sm font-normal py-2 text-gray-900">{msg.response}</p>
-                                                                            <span className="text-sm font-normal text-gray-500">Entregado</span>
                                                                         </div>
+                                                                        <p className="text-sm font-normal py-2 text-gray-900 text-right bg-gray-100 px-4 py-6 rounded">{msg.response}</p>
+                                                                        <span className="text-sm font-normal text-gray-500 mt-1 text-right">Entregado</span>
                                                                     </div>
                                                                 </div>
                                                                 {msg.references && msg.references.length > 0 && (
@@ -413,7 +413,11 @@ const ReferenceItem: React.FC<{ content: Reference }> = ({ content }) => {
                     {fileName}
                 </span>
             </p>
-            {isOpen && <p className="mt-2">{content.content.text}</p>}
+            {isOpen && (
+                <div className="mt-2 w-full h-96 overflow-y-auto">
+                    <p>{content.content.text}</p>
+                </div>
+            )}
         </div>
     );
 };
