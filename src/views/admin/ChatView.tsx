@@ -162,7 +162,12 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 setConversationMode('addMessage');
             }
 
-            const response = await messageService.sendMessage(message, userId, currentConversationId);
+            const response = await messageService.sendMessage(
+                message, 
+                userId, 
+                currentConversationId,
+                messages.map((msg) => msg.query).join(" "),
+            );
             const responseBody = response
 
             setMessages((prevMessages) => [
@@ -306,7 +311,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                         <div className="flex-grow ml-4">
                                             <div className="relative w-full">
                                                 <textarea
-                                                    placeholder="Type a message..."
+                                                    placeholder="Escribe un mensaje..."
                                                     value={textInput}
                                                     onChange={(e) => setTextInput(e.target.value)}
                                                     onKeyPress={(e) => {
