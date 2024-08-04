@@ -9,7 +9,6 @@ interface AppProviderProps {
     children: ReactNode;
 }
 
-
 interface AuthProviderProps {
     children: ReactNode;
 }
