@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { fetchAuthSession } from "aws-amplify/auth";
 import MessageService from '@src/services/messages.service';
@@ -9,8 +9,6 @@ import ConversationsHistoryService from '@src/services/conversationsHistory.serv
 import Sidebar from "@src/components/Sidebar/Sidebar";
 import LoadingComponent from "@src/components/LoadingComponent/LoadingComponent";
 import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
-
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 type Message = {
     prompt: string;
@@ -42,7 +40,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         window.innerWidth > 768 ? true : false
     );
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [modalReferences, setModalReferences] = useState<Reference[]>([]);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -56,7 +53,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     const [userId, setUserId] = useState('');
 
     const [documentReferences, setDocumentReferences] = useState<any[]>([]);
-    const [DocumentsReferencesNotFound, setDocumentsReferencesNotFound] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
@@ -192,18 +188,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         setActiveQuestion(query);
         setDocumentReferences(references);
         setIsModalOpen(true);
-    };
-
-    const formatResponseAsBullets = (response: string) => {
-        const [intro, listPart] = response.split(":");
-
-        if (!listPart) {
-            return response;
-        }
-
-        const items = listPart.split("-").filter((item) => item.trim() !== "");
-        const bulletList = items.map((item) => `<li>${item.trim()}</li>`).join("");
-        return `${intro}:<ul>${bulletList}</ul>`;
     };
 
     const closeModal = () => {

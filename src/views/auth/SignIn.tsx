@@ -1,12 +1,11 @@
-import React, { FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { signIn } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 const SignIn = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [error, setError] = useState<string | null>(null);
+    const [, setError] = useState<string | null>(null);
     const navigate = useNavigate()
 
     const handleLogin = async (event: FormEvent<HTMLFormElement>) => {

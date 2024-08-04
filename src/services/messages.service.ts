@@ -1,4 +1,3 @@
-import { counter } from "@fortawesome/fontawesome-svg-core";
 import { IABOGADO_API_URL } from "@src/config/env";
 
 class MessageService {

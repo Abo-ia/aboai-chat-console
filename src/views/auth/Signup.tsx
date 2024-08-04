@@ -1,16 +1,15 @@
-import React, { useState, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'aws-amplify/auth';
 
 import { Link } from 'react-router-dom';
 
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -49,7 +48,7 @@ const SignUp = () => {
             return;
         }
         try {
-            const response = await signUp({
+            await signUp({
                 username: email,
                 password: password,
             });

@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import SidebarIcons from '@src/components/Sidebar/SidebarIcons';
-
 import ConversationsHistoryService from '@src/services/conversationsHistory.service';
-
 import { fetchAuthSession } from "aws-amplify/auth";
 
-interface SidebarProps {
-    isSidebarOpen: boolean
-}
 
 interface SidebarItemProps {
     conversationId: string;
@@ -61,7 +56,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
 
     const [selectedId, setSelectedId] = useState<string>('');
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-    const [userId, setUserId] = useState('');
+    const [, setUserId] = useState('');
 
 
     useEffect(() => {

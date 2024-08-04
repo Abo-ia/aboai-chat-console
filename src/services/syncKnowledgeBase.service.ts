@@ -9,7 +9,7 @@ class SyncKnowledgeBase {
 
     async syncKnowledgeBase(): Promise<any> {
         try {
-            const response = await fetch(`https://23d0rpxiia.execute-api.us-west-2.amazonaws.com/ingestion`, {
+            const response = await fetch(`${IABOGADO_API_URL}/ingestion`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

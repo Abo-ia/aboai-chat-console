@@ -7,49 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen, faCloudDownloadAlt, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { v4 as uuidv4 } from 'uuid';
 import { GOOGLE_API_KEY, GOOGLE_CLIENT_ID, GOOGLE_SCOPES, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_BUCKET_NAME } from '@src/config/env';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import SyncKnowledgeBase from "@src/services/syncKnowledgeBase.service"
-
-const sample_data = {
-    "folders": [
-        {
-            "id": "folder1",
-            "name": "Project Documents",
-            "files": [
-                {
-                    "id": "file1",
-                    "name": "Document1.pdf",
-                    "mimeType": "application/pdf"
-                },
-                {
-                    "id": "file2",
-                    "name": "Document2.docx",
-                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                }
-            ]
-        },
-        {
-            "id": "folder2",
-            "name": "Images",
-            "files": [
-                {
-                    "id": "file3",
-                    "name": "Image1.png",
-                    "mimeType": "image/png"
-                },
-                {
-                    "id": "file4",
-                    "name": "Image2.jpg",
-                    "mimeType": "image/jpeg"
-                }
-            ]
-        }
-    ]
-}
 
 
 interface GoogleDriveFile {

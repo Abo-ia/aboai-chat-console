@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { confirmSignUp } from 'aws-amplify/auth';
 import { toast, ToastContainer } from 'react-toastify';
@@ -13,7 +13,7 @@ const VerifyEmail = () => {
     const handleConfirmSignUp = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const { isSignUpComplete, nextStep } = await confirmSignUp({
+            await confirmSignUp({
                 username: username,
                 confirmationCode: code,
             })
