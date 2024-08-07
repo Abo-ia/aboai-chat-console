@@ -9,6 +9,7 @@ import ConversationsHistoryService from '@src/services/conversationsHistory.serv
 import Sidebar from "@src/components/Sidebar/Sidebar";
 import LoadingComponent from "@src/components/LoadingComponent/LoadingComponent";
 import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
+import UploadFileModal from '@src/components/Modals/UploadFilesModal';
 
 type Message = {
     prompt: string;
@@ -350,6 +351,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             </div>
 
             <GoogleDriveModal />
+            <UploadFileModal/>
         </div>
     )
 }

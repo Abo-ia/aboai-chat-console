@@ -7,10 +7,13 @@ export const AppContext = createContext<AppContextType | null>(null);
 export function AppProvider(props: AppProviderProps) {
 
     const [showModal, setShowModal] = useState(false);
+    const [uploadFileShowModal, setUploadFileShowModal] = useState(false);
 
     const appContext: AppContextType = {
         showModal: showModal,
-        setShowModal: setShowModal
+        setShowModal: setShowModal,
+        uploadFileShowModal: uploadFileShowModal,
+        setUploadFileShowModal: setUploadFileShowModal
     }
 
     return (

@@ -26,6 +26,18 @@ const SidebarIcons = () => {
                     </div>
                     <div className="text-center text-white opacity-50 text-sm">&#8984;1</div>
                 </div>
+                <div className="cursor-pointer mb-4">
+                    <div 
+                        onClick={() => appContext?.setUploadFileShowModal(true)}
+                        className="h-10 w-10 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">
+                        <img
+                            src='https://icons.iconarchive.com/icons/dtafalonso/win-10x/512/My-Files-icon.png'
+                            alt="Slack"
+                        />
+                    </div>
+                    <div className="text-center text-white opacity-50 text-sm">&#8984;2</div>
+                </div>
+
                 <div className="cursor-pointer">
                     <div className="bg-custom-base opacity-25 h-12 w-12 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">
                         <svg className="fill-current h-10 w-10 block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
