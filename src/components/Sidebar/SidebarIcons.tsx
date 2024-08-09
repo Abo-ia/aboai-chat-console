@@ -37,6 +37,17 @@ const SidebarIcons = () => {
                     </div>
                     <div className="text-center text-white opacity-50 text-sm">&#8984;2</div>
                 </div>
+                <div className="cursor-pointer mb-4">
+                    <div 
+                        onClick={() => appContext?.setSyncHistoryShowModal(true)}
+                        className="h-10 w-10 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">
+                        <img
+                            src='https://cdn-icons-png.flaticon.com/512/5582/5582334.png'
+                            alt="Slack"
+                        />
+                    </div>
+                    <div className="text-center text-white opacity-50 text-sm">&#8984;3</div>
+                </div>
 
                 <div className="cursor-pointer">
                     <div className="bg-custom-base opacity-25 h-12 w-12 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">

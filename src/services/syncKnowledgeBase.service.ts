@@ -23,6 +23,22 @@ class SyncKnowledgeBase {
             throw error;
         }
     }
+    async getSyncKnowledgeBaseStatus(): Promise<any> {
+        try {
+            const response = await fetch(`${IABOGADO_API_URL}/sync-history`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.idToken}`
+                },
+            })
+            const data = await response.json();
+            return JSON.parse(data.body);
+        }catch (error) {
+            console.error('Error getting sync knowledge base status:', error);
+            throw error;
+        }
+    }
 }
 
 export default SyncKnowledgeBase;

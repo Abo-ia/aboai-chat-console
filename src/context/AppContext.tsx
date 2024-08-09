@@ -8,12 +8,15 @@ export function AppProvider(props: AppProviderProps) {
 
     const [showModal, setShowModal] = useState(false);
     const [uploadFileShowModal, setUploadFileShowModal] = useState(false);
+    const [syncHistoryShowModal, setSyncHistoryShowModal] = useState(false);
 
     const appContext: AppContextType = {
         showModal: showModal,
         setShowModal: setShowModal,
         uploadFileShowModal: uploadFileShowModal,
-        setUploadFileShowModal: setUploadFileShowModal
+        setUploadFileShowModal: setUploadFileShowModal,
+        syncHistoryShowModal: syncHistoryShowModal,
+        setSyncHistoryShowModal: setSyncHistoryShowModal
     }
 
     return (

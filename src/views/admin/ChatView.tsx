@@ -10,6 +10,7 @@ import Sidebar from "@src/components/Sidebar/Sidebar";
 import LoadingComponent from "@src/components/LoadingComponent/LoadingComponent";
 import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
 import UploadFileModal from '@src/components/Modals/UploadFilesModal';
+import SyncHistoryModal from '@src/components/Modals/SyncHistoryModal';
 
 type Message = {
     prompt: string;
@@ -352,6 +353,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
             <GoogleDriveModal />
             <UploadFileModal/>
+            <SyncHistoryModal/>
         </div>
     )
 }
