@@ -7,9 +7,9 @@ const Modal: React.FC<{ content: any[]; onClose: () => void }> = ({ content, onC
         <div className="bg-black opacity-50 absolute inset-0" onClick={onClose}></div>
         <div className="bg-white rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
             <h2 className="text-2xl font-bold mb-4">Referencias</h2>
-            {content.map((ref, index) => (
+            {/* {content.map((ref, index) => (
                 <ReferenceItem key={index} content={ref} />
-            ))}
+            ))} */}
             <button
                 onClick={onClose}
                 className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"

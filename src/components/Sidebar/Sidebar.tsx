@@ -48,12 +48,6 @@ interface MenuItem {
 }
 
 const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
-    // const { isSidebarOpen } = props
-
-    // if (!isSidebarOpen) {
-    //     return null
-    // }
-
     const [selectedId, setSelectedId] = useState<string>('');
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [, setUserId] = useState('');
@@ -147,22 +141,23 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
                         </div>
                     </div>
                 </div>
+
                 <div className="px-4">
                     <div className="text-white mb-10 mt-3">Historial de Chats</div>
-                    {menuItems.map((item) => (
-                        <SidebarItem
-                            key={item.conversationId}
-                            conversationId={item.conversationId}
-                            conversationName={item.conversation_name}
-                            getConversation={getConversation}
-                            selected={selectedId === item.conversationId}
-                            setSelected={setSelectedId}
-                        />
-                    ))}
+                    <div className="overflow-y-auto">
+                        {menuItems.map((item) => (
+                            <SidebarItem
+                                key={item.conversationId}
+                                conversationId={item.conversationId}
+                                conversationName={item.conversation_name}
+                                getConversation={getConversation}
+                                selected={selectedId === item.conversationId}
+                                setSelected={setSelectedId}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
-
-
         </React.Fragment>
     )
 }

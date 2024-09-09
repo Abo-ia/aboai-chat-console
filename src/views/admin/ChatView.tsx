@@ -161,8 +161,8 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             }
 
             const response = await messageService.sendMessage(
-                message, 
-                userId, 
+                message,
+                userId,
                 currentConversationId,
                 messages.map((msg) => msg.query).join(" "),
             );
@@ -197,7 +197,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     };
 
     return (
-        <div className="font-sans antialiased h-screen flex">
+        <div className="font-sans h-screen flex">
             {isSidebarOpen &&
                 <Sidebar
                     loadConversation={loadConversation}
@@ -240,7 +240,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                     return (
                                                         <div key={index} className="flex items-start mb-4 text-sm lg:w-3/4">
                                                             <div className="flex-1 overflow-hidden">
-                                                                <div className="mt-1 p-3 rounded-lg shadow-sm bg-white">
+                                                                <div className="mt-1 p-3 rounded-lg">
                                                                     {/* Usuario */}
                                                                     <div className="flex items-start gap-2.5 mb-4">
                                                                         <img
@@ -259,19 +259,22 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                     </div>
                                                                     {/* Asistente de IA */}
                                                                     <div className="flex flex-col gap-2.5">
-                                                                        <div className="flex flex-col w-full leading-1.5 items-end">
+                                                                        <div className="flex flex-col w-full leading-1.5">
                                                                             <div className="flex items-center space-x-2">
-                                                                                <span className="text-sm font-normal text-gray-500">{date}</span>
-                                                                                <span className="text-sm font-semibold text-gray-900">Asistente</span>
                                                                                 <img
                                                                                     className="w-8 h-8 rounded-full"
                                                                                     src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
                                                                                     alt="Assistant Avatar"
                                                                                 />
+                                                                                <span className="text-sm font-semibold text-gray-900">Asistente</span>
+                                                                                <span className="text-sm font-normal text-gray-500">{date}</span>
                                                                             </div>
                                                                         </div>
-                                                                        <p className="text-sm font-normal py-2 text-gray-900 text-right bg-gray-100 px-4 py-6 rounded">{msg.response}</p>
-                                                                        <span className="text-sm font-normal text-gray-500 mt-1 text-right">Entregado</span>
+                                                                        <div
+                                                                            className="text-sm font-normal bg-gray-100 pt-6 py-2 px-4 pb-6 rounded  prose prose-sm"
+                                                                            dangerouslySetInnerHTML={{ __html: msg.response }}
+                                                                        />
+                                                                        <span className="text-sm font-normal text-gray-500 mt-1">Entregado</span>
                                                                     </div>
                                                                 </div>
                                                                 {msg.references && msg.references.length > 0 && (
@@ -352,8 +355,8 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             </div>
 
             <GoogleDriveModal />
-            <UploadFileModal/>
-            <SyncHistoryModal/>
+            <UploadFileModal />
+            <SyncHistoryModal />
         </div>
     )
 }
@@ -403,7 +406,7 @@ const ReferenceItem: React.FC<{ content: Reference }> = ({ content }) => {
                 <span
                     className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold border-b border-indigo-200"
                 >
-                    {fileName}
+                    {fileName.length > 30 ? `${fileName.slice(0, 30)}...` : fileName}
                 </span>
             </p>
             {isOpen && (
