@@ -227,19 +227,19 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     }
                 </div>
 
-                <div className="flex">
-                    <div className="col-chat-area w-1/3 grow h-[91vh]">
+                <div className="lg:w-[70%] w-[94%] mx-auto">
+                    <div className="mx-auto h-[91vh]">
                         <div className="flex flex-row h-full w-full overflow-x-hidden">
-                            <div className="flex flex-col flex-auto h-full p-6">
-                                <div className="flex flex-col flex-auto flex-shrink-0 h-full">
-                                    <div className="flex flex-col h-full overflow-x-auto relative mb-4">
-                                        <div className="flex flex-col h-full start-of-life">
+                            <div className="flex flex-col flex-auto h-full">
+                                <div className="flex flex-col  flex-auto flex-shrink-0 h-full">
+                                    <div className="flex flex-col  h-full overflow-x-auto mb-4">
+                                        <div className="flex flex-col h-full">
                                             <div className="gap-y-1">
                                                 {messages.map((msg, index) => {
                                                     const date = new Date(msg.timestamp).toLocaleTimeString();
                                                     return (
-                                                        <div key={index} className="flex items-start mb-4 text-sm lg:w-3/4">
-                                                            <div className="flex-1 overflow-hidden">
+                                                        <div key={index} className="flex items-start mb-4 text-sm">
+                                                            <div className="w-full">
                                                                 <div className="mt-1 p-3 rounded-lg">
                                                                     {/* Usuario */}
                                                                     <div className="flex items-start gap-2.5 mb-4">
@@ -248,18 +248,18 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                             src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
                                                                             alt="User Avatar"
                                                                         />
-                                                                        <div className="flex flex-col w-full leading-1.5">
+                                                                        <div className="flex flex-col  leading-1.5">
                                                                             <div className="flex items-center space-x-2">
                                                                                 <span className="text-sm font-semibold text-gray-900">Tú</span>
                                                                                 <span className="text-sm font-normal text-gray-500">{date}</span>
                                                                             </div>
-                                                                            <p className="text-sm font-normal py-2 text-gray-900">{msg.query}</p>
+                                                                            <p className="py-2 text-gray-900">{msg.query}</p>
                                                                             <span className="text-sm font-normal text-gray-500">Enviado</span>
                                                                         </div>
                                                                     </div>
                                                                     {/* Asistente de IA */}
                                                                     <div className="flex flex-col gap-2.5">
-                                                                        <div className="flex flex-col w-full leading-1.5">
+                                                                        <div className="flex flex-col leading-1.5">
                                                                             <div className="flex items-center space-x-2">
                                                                                 <img
                                                                                     className="w-8 h-8 rounded-full"
@@ -271,9 +271,10 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                             </div>
                                                                         </div>
                                                                         <div
-                                                                            className="text-sm font-normal bg-gray-100 pt-6 py-2 px-4 pb-6 rounded  prose prose-sm"
+                                                                            className="w-full h-full bg-gray-100 pt-6 py-2 px-5 pb-6 rounded prose prose-sm"
                                                                             dangerouslySetInnerHTML={{ __html: msg.response }}
                                                                         />
+
                                                                         <span className="text-sm font-normal text-gray-500 mt-1">Entregado</span>
                                                                     </div>
                                                                 </div>
