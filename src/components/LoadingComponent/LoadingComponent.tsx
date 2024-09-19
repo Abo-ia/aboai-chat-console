@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React from 'react';
 import { useEffect, useState } from 'react';    
 import { FaCircleNotch } from 'react-icons/fa';
 
@@ -24,7 +23,7 @@ const LoadingComponent: React.FC = () => {
     }, [messageDuration]);
 
     return (
-        <div className="flex flex-col items-center justify-center p-4">
+        <div className="flex flex-col items-center justify-center h-screen">
             <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
                 <div className="flex items-center justify-center mb-4">
                     <FaCircleNotch className="text-neutral-800 animate-spin text-3xl" />
@@ -49,4 +48,4 @@ const LoadingComponent: React.FC = () => {
     );
 };
 
-export default LoadingComponent
+export default LoadingComponent;

@@ -198,11 +198,12 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
     return (
         <div className="font-sans h-screen flex">
-            {isSidebarOpen &&
+            {isSidebarOpen && (
                 <Sidebar
                     loadConversation={loadConversation}
-                    isSidebarOpen={isSidebarOpen} />
-            }
+                    isSidebarOpen={isSidebarOpen}
+                />
+            )}
 
             <div className="flex-1 flex flex-col bg-white overflow-hidden">
                 <div className="border-b flex px-6 py-2 items-center flex-none">
@@ -217,22 +218,22 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                             {activeQuestion}
                         </div>
                     </div>
-                    {isSidebarOpen &&
+                    {isSidebarOpen && (
                         <div className="ml-auto flex items-center space-x-4">
                             <div className="relative">
                                 <input type="search" placeholder="Buscar" className="appearance-none border border-grey rounded-lg pl-8 pr-4 py-2" />
                                 <FontAwesomeIcon icon={faSearch} className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
                             </div>
                         </div>
-                    }
+                    )}
                 </div>
 
                 <div className="lg:w-[70%] w-[94%] mx-auto">
                     <div className="mx-auto h-[91vh]">
                         <div className="flex flex-row h-full w-full overflow-x-hidden">
                             <div className="flex flex-col flex-auto h-full">
-                                <div className="flex flex-col  flex-auto flex-shrink-0 h-full">
-                                    <div className="flex flex-col  h-full overflow-x-auto mb-4">
+                                <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
+                                    <div className="flex flex-col h-full overflow-y-auto mb-4">
                                         <div className="flex flex-col h-full">
                                             <div className="gap-y-1">
                                                 {messages.map((msg, index) => {
@@ -248,7 +249,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                             src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
                                                                             alt="User Avatar"
                                                                         />
-                                                                        <div className="flex flex-col  leading-1.5">
+                                                                        <div className="flex flex-col leading-1.5">
                                                                             <div className="flex items-center space-x-2">
                                                                                 <span className="text-sm font-semibold text-gray-900">Tú</span>
                                                                                 <span className="text-sm font-normal text-gray-500">{date}</span>
@@ -290,8 +291,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                         </div>
                                                     )
                                                 })}
-
-
                                                 <div ref={messagesEndRef}></div>
                                                 {isLoading && <LoadingComponent />}
                                             </div>
