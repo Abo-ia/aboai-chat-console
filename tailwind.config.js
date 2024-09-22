@@ -9,11 +9,11 @@ export default {
             colors: {
                 custom: {
                     lightest: '#006DA4',
-                    lighter: '#',
-                    light: '#004D74',
-                    base: '#c9d1d9',
-                    dark: '#161b22',
-                    darkest: '#0d1117', 
+                    lighter: '#c1c0ae',
+                    light: '##89a09a',
+                    base: '#89a09a',
+                    dark: '#070705',
+                    darkest: '#3e4b51', 
                 },
             },
         },

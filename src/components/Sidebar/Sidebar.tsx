@@ -27,10 +27,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     return (
         <div className="relative group block mb-1">
             <div
-                className={`flex justify-between items-center cursor-pointer px-4 py-2 rounded-lg transition-all ${selected ? 'bg-indigo-600 text-white' : 'group-hover:bg-indigo-100 group-hover:text-indigo-600'}`}
+                className={`flex justify-between items-center cursor-pointer px-4 py-2 rounded-lg transition-all ${selected ? 'bg-custom-base text-white' : 'group-hover:bg-custom-base'}`}
                 onClick={handleClick}
             >
-                <p className={`truncate ${selected ? 'text-white' : 'text-white group-hover:text-indigo-600'}`}>{conversationName}</p>
+                <p className={`truncate ${selected ? 'text-white' : 'text-white'}`}>{conversationName}</p>
                 <span className={`text-3xl mb-2 ${selected ? 'text-green-300' : 'text-gray-800 group-hover:text-green-300'}`}>...</span>
             </div>
         </div>
@@ -112,7 +112,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
             <div className={`bg-indigo-darker text-purple-lighter flex-none w-64 pb-6 transform transition-transform duration-300 bg-custom-dark`}>
                 <div className="text-white mb-2 mt-3 px-4 flex justify-between">
                     <div className="flex-auto">
-                        <h1 className="font-semibold text-xl leading-tight mb-1 truncate">IAbogado</h1>
+                        <h1 className="font-semibold text-xl leading-tight mb-1 truncate">Harvee</h1>
                         <div className="flex items-center mb-6">
                             <span className="bg-green rounded-full block w-2 h-2 mr-2"></span>
                             <span className="text-white opacity-50 text-sm">Tú</span>
@@ -127,7 +127,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
                 <div className="px-4 mb-2 text-white flex justify-between items-center cursor-pointer transition-colors duration-300 py-2">
                     <button
                         onClick={() => window.location.reload()}
-                        className='bg-indigo-700 text-white px-4 py-2 hover:bg-indigo-900 transition-colors duration-300 rounded border border-custom-dark w-full'>
+                        className='bg-custom-base text-white px-4 py-2 hover:bg-indigo-900 transition-colors duration-300 rounded border border-custom-dark w-full'>
                         Nueva conversación
                     </button>
                 </div>
