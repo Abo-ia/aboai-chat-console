@@ -1,4 +1,4 @@
-export const IABOGADO_API_URL = import.meta.env.VITE_IABOGADO_API_URL;
+export const IABOGADO_API_URL = "https://nkiiqqxief.execute-api.us-west-2.amazonaws.com/dev"
 
 export const AWS_COGNITO_USER_POOL_WEB_CLIENT_ID = import.meta.env.VITE_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID;
 export const AWS_COGNITO_USER_POOL_ID = import.meta.env.VITE_AWS_COGNITO_USER_POOL_ID;
