@@ -247,5 +247,4 @@ const App: React.FC = () => {
         </Authenticator>
     );
 }
-
 export default App;
