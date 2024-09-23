@@ -127,7 +127,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
                 <div className="px-4 mb-2 text-white flex justify-between items-center cursor-pointer transition-colors duration-300 py-2">
                     <button
                         onClick={() => window.location.reload()}
-                        className='bg-custom-base text-white px-4 py-2 hover:bg-indigo-900 transition-colors duration-300 rounded border border-custom-dark w-full'>
+                        className='bg-custom-base text-white px-4 py-2 transition-colors duration-300 rounded border border-custom-dark w-full'>
                         Nueva conversación
                     </button>
                 </div>

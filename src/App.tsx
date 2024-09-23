@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ChatView from '@src/views/admin/ChatView';
-import SignIn from '@src/views/auth/SignIn';
-import SignUp from '@src/views/auth/Signup';
-import VerifyEmail from '@src/views/auth/VerifyEmail';
 
 import { fetchAuthSession } from "aws-amplify/auth";
 import { Amplify } from 'aws-amplify';
@@ -11,6 +8,7 @@ import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 
 import { AWS_COGNITO_USER_POOL_ID, AWS_COGNITO_USER_POOL_WEB_CLIENT_ID } from '@src/config/env';
 import '@aws-amplify/ui-react/styles.css';
+import StorageView from './views/storage/StorageView';
 
 
 Amplify.configure({
@@ -243,6 +241,7 @@ const App: React.FC = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<ChatView conversation={''} />} />
+                    <Route path="/almacenamiento" element={<StorageView />} />
                 </Routes>
             </Router>
         </Authenticator>
