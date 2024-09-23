@@ -8,12 +8,12 @@ export default {
         extend: {
             colors: {
                 custom: {
-                    lightest: '#006DA4',
-                    lighter: '#',
-                    light: '#004D74',
-                    base: '#c9d1d9',
-                    dark: '#161b22',
-                    darkest: '#0d1117', 
+                    lightest: '#e1e3ac',
+                    lighter: '#a6b985',
+                    light: '#648a64',
+                    base: '#89a09a',
+                    dark: '#213435',
+                    darkest: '#46685b', 
                 },
             },
         },
