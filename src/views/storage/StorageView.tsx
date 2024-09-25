@@ -16,20 +16,19 @@ const FileExplorerTable: React.FC = () => {
     const [hasMore, setHasMore] = useState<boolean>(true);
 
     const s3Client = new S3Client({
-        region: AWS_REGION,
+        region: 'us-west-2',
         credentials: {
-            accessKeyId: AWS_ACCESS_KEY_ID,
-            secretAccessKey: AWS_SECRET_ACCESS_KEY,
+            accessKeyId: 'AKIAQEFWA3RHL6DN3NVI',
+            secretAccessKey: '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'
         }
     });
-    
 
     const fetchFilesFromS3 = async () => {
         if (isLoading || !hasMore) return;
 
         setIsLoading(true);
         const command = new ListObjectsV2Command({
-            Bucket: AWS_BUCKET_NAME,
+            Bucket: 'iabogado-bucket',
             ContinuationToken: continuationToken,
         });
 
