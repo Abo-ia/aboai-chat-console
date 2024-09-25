@@ -22,6 +22,7 @@ const FileExplorerTable: React.FC = () => {
             secretAccessKey: AWS_SECRET_ACCESS_KEY,
         }
     });
+    
 
     const fetchFilesFromS3 = async () => {
         if (isLoading || !hasMore) return;
