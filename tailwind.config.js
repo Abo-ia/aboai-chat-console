@@ -11,9 +11,12 @@ export default {
                     lightest: '#e1e3ac',
                     lighter: '#a6b985',
                     light: '#648a64',
-                    base: '#89a09a',
-                    dark: '#213435',
-                    darkest: '#46685b', 
+
+
+
+                    base: '#006465',
+                    dark: '#19191a',
+                    darkest: '#020202', 
                 },
             },
         },

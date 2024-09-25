@@ -22,8 +22,18 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
+interface FileItem {
+    id: string;
+    name: string;
+    type: 'folder' | 'file';
+    owner: string;
+    lastModified: string;
+    size?: string;
+}
+
 export type {
     AuthProviderProps,
     AppContextType,
-    AppProviderProps
+    AppProviderProps,
+    FileItem
 }
