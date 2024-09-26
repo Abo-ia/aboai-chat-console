@@ -13,24 +13,8 @@ const Header: React.FC = () => {
     }
     return (
         <div className="bg-white p-4 shadow-md flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-                <button className="p-3 rounded-full hover:bg-custom-lighter transition duration-200">
-                    <FiSettings className="text-custom-darkest" />
-                </button>
-                <button className="p-3 rounded-full hover:bg-custom-lighter transition duration-200">
-                    <FiSearch className="text-custom-darkest" />
-                </button>
-                <button className="p-3 rounded-full hover:bg-custom-lighter transition duration-200">
-                    <FiUser className="text-custom-darkest" />
-                </button>
-            </div>
-            <div className="flex items-center space-x-4">
-                <button className="p-3 rounded-full hover:bg-custom-lighter transition duration-200">
-                    <FiMoreVertical className="text-custom-darkest" />
-                </button>
-            </div>
-
-            <div className="relative inline-block text-left">
+            <div></div>
+            <div className="relative inline-block text-left justify-end">
                 <div>
                     <button
                         onClick={handleOptionsState}

@@ -10,7 +10,7 @@ const Sidebar: React.FC = () => {
                     alt="User"
                     className="w-10 h-10 rounded-full" />
                 <div>
-                    <h4 className="font-semibold text-white">John Doe</h4>
+                    <h4 className="font-semibold text-white">Almacenamiento</h4>
                     <span className="text-white text-sm">
                         <span className="text-custom-base">13.2 GB</span> de 15 GB usados
                     </span>
