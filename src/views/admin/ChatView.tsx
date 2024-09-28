@@ -202,6 +202,10 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         setOptionsState(!optionsState);
     }
 
+    const handleQueyChange = (query: string) => {
+        setTextInput(query);
+    }
+
     return (
         <div className="font-sans h-screen flex">
             {isSidebarOpen && (
@@ -228,7 +232,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     </div>
                     <div className="relative inline-block text-left">
                         <div>
-                            <button 
+                            <button
                                 onClick={handleOptionsState}
                                 type="button" className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
                                 <span>
@@ -385,6 +389,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
             {isSidebarOpen && (
                 <PromptSidebar
+                    handleQueyChange={handleQueyChange}
                     loadConversation={loadConversation}
                     isSidebarOpen={isSidebarOpen}
                 />
