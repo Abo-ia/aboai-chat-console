@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FileItem } from '@src/types/types';
-import FileItemRow from '@src/components/Storage/FileItemRow';
 import Sidebar from '@src/components/Storage/Sidebar';
 import Header from '@src/components/Storage/Header';
 import { S3Client, ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3';
-import { saveAs } from 'file-saver';
 
-import { AWS_ACCESS_KEY_ID, AWS_BUCKET_NAME, AWS_REGION, AWS_SECRET_ACCESS_KEY } from '@src/config/env';
+import { FiFolder, FiFile, FiMoreVertical, } from 'react-icons/fi';
 
 const FileExplorerTable: React.FC = () => {
     const [data, setData] = useState<FileItem[]>([]);
@@ -16,7 +14,7 @@ const FileExplorerTable: React.FC = () => {
     const [hasMore, setHasMore] = useState<boolean>(true);
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const itemsPerPage = 20; // Aumentamos a 20 archivos por página
+    const itemsPerPage = 20;
 
     const s3Client = new S3Client({
         region: 'us-west-2',
@@ -37,20 +35,7 @@ const FileExplorerTable: React.FC = () => {
 
         try {
             const response = await s3Client.send(command);
-            if (response.Contents) {
-                const fetchedData: FileItem[] = response.Contents.map((item) => ({
-                    id: item.Key!,
-                    name: item.Key!.split('/').pop()!,
-                    type: item.Key!.endsWith('/') ? 'folder' : 'file',
-                    owner: 'me',
-                    lastModified: item.LastModified?.toLocaleDateString() || '',
-                    size: item.Size ? `${(item.Size / 1024).toFixed(2)} KB` : undefined,
-                }));
-
-                setData((prevData) => [...prevData, ...fetchedData]);
-                setContinuationToken(response.NextContinuationToken);
-                setHasMore(!!response.NextContinuationToken);
-            }
+            console.log('Response:', response);
         } catch (error) {
             console.error('Error fetching files from S3:', error);
         } finally {
@@ -69,7 +54,7 @@ const FileExplorerTable: React.FC = () => {
     const handleFileClick = async (file: FileItem) => {
         if (file.type === 'file') {
             const command = new GetObjectCommand({
-                Bucket: AWS_BUCKET_NAME,
+                Bucket: 'iabogado-bucket',
                 Key: file.id,
             });
 
@@ -79,23 +64,6 @@ const FileExplorerTable: React.FC = () => {
                 window.open(url, '_blank');
             } catch (error) {
                 console.error('Error opening file from S3:', error);
-            }
-        }
-    };
-
-    const handleFileDownload = async (file: FileItem) => {
-        if (file.type === 'file') {
-            const command = new GetObjectCommand({
-                Bucket: AWS_BUCKET_NAME,
-                Key: file.id,
-            });
-
-            try {
-                const response = await s3Client.send(command);
-                const blob = await response.Body?.blob();
-                saveAs(blob, file.name);
-            } catch (error) {
-                console.error('Error downloading file from S3:', error);
             }
         }
     };
@@ -148,17 +116,6 @@ const FileExplorerTable: React.FC = () => {
             <div className="flex-1 flex flex-col">
                 <Header />
                 <div className="p-8 min-w-full m-6 rounded-lg bg-white">
-                    <h2 className="text-2xl font-semibold mb-6 text-custom-dark">Archivos</h2>
-                    <div className="mb-4">
-                        <input
-                            type="text"
-                            placeholder="Buscar archivos..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="p-2 border border-gray-300 rounded"
-                        />
-                        <button onClick={handleSearch} className="ml-2 p-2 bg-custom-base text-white rounded">Buscar</button>
-                    </div>
                     <div className="overflow-y-auto max-h-[500px]"> {/* Scroll vertical y altura máxima */}
                         <table className="bg-white shadow-md rounded-lg min-w-full">
                             <thead>
@@ -173,14 +130,31 @@ const FileExplorerTable: React.FC = () => {
                             <tbody>
                                 {getPageData()
                                     .filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
-                                    .map((item, id) => (
-                                        <FileItemRow
-                                            key={id}
-                                            item={item}
-                                            onClick={() => handleFileClick(item)}
-                                            onDownload={() => handleFileDownload(item)}
-                                        />
-                                    ))}
+                                    .map((item, id) => {
+                                        const slicedName = item.name.length > 60 ? `${item.name.slice(0, 20)}...` : item.name;
+                                        return (
+                                            <tr
+                                            key={id} 
+                                            className="hover:bg-custom-lightest transition duration-300 ease-in-out">
+                                                <td className="p-4">
+                                                    <div className="flex items-center">
+                                                        {item.type === 'folder' ? (
+                                                            <FiFolder className="mr-2 text-custom-base" />
+                                                        ) : (
+                                                            <FiFile className="mr-2 text-custom-darkest" />
+                                                        )}
+                                                        <span className="text-custom-darkest">{slicedName}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="p-4 text-custom-darkest">{item.owner}</td>
+                                                <td className="p-4 text-custom-darkest">{item.lastModified}</td>
+                                                <td className="p-4 text-custom-darkest">{item.size || '—'}</td>
+                                                <td className="p-4 text-custom-darkest text-right">
+                                                    <FiMoreVertical className="cursor-pointer hover:text-custom-base transition-colors duration-200" />
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
                             </tbody>
                         </table>
                     </div>
