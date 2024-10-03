@@ -261,8 +261,8 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     </div>
                 </div>
 
-                <div className="lg:w-[70%] w-[94%] mx-auto">
-                    <div className="mx-auto h-[91vh]">
+                <div className="lg:w-[90%] w-[94%] mx-auto">
+                    <div className="mx-auto h-[85vh]">
                         <div className="flex flex-row h-full w-full overflow-x-hidden">
                             <div className="flex flex-col flex-auto h-full">
                                 <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">

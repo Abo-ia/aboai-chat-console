@@ -136,21 +136,17 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
 
     return (
         <React.Fragment>
-            <div className="bg-gray-800 text-white flex-none w-[300px] py-6 transition-transform duration-300 shadow-lg">
-                <div className="px-4 py-4 mb-4 flex justify-between items-center bg-gray-700 rounded-md">
+            <div className="bg-[#f8fbfc] text-[#292828] flex-none w-[300px] py-6 transition-transform duration-300 shadow-lg">
+                <div className="px-4 py-2 mb-4 flex justify-between items-center rounded-md">
                     <h1 className="text-lg font-semibold">Prompts Base</h1>
-                    <button
-                        onClick={() => window.location.reload()}
-                        className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded transition-all duration-300">
-                        Nuevo Prompt
-                    </button>
+                    
                 </div>
 
                 <div className="px-4 mb-2 h-[82vh] overflow-y-auto">
                     {promptCategories.map((category: IPromptCategory) => (
                         <div key={category.id} className="mb-4">
                             <div
-                                className="flex justify-between items-center cursor-pointer p-2 bg-gray-700 hover:bg-gray-600 rounded transition-colors duration-200"
+                                className="flex text-sm justify-between items-center cursor-pointer p-2 bg-[#e9eaee] rounded transition-colors duration-200"
                                 onClick={() => toggleCategory(category.id)}
                             >
                                 <span className="font-semibold">{category.category}</span>
@@ -171,10 +167,10 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                                         <div
                                             key={prompt.id}
                                             onClick={() => handleQueyChange(prompt.title)}
-                                            className="flex justify-between cursor-pointer items-center p-2 mt-2 bg-gray-800 hover:bg-gray-700 rounded transition-colors duration-200"
+                                            className="flex justify-between cursor-pointer items-center p-2 mt-2 bg-[#e9eaee] rounded transition-colors duration-200"
                                         >
                                             <p className="">{prompt.title}</p>
-                                            <button className="text-gray-400 hover:text-white">
+                                            <button className="text-red-400 hover:text-white">
                                                 <svg
                                                     className="w-5 h-5"
                                                     xmlns="http://www.w3.org/2000/svg"

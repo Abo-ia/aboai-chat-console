@@ -13,12 +13,22 @@ const Header: React.FC = () => {
     }
     return (
         <div className="bg-white p-4 shadow-md flex justify-between items-center">
-            <div></div>
+            <div>
+                <input 
+                    type="text" 
+                    placeholder="Buscar en Harvee AI"
+                    className="bg-gray-100 w-[500px] py-3 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-base focus:ring-opacity-50"
+                    />
+            </div>
             <div className="relative inline-block text-left justify-end">
                 <div>
                     <button
                         onClick={handleOptionsState}
-                        type="button" className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        type="button"
+                        className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        id="menu-button"
+                        aria-expanded="true"
+                        aria-haspopup="true">
                         <span>
                             <img
                                 className="w-6 h-6 rounded-full"

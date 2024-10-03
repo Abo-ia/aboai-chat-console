@@ -9,6 +9,7 @@ import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import { AWS_COGNITO_USER_POOL_ID, AWS_COGNITO_USER_POOL_WEB_CLIENT_ID } from '@src/config/env';
 import '@aws-amplify/ui-react/styles.css';
 import StorageView from './views/storage/StorageView';
+import PaymentForm from './views/payment/PaymentForm';
 
 
 Amplify.configure({
@@ -242,6 +243,7 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<ChatView conversation={''} />} />
                     <Route path="/almacenamiento" element={<StorageView />} />
+                    <Route path='/payment' element={<PaymentForm/>}/>
                 </Routes>
             </Router>
         </Authenticator>

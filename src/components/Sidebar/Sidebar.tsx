@@ -3,6 +3,8 @@ import SidebarIcons from '@src/components/Sidebar/SidebarIcons';
 import ConversationsHistoryService from '@src/services/conversationsHistory.service';
 import { fetchAuthSession } from "aws-amplify/auth";
 
+import logo from '@src/assets/harvee_logo.png'
+
 
 interface SidebarItemProps {
     conversationId: string;
@@ -112,10 +114,9 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
             <div className={`bg-indigo-darker text-purple-lighter flex-none w-64 pb-6 transform transition-transform duration-300 bg-custom-dark`}>
                 <div className="text-white mb-2 mt-3 px-4 flex justify-between">
                     <div className="flex-auto">
-                        <h1 className="font-semibold text-xl leading-tight mb-1 truncate">Harvee</h1>
-                        <div className="flex items-center mb-6">
-                            <span className="bg-green rounded-full block w-2 h-2 mr-2"></span>
-                            <span className="text-white opacity-50 text-sm">Tú</span>
+                        <div className='flex items-center cursor-pointer'>
+                            <img src={logo} alt="Harvee" className="w-12 h-12" />
+                            <h1>Harvee AI</h1>
                         </div>
                     </div>
                     <div>
