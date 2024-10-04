@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { S3Client, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, ListObjectsV2Command, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import Sidebar from '@src/components/Storage/Sidebar';
 import Header from '@src/components/Storage/Header';
 import { FiFolder, FiFile, FiMoreVertical } from 'react-icons/fi';
-import { FaFolder, FaFile } from "react-icons/fa";
+import { FaFolder, FaFile, FaSyncAlt } from "react-icons/fa";
 import Alert from '@src/components/Alert/Alert';
-import { FaSyncAlt } from "react-icons/fa";
+import { FaFolderPlus } from "react-icons/fa";
+import { BiSend } from "react-icons/bi";
+import { RxReload } from "react-icons/rx";
+
 
 const organizeFilesByFolders = (items: any[]) => {
     const folderStructure: { folder_path: string; files: { file_name: string; file_size: number, key: string }[] }[] = [];
@@ -51,7 +54,9 @@ const FileExplorerTable: React.FC = () => {
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const [openFolders, setOpenFolders] = useState<string[]>([]);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
-    const [showSyncAlert, setShowSyncAlert] = useState<boolean>(false);  // Estado para controlar la alerta de sincronización
+    const [newFolderName, setNewFolderName] = useState<string>('');
+    const [showSyncAlert, setShowSyncAlert] = useState<boolean>(false);
+    const [alertMessage, setAlertMessage] = useState<string | null>(null);
     const itemsPerPage = 20;
 
     const s3Client = new S3Client({
@@ -114,7 +119,34 @@ const FileExplorerTable: React.FC = () => {
 
     const handleSync = () => {
         setShowSyncAlert(true);
-        setTimeout(() => setShowSyncAlert(false), 3000); 
+        setTimeout(() => setShowSyncAlert(false), 3000);
+    };
+
+    const handleCreateFolder = async () => {
+        if (!newFolderName) {
+            setAlertMessage("El nombre de la carpeta no puede estar vacío.");
+            setTimeout(() => setAlertMessage(null), 3000);
+            return;
+        }
+
+        const folderKey = `${newFolderName}/`;
+
+        const command = new PutObjectCommand({
+            Bucket: 'iabogado-bucket',
+            Key: folderKey,
+            Body: '',
+        });
+
+        try {
+            await s3Client.send(command);
+            setAlertMessage(`La carpeta "${newFolderName}" se creó con éxito.`);
+            fetchFilesFromS3();
+            setNewFolderName('');
+        } catch (error) {
+            setAlertMessage("Error creando la carpeta.");
+        } finally {
+            setTimeout(() => setAlertMessage(null), 3000);
+        }
     };
 
     useEffect(() => {
@@ -128,16 +160,15 @@ const FileExplorerTable: React.FC = () => {
             <Sidebar />
             <div className="flex-1 flex flex-col">
                 <Header />
-                <div className="p-8 m-6 rounded-lg bg-white relative">
+                <div className="px-8 m-6 rounded-lg bg-white relative">
                     {isDeleting && (
                         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-2 rounded-lg shadow-lg z-50">
                             Eliminando archivo...
                         </div>
                     )}
 
-                    {showSyncAlert && (
-                        <Alert type="info" message="Sincronización en progreso..." />
-                    )}
+                    {alertMessage && (<Alert type="info" message={alertMessage} />)}
+                    {showSyncAlert && (<Alert type="info" message="Sincronización en progreso..." />)}
 
                     <div className="overflow-y-auto max-h-[80vh]">
                         <table className="bg-white shadow-md rounded-lg min-w-full">
@@ -150,6 +181,30 @@ const FileExplorerTable: React.FC = () => {
                                         <FiMoreVertical />
                                     </th>
                                 </tr>
+                                <tr>
+                                    <td colSpan={4} className="p- flex items-center mt-4">
+                                        <div className="flex items-center bg-gray-50 rounded-lg p-2 w-full max-w-lg">
+                                            <FaFolderPlus
+                                                className="text-gray-300"
+                                            />
+                                            <input
+                                                type="text"
+                                                value={newFolderName}
+                                                onChange={(e) => setNewFolderName(e.target.value)}
+                                                placeholder="Nombre de la nueva carpeta"
+                                                className="bg-transparent w-full focus:outline-none px-2"
+                                            />
+                                            <BiSend
+                                                className="text-gray-600 cursor-pointer"
+                                                onClick={handleCreateFolder}
+                                            />
+                                        </div>
+                                        <RxReload
+                                            className="ml-3 text-gray-600 cursor-pointer"
+                                            onClick={() => window.location.reload()}
+                                        />
+                                    </td>
+                                </tr>
                             </thead>
                             <tbody>
                                 {organizedData.map((folder, folderIndex) => (
@@ -159,7 +214,7 @@ const FileExplorerTable: React.FC = () => {
                                             onClick={() => toggleFolder(folder.folder_path)}
                                         >
                                             <td colSpan={3} className="p-4">
-                                                <div className="flex items-center justify-between"> {/* Agregado justify-between */}
+                                                <div className="flex items-center justify-between">
                                                     <div className="flex items-center">
                                                         <FaFolder className="mr-2 text-custom-darkest" />
                                                         {folder.folder_path || ''}
@@ -167,7 +222,7 @@ const FileExplorerTable: React.FC = () => {
                                                     {folder.folder_path === 'sync' && (
                                                         <div
                                                             onClick={handleSync}
-                                                            className="flex items-center bg-gray-100 p-1 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-200 gap-2"  // Agregado hover:bg-gray-200
+                                                            className="flex items-center bg-gray-100 p-1 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-200 gap-2"
                                                         >
                                                             <FaSyncAlt className="text-custom-darkest" />
                                                             <p className="text-xs text-custom-darkest">Sincronizar</p>
@@ -176,7 +231,6 @@ const FileExplorerTable: React.FC = () => {
                                                 </div>
                                             </td>
                                         </tr>
-
 
                                         {openFolders.includes(folder.folder_path) &&
                                             folder.files.map((file: any, fileIndex: any) => {
