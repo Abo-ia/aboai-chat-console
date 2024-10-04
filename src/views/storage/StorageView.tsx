@@ -4,8 +4,9 @@ import Sidebar from '@src/components/Storage/Sidebar';
 import Header from '@src/components/Storage/Header';
 import { FiFolder, FiFile, FiMoreVertical } from 'react-icons/fi';
 import { FaFolder, FaFile } from "react-icons/fa";
+import Alert from '@src/components/Alert/Alert';
+import { FaSyncAlt } from "react-icons/fa";
 
-// Función para organizar archivos por carpetas
 const organizeFilesByFolders = (items: any[]) => {
     const folderStructure: { folder_path: string; files: { file_name: string; file_size: number, key: string }[] }[] = [];
 
@@ -46,11 +47,11 @@ const organizeFilesByFolders = (items: any[]) => {
 
 const FileExplorerTable: React.FC = () => {
     const [organizedData, setOrganizedData] = useState<any[]>([]);
-    const [searchTerm, setSearchTerm] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isDeleting, setIsDeleting] = useState<boolean>(false);  // Nuevo estado para eliminar archivos
-    const [openFolders, setOpenFolders] = useState<string[]>([]); 
-    const [openMenu, setOpenMenu] = useState<string | null>(null);  // Estado para controlar el menú abierto
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
+    const [openFolders, setOpenFolders] = useState<string[]>([]);
+    const [openMenu, setOpenMenu] = useState<string | null>(null);
+    const [showSyncAlert, setShowSyncAlert] = useState<boolean>(false);  // Estado para controlar la alerta de sincronización
     const itemsPerPage = 20;
 
     const s3Client = new S3Client({
@@ -87,22 +88,22 @@ const FileExplorerTable: React.FC = () => {
     };
 
     const toggleMenu = (fileKey: string) => {
-        setOpenMenu((prevMenu) => (prevMenu === fileKey ? null : fileKey)); // Abrir/cerrar el menú
+        setOpenMenu((prevMenu) => (prevMenu === fileKey ? null : fileKey));
     };
 
     const handleDeleteFile = async (fileKey: string) => {
-        setIsDeleting(true);  // Mostrar el mensaje de cargando cuando se inicia la eliminación
+        setIsDeleting(true);
         try {
             const command = new DeleteObjectCommand({
                 Bucket: 'iabogado-bucket',
                 Key: fileKey,
             });
             await s3Client.send(command);
-            fetchFilesFromS3(); // Recargar los archivos después de la eliminación
+            fetchFilesFromS3();
         } catch (error) {
             console.error('Error deleting file:', error);
         } finally {
-            setIsDeleting(false);  // Dejar de mostrar el mensaje de cargando después de la eliminación
+            setIsDeleting(false);
         }
     };
 
@@ -111,11 +112,16 @@ const FileExplorerTable: React.FC = () => {
         window.open(fileUrl, '_blank');
     };
 
+    const handleSync = () => {
+        setShowSyncAlert(true);
+        setTimeout(() => setShowSyncAlert(false), 3000);  // Mostrar la alerta por 3 segundos
+    };
+
     useEffect(() => {
         fetchFilesFromS3();
     }, []);
 
-    const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2); // Conversión a MB
+    const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2);
 
     return (
         <div className="flex">
@@ -123,16 +129,19 @@ const FileExplorerTable: React.FC = () => {
             <div className="flex-1 flex flex-col">
                 <Header />
                 <div className="p-8 m-6 rounded-lg bg-white relative">
-                    {/* Alerta o mensaje flotante */}
                     {isDeleting && (
                         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-2 rounded-lg shadow-lg z-50">
                             Eliminando archivo...
                         </div>
                     )}
 
-                    <div className="overflow-y-auto max-h-[500px]"> {/* Scroll vertical y altura máxima */}
+                    {showSyncAlert && (
+                        <Alert type="info" message="Sincronización en progreso..." />
+                    )}
+
+                    <div className="overflow-y-auto max-h-[80vh]">
                         <table className="bg-white shadow-md rounded-lg min-w-full">
-                            <thead>
+                            <thead className="sticky top-0 bg-white z-10">
                                 <tr className="border-b-[1px] border-gray-200">
                                     <th className="p-4 text-left text-custom-dark font-semibold">Nombre</th>
                                     <th className="p-4 text-left text-custom-dark font-semibold">Propietario</th>
@@ -150,12 +159,23 @@ const FileExplorerTable: React.FC = () => {
                                             onClick={() => toggleFolder(folder.folder_path)}
                                         >
                                             <td colSpan={3} className="p-4">
-                                                <div className="flex items-center">
-                                                    <FaFolder className="mr-2 text-custom-darkest" />
-                                                    {folder.folder_path || ''}
+                                                <div className="flex items-center justify-between"> {/* Agregado justify-between */}
+                                                    <div className="flex items-center">
+                                                        <FaFolder className="mr-2 text-custom-darkest" />
+                                                        {folder.folder_path || ''}
+                                                    </div>
+                                                    {folder.folder_path === 'sync' && (
+                                                        <div
+                                                            className="flex items-center bg-gray-100 p-1 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-200 gap-2"  // Agregado hover:bg-gray-200
+                                                        >
+                                                            <FaSyncAlt className="text-custom-darkest" />
+                                                            <p className="text-xs text-custom-darkest">Sincronizar</p>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </td>
                                         </tr>
+
 
                                         {openFolders.includes(folder.folder_path) &&
                                             folder.files.map((file: any, fileIndex: any) => {

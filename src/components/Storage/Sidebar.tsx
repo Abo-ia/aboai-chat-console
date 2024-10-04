@@ -1,58 +1,175 @@
-import React from 'react';
-import { FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud, FiFile, FiX } from 'react-icons/fi';
 import logo from '@src/assets/harvee_logo.png';
 
+const menuItems = [
+    { icon: <FiHome />, label: 'Inicio' },
+    { icon: <FiHardDrive />, label: 'Mi Unidad' },
+    { icon: <FiUsers />, label: 'Compartidos conmigo' },
+    { icon: <FiClock />, label: 'Recientes' },
+    { icon: <FiStar />, label: 'Destacados' },
+    { icon: <FiTrash />, label: 'Papelera' },
+    { icon: <FiCloud />, label: 'Almacenamiento', isLast: true },
+];
 
 const Sidebar: React.FC = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+    const [targetFolder, setTargetFolder] = useState<string>(''); // Carpeta destino
+
+    const s3Client = new S3Client({
+        region: 'us-west-2',
+        credentials: {
+            accessKeyId: 'AKIAQEFWA3RHL6DN3NVI',
+            secretAccessKey: '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',
+        },
+    });
+
+    // Función para manejar la carga de archivos
+    const handleFileUpload = async () => {
+        if (!selectedFiles) return;
+
+        const uploadPromises = Array.from(selectedFiles).map(async (file) => {
+            const folderPath = targetFolder ? `${targetFolder}/` : ''; // Si se especifica una carpeta, añadir "/"
+            const uploadParams = {
+                Bucket: 'iabogado-bucket',
+                Key: `${folderPath}${file.name}`, // Subir a la carpeta especificada
+                Body: file,
+            };
+            try {
+                const command = new PutObjectCommand(uploadParams);
+                await s3Client.send(command);
+                console.log(`Archivo ${file.name} subido correctamente a ${folderPath || 'root'}`);
+            } catch (error) {
+                console.error(`Error subiendo archivo ${file.name}: `, error);
+            }
+        });
+
+        await Promise.all(uploadPromises);
+        alert('Archivos subidos correctamente');
+        setSelectedFiles(null);
+        setShowModal(false);
+    };
+
+    // Función para manejar la selección de múltiples archivos
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedFiles(e.target.files);
+    };
+
+    // Función para eliminar un archivo de la lista seleccionada
+    const handleRemoveFile = (index: number) => {
+        if (!selectedFiles) return;
+        const newFiles = Array.from(selectedFiles);
+        newFiles.splice(index, 1);
+        const dataTransfer = new DataTransfer();
+        newFiles.forEach((file) => dataTransfer.items.add(file));
+        setSelectedFiles(dataTransfer.files);
+    };
+
     return (
         <div className="bg-[#f8fbfc] p-4 w-64 h-screen shadow-lg flex flex-col">
             <div className='flex items-center cursor-pointer mb-5'>
                 <img src={logo} alt="Harvee" className="w-12 h-12" />
                 <h1 className='font-semibold ml-2'>Harvee AI</h1>
             </div>
-            <button className="flex items-center p-3 mb-6 bg-white rounded-lg shadow transition duration-200">
-                <span className="flex items-center justify-center w-10 h-10 rounded-full mr-2">+</span>
-                <span className="font-semibold">Nuevo</span>
+            <button
+                className="flex items-center p-3 mb-6 bg-[#006d5b] text-white rounded-lg shadow transition hover:bg-[#004f45] hover:shadow-xl duration-200"
+                onClick={() => setShowModal(true)}
+            >
+                <span className="flex items-center justify-center w-10 h-10 bg-white text-[#006d5b] rounded-full mr-2">+</span>
+                <span className="font-semibold">Nuevo archivo</span>
             </button>
             <ul className="flex-1 space-y-3">
-                <li className="cursor-pointer text-sm py-1 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200">
-                    <FiHome className="mr-2" />
-                    <span>Inicio</span>
-                </li>
-                <li className="cursor-pointer text-sm py-1 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200">
-                    <FiHardDrive className="mr-2" />
-                    <span>Mi Unidad</span>
-                </li>
-                <li className="cursor-pointer text-sm py-1 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200">
-                    <FiUsers className="mr-2" />
-                    <span>Compartidos conmigo</span>
-                </li>
-                <li className="cursor-pointer text-sm py-1 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200">
-                    <FiClock className="mr-2" />
-                    <span>Recientes</span>
-                </li>
-                <li className="cursor-pointer text-sm py-1 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200">
-                    <FiStar className="mr-2" />
-                    <span>Destacados</span>
-                </li>
-                <li className="cursor-pointer text-sm py-1 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200">
-                    <FiTrash className="mr-2" />
-                    <span>Papelera</span>
-                </li>
-                <li className="mt-auto cursor-pointer text-sm py-1 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200">
-                    <FiCloud className="mr-2" />
-                    <span>Almacenamiento</span>
-                </li>
+                {menuItems.map((item, index) => (
+                    <li 
+                        key={index} 
+                        className={`cursor-pointer text-sm py-2 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200 ${item.isLast ? 'mt-auto' : ''}`}
+                    >
+                        {item.icon}
+                        <span className="ml-2">{item.label}</span>
+                    </li>
+                ))}
             </ul>
             <div className="bg-white p-3 rounded-lg shadow mt-6">
-                <div className="flex items-center justify-between text-sm text-custom-dark">
+                <div className="flex items-center justify-between text-sm text-[#484b4b]">
                     <span>13.2 GB de 15 GB usados</span>
-                    <button className="text-custom-base hover:underline">Más almacenamiento</button>
+                    <button className="text-[#006d5b] hover:underline">Más almacenamiento</button>
                 </div>
-                <div className="w-full h-2 bg-custom-light mt-2 rounded-full overflow-hidden">
-                    <div className="h-2 bg-custom-base rounded-full transition-all duration-500 ease-in-out" style={{ width: '88%' }}></div>
+                <div className="w-full h-2 bg-[#e9eaee] mt-2 rounded-full overflow-hidden">
+                    <div className="h-2 bg-[#006d5b] rounded-full transition-all duration-500 ease-in-out" style={{ width: '88%' }}></div>
                 </div>
             </div>
+
+            {/* Modal para subir archivos */}
+            {showModal && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]">
+                        <h2 className="text-xl font-semibold text-black mb-4">Subir archivos</h2>
+
+                        {/* Subir archivos */}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Seleccionar archivos</label>
+                            <input 
+                                type="file" 
+                                multiple
+                                onChange={handleFileChange}
+                                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#006d5b] p-2"
+                            />
+                        </div>
+
+                        {/* Input para especificar la carpeta de destino */}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Carpeta de destino</label>
+                            <input 
+                                type="text"
+                                value={targetFolder}
+                                onChange={(e) => setTargetFolder(e.target.value)}
+                                placeholder="Ejemplo: documentos o deja vacío para root"
+                                className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006d5b]"
+                            />
+                        </div>
+
+                        {/* Mostrar lista de archivos seleccionados */}
+                        {selectedFiles && (
+                            <div className="mb-4">
+                                <h3 className="text-sm font-medium text-gray-700 mb-2">Archivos seleccionados:</h3>
+                                <ul className="space-y-2">
+                                    {Array.from(selectedFiles).map((file, index) => (
+                                        <li key={index} className="flex justify-between items-center">
+                                            <div className="flex items-center space-x-2">
+                                                <FiFile className="text-gray-500" />
+                                                <span className="text-sm text-gray-600">{file.name}</span>
+                                            </div>
+                                            <button
+                                                className="text-red-500 hover:text-red-700"
+                                                onClick={() => handleRemoveFile(index)}
+                                            >
+                                                <FiX />
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <button
+                                onClick={handleFileUpload}
+                                className="w-full bg-[#006d5b] text-white py-2 rounded-lg hover:bg-[#004f45] transition duration-200 ease-in-out"
+                            >
+                                Subir archivos
+                            </button>
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition duration-200 ease-in-out"
+                            >
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

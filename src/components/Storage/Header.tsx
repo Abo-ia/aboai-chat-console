@@ -13,13 +13,25 @@ const Header: React.FC = () => {
     }
     return (
         <div className="bg-white p-4 shadow-md flex justify-between items-center">
-            <div>
-                <input 
-                    type="text" 
-                    placeholder="Buscar en Harvee AI"
-                    className="bg-gray-100 w-[500px] py-3 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-base focus:ring-opacity-50"
-                    />
+            <div className="relative flex items-center">
+                <span className="absolute left-4 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
+                    </svg>
+                </span>
+                <input
+                    type="text"
+                    placeholder="Search in Harvee AI"
+                    className="bg-gray-100 w-[500px] pl-12 pr-12 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-custom-base focus:ring-opacity-50"
+                />
+
+                <span className="absolute right-4 text-gray-400 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18M6 12h12m-9 5h6" />
+                    </svg>
+                </span>
             </div>
+
             <div className="relative inline-block text-left justify-end">
                 <div>
                     <button
