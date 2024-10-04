@@ -54,7 +54,7 @@ const Header: React.FC = () => {
                     </button>
                 </div>
                 {optionsState &&
-                    <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                    <div className="absolute right-0 z-1 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                         <div className="py-1" role="none">
                             <a href="/" className="block px-4 hover:bg-custom-base hover:text-white transition py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="menu-item-0">Chat</a>
                             <a href="/almacenamiento" className="block px-4 hover:bg-custom-base hover:text-white transition py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="menu-item-0">Almacenamiento</a>
