@@ -3,14 +3,16 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud, FiFile, FiX } from 'react-icons/fi';
 import logo from '@src/assets/harvee_logo.png';
 
+import { GoLaw } from "react-icons/go";
+
 const menuItems = [
     { icon: <FiHome />, label: 'Inicio' },
     { icon: <FiHardDrive />, label: 'Mi Unidad' },
+    { icon: <GoLaw />, label: 'Contratos/Convenios...' },
     { icon: <FiUsers />, label: 'Compartidos conmigo' },
     { icon: <FiClock />, label: 'Recientes' },
     { icon: <FiStar />, label: 'Destacados' },
     { icon: <FiTrash />, label: 'Papelera' },
-    { icon: <FiCloud />, label: 'Almacenamiento', isLast: true },
 ];
 
 const Sidebar: React.FC = () => {
@@ -57,7 +59,6 @@ const Sidebar: React.FC = () => {
         setSelectedFiles(e.target.files);
     };
 
-    // Función para eliminar un archivo de la lista seleccionada
     const handleRemoveFile = (index: number) => {
         if (!selectedFiles) return;
         const newFiles = Array.from(selectedFiles);
@@ -84,7 +85,7 @@ const Sidebar: React.FC = () => {
                 {menuItems.map((item, index) => (
                     <li 
                         key={index} 
-                        className={`cursor-pointer text-sm py-2 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200 ${item.isLast ? 'mt-auto' : ''}`}
+                        className={`cursor-pointer text-sm py-2 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200`}
                     >
                         {item.icon}
                         <span className="ml-2">{item.label}</span>
