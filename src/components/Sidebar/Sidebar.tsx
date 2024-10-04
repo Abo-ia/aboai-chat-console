@@ -29,7 +29,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     return (
         <div className="relative group block mb-1">
             <div
-                className={`flex justify-between items-center cursor-pointer px-4 py-2 rounded-lg transition-all ${selected ? 'bg-custom-base text-white' : 'group-hover:bg-custom-base'}`}
+                className={`flex justify-between items-center cursor-pointer px-2 rounded-lg transition-all ${selected ? 'bg-custom-base text-white' : 'group-hover:bg-custom-base'}`}
                 onClick={handleClick}
             >
                 <p className={`truncate ${selected ? 'text-white' : 'text-white'}`}>{conversationName}</p>

@@ -204,7 +204,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                                             onClick={() => handleQueyChange(prompt.title)}
                                             className="flex justify-between cursor-pointer items-center p-2 mt-2 bg-[#e9eaee] rounded transition-colors duration-200"
                                         >
-                                            <p className="">{prompt.title}</p>
+                                            <p className="text-sm">{prompt.title}</p>
                                             <button className="text-red-400 hover:text-white">
                                                 <svg
                                                     className="w-5 h-5"
