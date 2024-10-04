@@ -114,7 +114,7 @@ const FileExplorerTable: React.FC = () => {
 
     const handleSync = () => {
         setShowSyncAlert(true);
-        setTimeout(() => setShowSyncAlert(false), 3000);  // Mostrar la alerta por 3 segundos
+        setTimeout(() => setShowSyncAlert(false), 3000); 
     };
 
     useEffect(() => {
@@ -166,6 +166,7 @@ const FileExplorerTable: React.FC = () => {
                                                     </div>
                                                     {folder.folder_path === 'sync' && (
                                                         <div
+                                                            onClick={handleSync}
                                                             className="flex items-center bg-gray-100 p-1 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-200 gap-2"  // Agregado hover:bg-gray-200
                                                         >
                                                             <FaSyncAlt className="text-custom-darkest" />
