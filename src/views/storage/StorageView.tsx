@@ -10,6 +10,7 @@ import { BiSend } from "react-icons/bi";
 import { RxReload } from "react-icons/rx";
 import LegalSectionBody from '@src/components/LegalSection/LegalSectionBody';
 
+import ChatView from '@src/views/admin/ChatView';
 
 const organizeFilesByFolders = (items: any[]) => {
     const folderStructure: { folder_path: string; files: { file_name: string; file_size: number, key: string }[] }[] = [];
@@ -158,8 +159,20 @@ const FileExplorerTable: React.FC = () => {
 
     const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2);
 
-
-    if (activeView === 'Legal') {
+    if (activeView === 'Chat') {
+        return (
+            <div className="flex">
+                <Sidebar
+                    activeView={activeView}
+                    setActiveView={setActiveView}
+                />
+                <div className="flex-1 flex flex-col">
+                    <Header />
+                    <ChatView conversation={""}/>
+                </div>
+            </div>
+        )
+    } else if (activeView === 'Legal') {
         return (
             <div className="flex">
                 <Sidebar
@@ -173,7 +186,6 @@ const FileExplorerTable: React.FC = () => {
             </div>
         );
     }
-
     return (
         <div className="flex">
             <Sidebar

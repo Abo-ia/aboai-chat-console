@@ -241,8 +241,7 @@ const App: React.FC = () => {
         >
             <Router>
                 <Routes>
-                    <Route path="/" element={<ChatView conversation={''} />} />
-                    <Route path="/almacenamiento" element={<StorageView />} />
+                    <Route path="/" element={<StorageView />} />
                     <Route path='/payment' element={<PaymentForm/>}/>
                 </Routes>
             </Router>

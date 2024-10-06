@@ -204,7 +204,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     }
 
     return (
-        <div className="font-sans h-screen flex">
+        <div className="font-sans flex">
             {isSidebarOpen && (
                 <Sidebar
                     loadConversation={loadConversation}
@@ -212,25 +212,9 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 />
             )}
 
-            <div className="flex-1 flex flex-col bg-white overflow-hidden">
-                <div className="border-b flex px-6 py-5 items-center justify-between flex-none">
-                    <div className='flex items-center'>
-                        <button onClick={toggleSidebar} className="mr-4">
-                            <svg className="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M3 6h14v2H3V6zm0 4h14v2H3v-2zm0 4h14v2H3v-2z" />
-                            </svg>
-                        </button>
-                        <div className="flex flex-col">
-                            <h3 className="text-grey-darkest mb-1 font-extrabold">#general</h3>
-                            <div className="text-grey-dark text-sm truncate">
-                                {activeQuestion}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div className="flex-1 flex flex-col overflow-hidden">
                 <div className="lg:w-[90%] w-[94%] mx-auto">
-                    <div className="mx-auto h-[85vh]">
+                    <div className="mx-auto h-[84vh]">
                         <div className="flex flex-row h-full w-full overflow-x-hidden">
                             <div className="flex flex-col flex-auto h-full">
                                 <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
@@ -243,7 +227,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                         <div key={index} className="flex items-start mb-4 text-sm">
                                                             <div className="w-full">
                                                                 <div className="mt-1 p-3 rounded-lg">
-                                                                    {/* Usuario */}
                                                                     <div className="flex items-start gap-2.5 mb-4">
                                                                         <img
                                                                             className="w-8 h-8 rounded-full"
@@ -259,7 +242,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                             <span className="text-sm font-normal text-gray-500">Enviado</span>
                                                                         </div>
                                                                     </div>
-                                                                    {/* Asistente de IA */}
                                                                     <div className="flex flex-col gap-2.5">
                                                                         <div className="flex flex-col leading-1.5">
                                                                             <div className="flex items-center space-x-2">
@@ -268,12 +250,12 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                                     src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
                                                                                     alt="Assistant Avatar"
                                                                                 />
-                                                                                <span className="text-sm font-semibold text-gray-900">Asistente</span>
+                                                                                <span className="text-sm font-semibold text-gray-900">Harvee</span>
                                                                                 <span className="text-sm font-normal text-gray-500">{date}</span>
                                                                             </div>
                                                                         </div>
                                                                         <div
-                                                                            className="w-full h-full bg-gray-100 pt-6 py-2 px-5 pb-6 rounded prose prose-sm"
+                                                                            className="w-full h-full bg-gray-50 pt-6 py-2 px-5 pb-6 rounded prose prose-sm"
                                                                             dangerouslySetInnerHTML={{ __html: msg.response }}
                                                                         />
 
@@ -386,7 +368,7 @@ const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> =
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-black opacity-50 absolute inset-0" onClick={onClose}></div>
-            <div className="bg-white rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
+            <div className="bg-te rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
                 <h2 className="text-2xl font-bold mb-4">Referencias</h2>
                 {uniqueReferences.map((ref, index) => (
                     <ReferenceItem key={index} content={ref} />

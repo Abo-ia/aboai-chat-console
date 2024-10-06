@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud, FiFile, FiX } from 'react-icons/fi';
 import logo from '@src/assets/harvee_logo.png';
+import { IoChatboxOutline } from "react-icons/io5";
+
 
 import { GoLaw } from "react-icons/go";
 
 const menuItems = [
     { icon: <FiHome />, label: 'Inicio' },
     { icon: <FiHardDrive />, label: 'Mi Unidad' },
+    { icon: <IoChatboxOutline />, label: 'Chat' },
     { icon: <GoLaw />, label: 'Legal' },
     { icon: <FiUsers />, label: 'Compartidos conmigo' },
     { icon: <FiClock />, label: 'Recientes' },
@@ -79,10 +82,18 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
             </div>
             <button
                 className="flex items-center p-3 mb-6 bg-[#006d5b] text-white rounded-lg shadow transition hover:bg-[#004f45] hover:shadow-xl duration-200"
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                    if (props.activeView !== "Chat") {
+                        setShowModal(true);
+                    } else {
+                        window.location.reload();
+                    }
+                }}
             >
-                <span className="flex items-center justify-center w-10 h-10 bg-white text-[#006d5b] rounded-full mr-2">+</span>
-                <span className="font-semibold">Nuevo archivo</span>
+                <span className="flex items-center justify-center w-6 h-6 bg-white text-[#006d5b] rounded-full mr-2">+</span>
+                <span className="font-semibold">
+                    {props.activeView !== "Chat" ? "Nuevo archivo" : "Nueva conversación"}
+                </span>
             </button>
             <ul className="flex-1 space-y-3">
                 {menuItems.map((item, index) => (

@@ -1,9 +1,4 @@
 import React, { useState } from 'react';
-import { FiFolder, FiFile, FiUser, FiMoreVertical, FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud, FiSearch, FiSettings } from 'react-icons/fi';
-
-import { FileItem } from '@src/types/types';
-import FileItemRow from '@src/components/Storage/FileItemRow';
-import Sidebar from '@src/components/Storage/Sidebar';
 
 const Header: React.FC = () => {
     const [optionsState, setOptionsState] = useState(false);

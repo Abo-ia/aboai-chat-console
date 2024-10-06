@@ -13,7 +13,7 @@ const SidebarIcons = () => {
 
     
     return (
-        <div className="text-purple-lighter flex flex-col justify-between h-full w-24 p-6 bg-custom-darkest transition-transform duration-300">
+        <React.Fragment>
             <div>
                 <div className="cursor-pointer mb-4">
                     <div
@@ -62,7 +62,7 @@ const SidebarIcons = () => {
                     <FontAwesomeIcon icon={faSignOutAlt} className="text-white h-6 w-6" />
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

@@ -29,10 +29,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     return (
         <div className="relative group block mb-1">
             <div
-                className={`flex justify-between items-center cursor-pointer px-2 rounded-lg transition-all ${selected ? 'bg-custom-base text-white' : 'group-hover:bg-custom-base'}`}
+                className={`flex justify-between items-center cursor-pointer px-2 rounded-lg transition-all ${selected ? 'bg-custom-base' : 'group-hover:bg-custom-base'}`}
                 onClick={handleClick}
             >
-                <p className={`truncate ${selected ? 'text-white' : 'text-white'}`}>{conversationName}</p>
+                <p className={`truncate ${selected ? 'text-white' : 'text-gray-800 group-hover:text-white'}`}>{conversationName}</p>
                 <span className={`text-3xl mb-2 ${selected ? 'text-green-300' : 'text-gray-800 group-hover:text-green-300'}`}>...</span>
             </div>
         </div>
@@ -109,31 +109,10 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
 
     return (
         <React.Fragment>
-            <SidebarIcons />
-
-            <div className={`bg-indigo-darker text-purple-lighter flex-none w-64 pb-6 transform transition-transform duration-300 bg-custom-dark`}>
-                <div className="text-white mb-2 mt-3 px-4 flex justify-between">
-                    <div className="flex-auto">
-                        <div className='flex items-center cursor-pointer'>
-                            <img src={logo} alt="Harvee" className="w-12 h-12" />
-                            <h1>Harvee AI</h1>
-                        </div>
-                    </div>
-                    <div>
-                        <svg className="h-6 w-6 fill-current text-white opacity-25" viewBox="0 0 20 20">
-                            <path d="M14 8a4 4 0 1 0-8 0v7h8V8zM8.027 2.332A6.003 6.003 0 0 0 4 8v6l-3 2v1h18v-1l-3-2V8a6.003 6.003 0 0 0-4.027-5.668 2 2 0 1 0-3.945 0zM12 18a2 2 0 1 1-4 0h4z" fillRule="evenodd" />
-                        </svg>
-                    </div>
-                </div>
-                <div className="px-4 mb-2 text-white flex justify-between items-center cursor-pointer transition-colors duration-300 py-2">
-                    <button
-                        onClick={() => window.location.reload()}
-                        className='bg-custom-base text-white px-4 py-2 transition-colors duration-300 rounded border border-custom-dark w-full'>
-                        Nueva conversación
-                    </button>
-                </div>
+            {/* <SidebarIcons /> */}
+            <div className={`w-64 pt-6 transform transition-transform duration-300`}>
                 <div>
-                    <div className="px-4 mb-2 text-white flex justify-between items-center">
+                    <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
                         <div className="opacity-75">Apps</div>
                         <div>
                             <svg className="fill-current h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -144,7 +123,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
                 </div>
 
                 <div className="px-4">
-                    <div className="text-white mb-10 mt-3">Historial de Chats</div>
+                    <div className="text-gray-700 mb-10 mt-3">Historial de Chats</div>
                     <div className="overflow-y-auto">
                         {menuItems.map((item) => (
                             <SidebarItem

@@ -52,7 +52,6 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
 
     return (
         <div className="flex">
-            {/* Sidebar */}
             <div className="w-1/4 h-screen bg-gray-100 p-4 shadow-lg">
                 <div className="text-2xl font-bold text-gray-800 mb-6">Documentos</div>
 
