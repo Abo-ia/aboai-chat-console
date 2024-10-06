@@ -8,6 +8,7 @@ import Alert from '@src/components/Alert/Alert';
 import { FaFolderPlus } from "react-icons/fa";
 import { BiSend } from "react-icons/bi";
 import { RxReload } from "react-icons/rx";
+import LegalSectionBody from '@src/components/LegalSection/LegalSectionBody';
 
 
 const organizeFilesByFolders = (items: any[]) => {
@@ -58,6 +59,8 @@ const FileExplorerTable: React.FC = () => {
     const [showSyncAlert, setShowSyncAlert] = useState<boolean>(false);
     const [alertMessage, setAlertMessage] = useState<string | null>(null);
     const itemsPerPage = 20;
+
+    const [activeView, setActiveView] = useState<string>('Inicio');
 
     const s3Client = new S3Client({
         region: 'us-west-2',
@@ -155,9 +158,28 @@ const FileExplorerTable: React.FC = () => {
 
     const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2);
 
+
+    if (activeView === 'Legal') {
+        return (
+            <div className="flex">
+                <Sidebar
+                    activeView={activeView}
+                    setActiveView={setActiveView}
+                />
+                <div className="flex-1 flex flex-col">
+                    <Header />
+                    <LegalSectionBody activeView={activeView} />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="flex">
-            <Sidebar />
+            <Sidebar
+                activeView={activeView}
+                setActiveView={setActiveView}
+            />
             <div className="flex-1 flex flex-col">
                 <Header />
                 <div className="px-8 m-6 rounded-lg bg-white relative">

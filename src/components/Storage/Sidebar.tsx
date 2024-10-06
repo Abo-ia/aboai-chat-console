@@ -8,17 +8,22 @@ import { GoLaw } from "react-icons/go";
 const menuItems = [
     { icon: <FiHome />, label: 'Inicio' },
     { icon: <FiHardDrive />, label: 'Mi Unidad' },
-    { icon: <GoLaw />, label: 'Contratos/Convenios...' },
+    { icon: <GoLaw />, label: 'Legal' },
     { icon: <FiUsers />, label: 'Compartidos conmigo' },
     { icon: <FiClock />, label: 'Recientes' },
     { icon: <FiStar />, label: 'Destacados' },
     { icon: <FiTrash />, label: 'Papelera' },
 ];
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+    activeView: string;
+    setActiveView: (view: string) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-    const [targetFolder, setTargetFolder] = useState<string>(''); // Carpeta destino
+    const [targetFolder, setTargetFolder] = useState<string>('');
 
     const s3Client = new S3Client({
         region: 'us-west-2',
@@ -28,15 +33,14 @@ const Sidebar: React.FC = () => {
         },
     });
 
-    // Función para manejar la carga de archivos
     const handleFileUpload = async () => {
         if (!selectedFiles) return;
 
         const uploadPromises = Array.from(selectedFiles).map(async (file) => {
-            const folderPath = targetFolder ? `${targetFolder}/` : ''; // Si se especifica una carpeta, añadir "/"
+            const folderPath = targetFolder ? `${targetFolder}/` : '';
             const uploadParams = {
                 Bucket: 'iabogado-bucket',
-                Key: `${folderPath}${file.name}`, // Subir a la carpeta especificada
+                Key: `${folderPath}${file.name}`,
                 Body: file,
             };
             try {
@@ -54,7 +58,6 @@ const Sidebar: React.FC = () => {
         setShowModal(false);
     };
 
-    // Función para manejar la selección de múltiples archivos
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedFiles(e.target.files);
     };
@@ -83,9 +86,10 @@ const Sidebar: React.FC = () => {
             </button>
             <ul className="flex-1 space-y-3">
                 {menuItems.map((item, index) => (
-                    <li 
-                        key={index} 
-                        className={`cursor-pointer text-sm py-2 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200`}
+                    <li
+                        onClick={() => props.setActiveView(item.label)}
+                        key={index}
+                        className={`cursor-pointer text-sm py-2 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''}`}
                     >
                         {item.icon}
                         <span className="ml-2">{item.label}</span>
@@ -111,8 +115,8 @@ const Sidebar: React.FC = () => {
                         {/* Subir archivos */}
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Seleccionar archivos</label>
-                            <input 
-                                type="file" 
+                            <input
+                                type="file"
                                 multiple
                                 onChange={handleFileChange}
                                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#006d5b] p-2"
@@ -122,7 +126,7 @@ const Sidebar: React.FC = () => {
                         {/* Input para especificar la carpeta de destino */}
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Carpeta de destino</label>
-                            <input 
+                            <input
                                 type="text"
                                 value={targetFolder}
                                 onChange={(e) => setTargetFolder(e.target.value)}
