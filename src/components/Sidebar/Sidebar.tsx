@@ -123,7 +123,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
                 </div>
 
                 <div className="px-4">
-                    <div className="text-gray-700 mb-10 mt-3">Historial de Chats</div>
+                    <div className="text-gray-700 mb-5 mt-3">Historial de Chats</div>
                     <div className="overflow-y-auto">
                         {menuItems.map((item) => (
                             <SidebarItem

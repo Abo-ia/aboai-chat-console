@@ -218,9 +218,9 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                         <div className="flex flex-row h-full w-full overflow-x-hidden">
                             <div className="flex flex-col flex-auto h-full">
                                 <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
-                                    <div className="flex flex-col h-full overflow-y-auto mb-4">
+                                    <div className="flex  flex-col h-full overflow-y-auto mb-4">
                                         <div className="flex flex-col h-full">
-                                            <div className="gap-y-1">
+                                            <div className="pt-4 gap-y-1">
                                                 {messages.map((msg, index) => {
                                                     const date = new Date(msg.timestamp).toLocaleTimeString();
                                                     return (
