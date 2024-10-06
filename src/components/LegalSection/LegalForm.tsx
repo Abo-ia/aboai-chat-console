@@ -58,7 +58,7 @@ const LegalForm: React.FC<FormularioProps> = ({ tipoDocumento }) => {
                                     <option>Firma manuscrita</option>
                                 </select>
                             </div>
-                            <button className="bg-yellow-400 text-white p-2 rounded-lg w-full">
+                            <button className="bg-custom-base text-white p-2 rounded-lg w-full">
                                 Crear Contrato
                             </button>
                         </form>
@@ -107,7 +107,7 @@ const LegalForm: React.FC<FormularioProps> = ({ tipoDocumento }) => {
                                     <option>Firma manuscrita</option>
                                 </select>
                             </div>
-                            <button className="bg-yellow-400 text-white p-2 rounded-lg w-full">
+                            <button className="bg-custom-base text-white p-2 rounded-lg w-full">
                                 Crear Convenio
                             </button>
                         </form>
@@ -149,7 +149,7 @@ const LegalForm: React.FC<FormularioProps> = ({ tipoDocumento }) => {
                                     <option>Firma manuscrita</option>
                                 </select>
                             </div>
-                            <button className="bg-yellow-400 text-white p-2 rounded-lg w-full">
+                            <button className="bg-custom-base text-white p-2 rounded-lg w-full">
                                 Crear Acuerdo
                             </button>
                         </form>
