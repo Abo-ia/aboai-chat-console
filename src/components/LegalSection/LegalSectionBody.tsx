@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import Formulario from '@src/components/LegalSection/LegalForm';
+import { FaFileContract, FaHandshake, FaFileAlt } from 'react-icons/fa';
 
 interface SidebarProps {
     activeView: string;
 }
 
 const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
-    const [menuAbierto, setMenuAbierto] = useState<string | null>(null);
-    const [tipoDocumento, setTipoDocumento] = useState<string | null>(null);
+    const [openMenu, setopenMenu] = useState<string | null>(null);
+    const [documentType, setdocumentType] = useState<string | null>(null);
 
-    const opcionesDocumentos = {
+    const optionsDocuments = {
         contratos: [
             'Contrato Laboral',
             'Contrato de Arrendamiento',
@@ -42,34 +43,39 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
     };
 
     const alternarMenu = (menu: string) => {
-        setMenuAbierto(menuAbierto === menu ? null : menu);
+        setopenMenu(openMenu === menu ? null : menu);
     };
 
     const seleccionarDocumento = (tipo: string) => {
-        setTipoDocumento(tipo);
+        setdocumentType(tipo);
     };
 
     return (
         <div className="flex">
             {/* Sidebar */}
-            <div className="w-1/4 h-screen bg-gray-100 p-4">
-                <div className="text-lg font-semibold text-gray-800 mb-4">Documentos</div>
+            <div className="w-1/4 h-screen bg-gray-100 p-4 shadow-lg">
+                <div className="text-2xl font-bold text-gray-800 mb-6">Documentos</div>
 
-                {/* Contratos */}
-                <div className="mb-2">
+                <div className="mb-4">
                     <button
                         onClick={() => alternarMenu('contratos')}
-                        className="w-full flex justify-between items-center bg-gray-200 p-2 rounded-lg"
+                        className="w-full flex justify-between items-center bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-300"
                     >
-                        Contratos
-                        <span>{menuAbierto === 'contratos' ? '-' : '+'}</span>
+                        <div className="flex items-center">
+                            <FaFileContract className="mr-2 text-gray-700" />
+                            Contratos
+                        </div>
+                        <span>{openMenu === 'contratos' ? '-' : '+'}</span>
                     </button>
-                    {menuAbierto === 'contratos' && (
-                        <div className="pl-4 pt-2">
-                            <ul>
-                                {opcionesDocumentos.contratos.map((contrato, index) => (
-                                    <li key={index} className="mb-2">
-                                        <button onClick={() => seleccionarDocumento('contratos')}>
+                    {openMenu === 'contratos' && (
+                        <div className="pl-6 pt-2">
+                            <ul className="space-y-2">
+                                {optionsDocuments.contratos.map((contrato, index) => (
+                                    <li key={index}>
+                                        <button
+                                            onClick={() => seleccionarDocumento('contratos')}
+                                            className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 transition-colors duration-300"
+                                        >
                                             {contrato}
                                         </button>
                                     </li>
@@ -79,21 +85,26 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                     )}
                 </div>
 
-                {/* Convenios */}
-                <div className="mb-2">
+                <div className="mb-4">
                     <button
                         onClick={() => alternarMenu('convenios')}
-                        className="w-full flex justify-between items-center bg-gray-200 p-2 rounded-lg"
+                        className="w-full flex justify-between items-center bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-300"
                     >
-                        Convenios
-                        <span>{menuAbierto === 'convenios' ? '-' : '+'}</span>
+                        <div className="flex items-center">
+                            <FaHandshake className="mr-2 text-gray-700" />
+                            Convenios
+                        </div>
+                        <span>{openMenu === 'convenios' ? '-' : '+'}</span>
                     </button>
-                    {menuAbierto === 'convenios' && (
-                        <div className="pl-4 pt-2">
-                            <ul>
-                                {opcionesDocumentos.convenios.map((convenio, index) => (
-                                    <li key={index} className="mb-2">
-                                        <button onClick={() => seleccionarDocumento('convenios')}>
+                    {openMenu === 'convenios' && (
+                        <div className="pl-6 pt-2">
+                            <ul className="space-y-2">
+                                {optionsDocuments.convenios.map((convenio, index) => (
+                                    <li key={index}>
+                                        <button
+                                            onClick={() => seleccionarDocumento('convenios')}
+                                            className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 transition-colors duration-300"
+                                        >
                                             {convenio}
                                         </button>
                                     </li>
@@ -103,21 +114,26 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                     )}
                 </div>
 
-                {/* Acuerdos */}
-                <div className="mb-2">
+                <div className="mb-4">
                     <button
                         onClick={() => alternarMenu('acuerdos')}
-                        className="w-full flex justify-between items-center bg-gray-200 p-2 rounded-lg"
+                        className="w-full flex justify-between items-center bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-300"
                     >
-                        Acuerdos
-                        <span>{menuAbierto === 'acuerdos' ? '-' : '+'}</span>
+                        <div className="flex items-center">
+                            <FaFileAlt className="mr-2 text-gray-700" />
+                            Acuerdos
+                        </div>
+                        <span>{openMenu === 'acuerdos' ? '-' : '+'}</span>
                     </button>
-                    {menuAbierto === 'acuerdos' && (
-                        <div className="pl-4 pt-2">
-                            <ul>
-                                {opcionesDocumentos.acuerdos.map((acuerdo, index) => (
-                                    <li key={index} className="mb-2">
-                                        <button onClick={() => seleccionarDocumento('acuerdos')}>
+                    {openMenu === 'acuerdos' && (
+                        <div className="pl-6 pt-2">
+                            <ul className="space-y-2">
+                                {optionsDocuments.acuerdos.map((acuerdo, index) => (
+                                    <li key={index}>
+                                        <button
+                                            onClick={() => seleccionarDocumento('acuerdos')}
+                                            className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 rounded transition-colors duration-300"
+                                        >
                                             {acuerdo}
                                         </button>
                                     </li>
@@ -128,12 +144,14 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                 </div>
             </div>
 
-            {/* Contenedor del Formulario */}
-            <div className="w-3/4 h-screen p-6">
-                {tipoDocumento ? (
-                    <Formulario tipoDocumento={tipoDocumento} />
+            <div className="w-3/4 h-screen p-8 bg-gray-50">
+                {documentType ? (
+                    <Formulario documentType={documentType} />
                 ) : (
-                    <p className="text-gray-500">Selecciona un tipo de documento para empezar.</p>
+                    <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
+                        <FaFileAlt className="text-6xl mb-4" />
+                        <p className="text-xl">Selecciona un tipo de documento para empezar.</p>
+                    </div>
                 )}
             </div>
         </div>

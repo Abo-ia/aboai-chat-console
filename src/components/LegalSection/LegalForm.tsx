@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 interface FormularioProps {
-    tipoDocumento: string;
+    documentType: string;
 }
 
-const LegalForm: React.FC<FormularioProps> = ({ tipoDocumento }) => {
-    const renderFormulario = () => {
-        switch (tipoDocumento) {
+const LegalForm: React.FC<FormularioProps> = ({ documentType }) => {
+    const renderForm = () => {
+        switch (documentType) {
             case 'contratos':
                 return (
                     <div className="p-6 bg-white rounded-lg shadow-lg">
@@ -160,7 +160,7 @@ const LegalForm: React.FC<FormularioProps> = ({ tipoDocumento }) => {
         }
     };
 
-    return <div>{renderFormulario()}</div>;
+    return <div>{renderForm()}</div>;
 };
 
 export default LegalForm;
