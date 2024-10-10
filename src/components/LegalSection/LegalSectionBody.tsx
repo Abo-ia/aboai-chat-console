@@ -30,16 +30,6 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
             'Convenio de Distribución',
             'Convenio de Subcontratación',
         ],
-        acuerdos: [
-            'Acuerdo de Confidencialidad',
-            'Acuerdo de Licencia',
-            'Acuerdo de Distribución',
-            'Acuerdo de Servicios',
-            'Acuerdo de No Competencia',
-            'Acuerdo de Arbitraje',
-            'Acuerdo de Propiedad Intelectual',
-            'Acuerdo de Resolución de Disputas',
-        ],
     };
 
     const alternarMenu = (menu: string) => {
@@ -105,35 +95,6 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                             className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 transition-colors duration-300"
                                         >
                                             {convenio}
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </div>
-
-                <div className="mb-4">
-                    <button
-                        onClick={() => alternarMenu('acuerdos')}
-                        className="w-full flex justify-between items-center bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-300"
-                    >
-                        <div className="flex items-center">
-                            <FaFileAlt className="mr-2 text-gray-700" />
-                            Acuerdos
-                        </div>
-                        <span>{openMenu === 'acuerdos' ? '-' : '+'}</span>
-                    </button>
-                    {openMenu === 'acuerdos' && (
-                        <div className="pl-6 pt-2">
-                            <ul className="space-y-2">
-                                {optionsDocuments.acuerdos.map((acuerdo, index) => (
-                                    <li key={index}>
-                                        <button
-                                            onClick={() => seleccionarDocumento('acuerdos')}
-                                            className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 rounded transition-colors duration-300"
-                                        >
-                                            {acuerdo}
                                         </button>
                                     </li>
                                 ))}

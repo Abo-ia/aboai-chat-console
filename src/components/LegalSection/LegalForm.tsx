@@ -113,48 +113,6 @@ const LegalForm: React.FC<FormularioProps> = ({ documentType }) => {
                         </form>
                     </div>
                 );
-            case 'acuerdos':
-                return (
-                    <div className="p-6 bg-white rounded-lg shadow-lg">
-                        <h2 className="text-2xl font-semibold mb-4">Crear un Acuerdo</h2>
-                        <form>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Partes del Acuerdo</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Juan Pérez y Empresa Z"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Propósito del Acuerdo</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Acuerdo de confidencialidad"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Duración del Acuerdo</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Indefinido o por 1 año"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Método de Firma</label>
-                                <select className="w-full border border-gray-300 p-2 rounded-lg">
-                                    <option>Firma electrónica</option>
-                                    <option>Firma manuscrita</option>
-                                </select>
-                            </div>
-                            <button className="bg-custom-base text-white p-2 rounded-lg w-full">
-                                Crear Acuerdo
-                            </button>
-                        </form>
-                    </div>
-                );
             default:
                 return <p>No se ha seleccionado ningún tipo de documento</p>;
         }

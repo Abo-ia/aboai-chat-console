@@ -8,7 +8,6 @@ import { IoChatboxOutline } from "react-icons/io5";
 import { GoLaw } from "react-icons/go";
 
 const menuItems = [
-    { icon: <FiHome />, label: 'Inicio' },
     { icon: <FiHardDrive />, label: 'Mi Unidad' },
     { icon: <IoChatboxOutline />, label: 'Chat' },
     { icon: <GoLaw />, label: 'Legal' },

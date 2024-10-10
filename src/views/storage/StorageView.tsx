@@ -8,6 +8,9 @@ import Alert from '@src/components/Alert/Alert';
 import { FaFolderPlus } from "react-icons/fa";
 import { BiSend } from "react-icons/bi";
 import { RxReload } from "react-icons/rx";
+import { fetchAuthSession } from "aws-amplify/auth";
+import SyncKnowledgeBase from "@src/services/syncKnowledgeBase.service"
+
 import LegalSectionBody from '@src/components/LegalSection/LegalSectionBody';
 
 import ChatView from '@src/views/admin/ChatView';
@@ -121,10 +124,19 @@ const FileExplorerTable: React.FC = () => {
         window.open(fileUrl, '_blank');
     };
 
-    const handleSync = () => {
+    const handleSync = async() => {
         setShowSyncAlert(true);
         setTimeout(() => setShowSyncAlert(false), 3000);
+
+        const session = await fetchAuthSession();
+        const idToken = session?.tokens?.idToken?.toString() as string;
+
+
+        const syncKnowledgeBaseInstance = new SyncKnowledgeBase(idToken);
+        await syncKnowledgeBaseInstance.syncKnowledgeBase();
     };
+
+
 
     const handleCreateFolder = async () => {
         if (!newFolderName) {

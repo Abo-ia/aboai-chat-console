@@ -109,7 +109,6 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
 
     return (
         <React.Fragment>
-            {/* <SidebarIcons /> */}
             <div className={`w-64 pt-6 transform transition-transform duration-300`}>
                 <div>
                     <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
