@@ -1,71 +1,111 @@
 // src/components/LegalForms/PaymentAgreementForm.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
+import generatePaymentAgreement from '@src/config/generatePaymentAgreement';
+import Modal from '@src/components/Modals/Modal';
 
 const PaymentAgreementForm: React.FC = () => {
+    const [formData, setFormData] = useState({
+        fechaConvenio: '',
+        nombreDeudor: '',
+        direccionDeudor: '',
+        nombreAcreedor: '',
+        direccionAcreedor: '',
+        montoTotal: '',
+        cronogramaPagos: '',
+        metodoPago: '',
+        interesesMoratorios: '',
+        garantias: '',
+        obligacionesDeudor: '',
+        obligacionesAcreedor: '',
+        medidasSeguridad: '',
+        penalizacionesIncumplimiento: '',
+        resolucionDisputas: '',
+        jurisdiccion: '',
+        ciudadFirma: '',
+    });
+
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [showModal, setShowModal] = useState(false);
+    const [generatedContract, setGeneratedContract] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+        Object.keys(formData).forEach((key) => {
+            if (!formData[key as keyof typeof formData]) {
+                newErrors[key] = 'Este campo es obligatorio';
+            }
+        });
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; 
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+        setErrors({
+            ...errors,
+            [name]: '',
+        });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (validateForm()) {
+            setIsLoading(true);
+            setTimeout(() => {
+                const contract = generatePaymentAgreement(formData);
+                setGeneratedContract(contract);
+                setShowModal(true);
+                setIsLoading(false);
+            }, 3000);
+        }
+    };
+
     return (
-        <div className="px-6 rounded-lg">
+        <div className="px-6 rounded-lg h-[80vh] overflow-y-scroll">
             <h2 className="text-2xl font-semibold mb-4">Crear un Convenio de Pago</h2>
-            <form>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Deudor y Acreedor</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, Juan Pérez (Deudor) y Empresa X (Acreedor)"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Monto Total a Pagar</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, $10,000 MXN"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Plazo de Pago</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, 12 meses"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Frecuencia de Pagos</label>
-                    <select className="w-full border border-gray-300 p-2 rounded-lg">
-                        <option>Mensual</option>
-                        <option>Quincenal</option>
-                        <option>Semanal</option>
-                        <option>Único</option>
-                    </select>
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Tasa de Interés (si aplica)</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, 5% anual"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Condiciones de Incumplimiento</label>
-                    <textarea
-                        placeholder="Describe las consecuencias en caso de incumplimiento del pago"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Método de Firma</label>
-                    <select className="w-full border border-gray-300 p-2 rounded-lg">
-                        <option>Firma electrónica</option>
-                        <option>Firma manuscrita</option>
-                    </select>
-                </div>
-                <button className="bg-custom-base text-white p-2 rounded-lg w-full">
-                    Crear Convenio de Pago
+            <form onSubmit={handleSubmit} className=' h-[80vh] overflow-y-scroll'>
+                {Object.keys(formData).map((fieldName) => (
+                    <div className="mb-4" key={fieldName}>
+                        <label className="block text-gray-700 capitalize">
+                            {fieldName
+                                .replace(/([A-Z])/g, ' $1')
+                                .replace(/^./, (str) => str.toUpperCase())}
+                        </label>
+                        <input
+                            type={fieldName.includes('fecha') ? 'date' : 'text'}
+                            name={fieldName}
+                            value={formData[fieldName as keyof typeof formData]}
+                            onChange={handleChange}
+                            placeholder={`Introduce ${fieldName}`}
+                            className={`w-full border p-2 rounded-lg ${
+                                errors[fieldName] ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                        />
+                        {errors[fieldName] && <p className="text-red-500 text-sm">{errors[fieldName]}</p>}
+                    </div>
+                ))}
+
+                <button
+                    type="submit"
+                    className={`bg-custom-base text-white p-2 rounded-lg w-full ${
+                        isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Procesando...' : 'Crear Convenio de Pago'}
                 </button>
             </form>
+
+            {/* Modal para mostrar el contrato generado */}
+            {showModal && (
+                <Modal children={generatedContract} onClose={() => setShowModal(false)} />
+            )}
         </div>
     );
 };

@@ -1,69 +1,110 @@
 // src/components/LegalForms/SaleContractForm.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
+import generateSaleContract from '@src/config/generateSaleContract';
+import Modal from '@src/components/Modals/Modal';
 
 const SaleContractForm: React.FC = () => {
+    const [formData, setFormData] = useState({
+        fechaContrato: '',
+        nombreVendedor: '',
+        direccionVendedor: '',
+        nombreComprador: '',
+        direccionComprador: '',
+        descripcionBien: '',
+        estadoBien: '',
+        precioVenta: '',
+        metodoPago: '',
+        fechaEntrega: '',
+        lugarEntrega: '',
+        obligacionesVendedor: '',
+        obligacionesComprador: '',
+        garantia: '',
+        penalizaciones: '',
+        condicionesIncumplimiento: '',
+        transferenciaPropiedad: '',
+        jurisdiccion: '',
+        ciudadFirma: '',
+    });
+
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [showModal, setShowModal] = useState(false);
+    const [generatedContract, setGeneratedContract] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+        Object.keys(formData).forEach((key) => {
+            if (!formData[key as keyof typeof formData]) {
+                newErrors[key] = 'Este campo es obligatorio';
+            }
+        });
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+        setErrors({
+            ...errors,
+            [name]: '',
+        });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (validateForm()) {
+            setIsLoading(true);
+            setTimeout(() => {
+                const contract = generateSaleContract(formData);
+                setGeneratedContract(contract);
+                setShowModal(true);
+                setIsLoading(false);
+            }, 3000);
+        }
+    };
+
     return (
         <div className="px-6 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Crear un Contrato de Compraventa</h2>
-            <form>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Vendedor y Comprador</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, Juan Pérez (Vendedor) y María Gómez (Compradora)"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Descripción del Bien</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, Vehículo modelo 2020, color blanco"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Precio de Venta</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, $150,000 MXN"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Condiciones de Pago</label>
-                    <textarea
-                        placeholder="Describe las condiciones de pago, por ejemplo, pago único o en cuotas"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Fecha de Entrega</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, 1 de diciembre de 2024"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Garantías</label>
-                    <textarea
-                        placeholder="Describe cualquier garantía ofrecida por el vendedor"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Método de Firma</label>
-                    <select className="w-full border border-gray-300 p-2 rounded-lg">
-                        <option>Firma electrónica</option>
-                        <option>Firma manuscrita</option>
-                    </select>
-                </div>
-                <button className="bg-custom-base text-white p-2 rounded-lg w-full">
-                    Crear Contrato de Compraventa
+            <form onSubmit={handleSubmit} className='h-[80vh] overflow-y-scroll'>
+                {Object.keys(formData).map((fieldName) => (
+                    <div className="mb-4" key={fieldName}>
+                        <label className="block text-gray-700 capitalize">
+                            {fieldName
+                                .replace(/([A-Z])/g, ' $1')
+                                .replace(/^./, (str) => str.toUpperCase())}
+                        </label>
+                        <input
+                            type={fieldName.includes('fecha') ? 'date' : 'text'}
+                            name={fieldName}
+                            value={formData[fieldName as keyof typeof formData]}
+                            onChange={handleChange}
+                            placeholder={`Introduce ${fieldName}`}
+                            className={`w-full border p-2 rounded-lg ${errors[fieldName] ? 'border-red-500' : 'border-gray-300'
+                                }`}
+                        />
+                        {errors[fieldName] && <p className="text-red-500 text-sm">{errors[fieldName]}</p>}
+                    </div>
+                ))}
+
+                <button
+                    type="submit"
+                    className={`bg-custom-base text-white p-2 rounded-lg w-full ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Procesando...' : 'Crear Contrato de Compraventa'}
                 </button>
             </form>
+
+            {showModal && (
+                <Modal children={generatedContract} onClose={() => setShowModal(false)} />
+            )}
         </div>
     );
 };

@@ -42,8 +42,6 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
         setDocumentName(nombre);
     };
 
-    console.log(`Document Type: ${documentType}, Document Name: ${documentName}`);
-
     return (
         <div className="flex">
             <div className="w-1/4 h-screen bg-gray-100 p-4 shadow-lg">
@@ -64,10 +62,13 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                         <div className="pl-6 pt-2">
                             <ul className="space-y-2">
                                 {optionsDocuments.contratos.map((contrato, index) => (
-                                    <li key={index}>
+                                    <li key={index} className="flex items-center">
+                                        {documentName === contrato && (
+                                            <span className="w-2 h-2 bg-custom-base rounded-full mr-2"></span>
+                                        )}
                                         <button
                                             onClick={() => seleccionarDocumento('contratos', contrato)}
-                                            className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 transition-colors duration-300"
+                                            className="text-left text-gray-700 hover:bg-gray-200 py-1 px-2 transition-colors duration-300 flex-grow"
                                         >
                                             {contrato}
                                         </button>
@@ -93,10 +94,13 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                         <div className="pl-6 pt-2">
                             <ul className="space-y-2">
                                 {optionsDocuments.convenios.map((convenio, index) => (
-                                    <li key={index}>
+                                    <li key={index} className="flex items-center">
+                                        {documentName === convenio && (
+                                            <span className="w-2 h-2 bg-custom-base rounded-full mr-2"></span>
+                                        )}
                                         <button
                                             onClick={() => seleccionarDocumento('convenios', convenio)}
-                                            className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 transition-colors duration-300"
+                                            className="text-left text-gray-700 hover:bg-gray-200 py-1 px-2 transition-colors duration-300 flex-grow"
                                         >
                                             {convenio}
                                         </button>

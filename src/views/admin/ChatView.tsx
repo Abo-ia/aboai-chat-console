@@ -259,7 +259,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                                 </div>
                                                                             </div>
                                                                             <div
-                                                                                className="w-full h-full pt-6 py-2 px-5 pb-6 rounded prose prose-sm"
+                                                                                className="w-full h-full bg-gray-50 pt-6 py-2 px-5 pb-6 rounded prose prose-sm"
                                                                                 dangerouslySetInnerHTML={{ __html: msg.response }}
                                                                             />
 

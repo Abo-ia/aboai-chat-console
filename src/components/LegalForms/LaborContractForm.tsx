@@ -1,70 +1,134 @@
 // src/components/LegalForms/LaborContractForm.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
+import generateLaborContract from '@src/config/generateLaborContract';
+import Modal from '@src/components/Modals/Modal';
 
 const LaborContractForm: React.FC = () => {
+    const [formData, setFormData] = useState({
+        fechaContrato: '',
+        nombreEmpleado: '',
+        direccionEmpleado: '',
+        nombreEmpleador: '',
+        direccionEmpleador: '',
+        puestoTrabajo: '',
+        salario: '',
+        horarioTrabajo: '',
+        beneficios: '',
+        obligacionesEmpleado: '',
+        obligacionesEmpleador: '',
+        fechaInicio: '',
+        duracionContrato: '',
+        periodoPrueba: '',
+        jurisdiccion: '',
+        metodoFirma: 'Firma electrónica',
+        ciudadFirma: '',
+    });
+
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [showModal, setShowModal] = useState(false);
+    const [generatedContract, setGeneratedContract] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+        Object.keys(formData).forEach((key) => {
+            if (!formData[key as keyof typeof formData]) {
+                newErrors[key] = 'Este campo es obligatorio';
+            }
+        });
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Retorna true si no hay errores
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+        setErrors({
+            ...errors,
+            [e.target.name]: '', // Limpia el error del campo al cambiar
+        });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (validateForm()) {
+            setIsLoading(true); // Muestra el efecto de carga
+            setTimeout(() => {
+                const contract = generateLaborContract(formData);
+                setGeneratedContract(contract);
+                setShowModal(true);
+                setIsLoading(false); // Oculta el efecto de carga
+            }, 3000); // Simula 3 segundos de procesamiento
+        }
+    };
+
     return (
         <div className="px-6 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Crear un Contrato Laboral</h2>
-            <form>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Empleado y Empleador</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, Empresa X y Juan Pérez"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Puesto de Trabajo</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, Desarrollador de Software"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Salario y Beneficios</label>
-                    <textarea
-                        placeholder="Describe el salario y beneficios adicionales"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Duración del Contrato</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, Contrato indefinido o por un año"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Período de Prueba</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, 3 meses"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Jurisdicción</label>
-                    <input
-                        type="text"
-                        placeholder="Por ejemplo, Ciudad de México, México"
-                        className="w-full border border-gray-300 p-2 rounded-lg"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Método de Firma</label>
-                    <select className="w-full border border-gray-300 p-2 rounded-lg">
-                        <option>Firma electrónica</option>
-                        <option>Firma manuscrita</option>
-                    </select>
-                </div>
-                <button className="bg-custom-base text-white p-2 rounded-lg w-full">
-                    Crear Contrato Laboral
+            <form onSubmit={handleSubmit} className='h-[80vh] overflow-y-scroll'>
+                {Object.keys(formData).map((fieldName) => (
+                    <div className="mb-4" key={fieldName}>
+                        <label className="block text-gray-700 capitalize">
+                            {fieldName
+                                .replace(/([A-Z])/g, ' $1')
+                                .replace(/^./, (str) => str.toUpperCase())}
+                        </label>
+                        {fieldName === 'metodoFirma' ? (
+                            <select
+                                name={fieldName}
+                                value={formData[fieldName as keyof typeof formData]}
+                                onChange={handleChange}
+                                className={`w-full border p-2 rounded-lg ${
+                                    errors[fieldName] ? 'border-red-500' : 'border-gray-300'
+                                }`}
+                            >
+                                <option value="Firma electrónica">Firma electrónica</option>
+                                <option value="Firma manuscrita">Firma manuscrita</option>
+                            </select>
+                        ) : fieldName.includes('fecha') ? (
+                            <input
+                                type="date"
+                                name={fieldName}
+                                value={formData[fieldName as keyof typeof formData]}
+                                onChange={handleChange}
+                                className={`w-full border p-2 rounded-lg ${
+                                    errors[fieldName] ? 'border-red-500' : 'border-gray-300'
+                                }`}
+                            />
+                        ) : (
+                            <input
+                                type="text"
+                                name={fieldName}
+                                value={formData[fieldName as keyof typeof formData]}
+                                onChange={handleChange}
+                                placeholder={`Introduce ${fieldName}`}
+                                className={`w-full border p-2 rounded-lg ${
+                                    errors[fieldName] ? 'border-red-500' : 'border-gray-300'
+                                }`}
+                            />
+                        )}
+                        {errors[fieldName] && <p className="text-red-500 text-sm">{errors[fieldName]}</p>}
+                    </div>
+                ))}
+
+                <button
+                    type="submit"
+                    className={`bg-custom-base text-white p-2 rounded-lg w-full ${
+                        isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Procesando...' : 'Crear Contrato Laboral'}
                 </button>
             </form>
+
+            {/* Modal para mostrar el contrato generado */}
+            {showModal && (
+                <Modal children={generatedContract} onClose={() => setShowModal(false)} />
+            )}
         </div>
     );
 };
