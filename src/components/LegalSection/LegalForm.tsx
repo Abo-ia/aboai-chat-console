@@ -1,5 +1,3 @@
-// src/components/LegalSection/LegalForm.tsx
-
 import React from 'react';
 import LaborContractForm from '../LegalForms/LaborContractForm';
 import LeaseContractForm from '../LegalForms/LeaseContractForm';
@@ -9,6 +7,13 @@ import NDAContractForm from '../LegalForms/NDAContractForm';
 import PartnershipContractForm from '../LegalForms/PartnershipContractForm';
 import FranchiseContractForm from '../LegalForms/FranchiseContractForm';
 import SocietyContractForm from '../LegalForms/SocietyContractForm';
+import CollaborationAgreementForm from '../LegalForms/CollaborationAgreementForm';
+import ConfidentialityAgreementForm from '../LegalForms/ConfidentialityAgreementForm';
+import PaymentAgreementForm from '../LegalForms/PaymentAgreementForm';
+import AssociationAgreementForm from '../LegalForms/AssociationAgreementForm';
+import FinancingAgreementForm from '../LegalForms/FinancingAgreementForm';
+import DistributionAgreementForm from '../LegalForms/DistributionAgreementForm';
+import SubcontractingAgreementForm from '../LegalForms/SubcontractingAgreementForm';
 
 interface FormularioProps {
     documentType: string;
@@ -16,30 +21,25 @@ interface FormularioProps {
 }
 
 const LegalForm: React.FC<FormularioProps> = ({ documentType, documentName }) => {
-    const renderForm = () => {
-        switch (documentName) {
-            case 'Contrato Laboral':
-                return <LaborContractForm />;
-            case 'Contrato de Arrendamiento':
-                return <LeaseContractForm />;
-            case 'Contrato de Compraventa':
-                return <SaleContractForm />;
-            case 'Contrato de Prestación de Servicios':
-                return <ServiceContractForm />;
-            case 'Contrato de Confidencialidad':
-                return <NDAContractForm />;
-            case 'Contrato de Asociación':
-                return <PartnershipContractForm />;
-            case 'Contrato de Franquicia':
-                return <FranchiseContractForm />;
-            case 'Contrato de Sociedad':
-                return <SocietyContractForm />;
-            default:
-                return <p>No se ha seleccionado ningún tipo de documento</p>;
-        }
+    const formComponents: { [key: string]: JSX.Element } = {
+        'Contrato Laboral': <LaborContractForm />,
+        'Contrato de Arrendamiento': <LeaseContractForm />,
+        'Contrato de Compraventa': <SaleContractForm />,
+        'Contrato de Prestación de Servicios': <ServiceContractForm />,
+        'Contrato de Confidencialidad': <NDAContractForm />,
+        'Contrato de Asociación': <PartnershipContractForm />,
+        'Contrato de Franquicia': <FranchiseContractForm />,
+        'Contrato de Sociedad': <SocietyContractForm />,
+        'Convenio de Colaboración': <CollaborationAgreementForm />,
+        'Convenio de Confidencialidad': <ConfidentialityAgreementForm />,
+        'Convenio de Pago': <PaymentAgreementForm />,
+        'Convenio de Asociación': <AssociationAgreementForm />,
+        'Convenio de Financiación': <FinancingAgreementForm />,
+        'Convenio de Distribución': <DistributionAgreementForm />,
+        'Convenio de Subcontratación': <SubcontractingAgreementForm />,
     };
 
-    return <div>{renderForm()}</div>;
+    return <div>{documentName ? formComponents[documentName] || <p>No se ha seleccionado ningún tipo de documento</p> : <p>No se ha seleccionado ningún tipo de documento</p>}</div>;
 };
 
 export default LegalForm;
