@@ -7,8 +7,9 @@ interface SidebarProps {
 }
 
 const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
-    const [openMenu, setopenMenu] = useState<string | null>(null);
-    const [documentType, setdocumentType] = useState<string | null>(null);
+    const [openMenu, setOpenMenu] = useState<string | null>(null);
+    const [documentType, setDocumentType] = useState<string | null>(null);
+    const [documentName, setDocumentName] = useState<string | null>(null);
 
     const optionsDocuments = {
         contratos: [
@@ -33,12 +34,15 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
     };
 
     const alternarMenu = (menu: string) => {
-        setopenMenu(openMenu === menu ? null : menu);
+        setOpenMenu(openMenu === menu ? null : menu);
     };
 
-    const seleccionarDocumento = (tipo: string) => {
-        setdocumentType(tipo);
+    const seleccionarDocumento = (tipo: string, nombre: string) => {
+        setDocumentType(tipo);
+        setDocumentName(nombre);
     };
+
+    console.log(`Document Type: ${documentType}, Document Name: ${documentName}`);
 
     return (
         <div className="flex">
@@ -62,7 +66,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 {optionsDocuments.contratos.map((contrato, index) => (
                                     <li key={index}>
                                         <button
-                                            onClick={() => seleccionarDocumento('contratos')}
+                                            onClick={() => seleccionarDocumento('contratos', contrato)}
                                             className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 transition-colors duration-300"
                                         >
                                             {contrato}
@@ -91,7 +95,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 {optionsDocuments.convenios.map((convenio, index) => (
                                     <li key={index}>
                                         <button
-                                            onClick={() => seleccionarDocumento('convenios')}
+                                            onClick={() => seleccionarDocumento('convenios', convenio)}
                                             className="text-left text-gray-700 hover:bg-custom-base hover:text-white py-1 px-2 transition-colors duration-300"
                                         >
                                             {convenio}
@@ -105,8 +109,8 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
             </div>
 
             <div className="w-3/4 h-screen p-8 bg-gray-50">
-                {documentType ? (
-                    <Formulario documentType={documentType} />
+                {documentType && documentName ? (
+                    <Formulario documentType={documentType} documentName={documentName} />
                 ) : (
                     <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
                         <FaFileAlt className="text-6xl mb-4" />

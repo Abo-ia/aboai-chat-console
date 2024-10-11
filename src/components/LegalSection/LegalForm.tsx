@@ -1,118 +1,39 @@
-import React, { useState } from 'react';
+// src/components/LegalSection/LegalForm.tsx
+
+import React from 'react';
+import LaborContractForm from '../LegalForms/LaborContractForm';
+import LeaseContractForm from '../LegalForms/LeaseContractForm';
+import SaleContractForm from '../LegalForms/SaleContractForm';
+import ServiceContractForm from '../LegalForms/ServiceContractForm';
+import NDAContractForm from '../LegalForms/NDAContractForm';
+import PartnershipContractForm from '../LegalForms/PartnershipContractForm';
+import FranchiseContractForm from '../LegalForms/FranchiseContractForm';
+import SocietyContractForm from '../LegalForms/SocietyContractForm';
 
 interface FormularioProps {
     documentType: string;
+    documentName: string | null;
 }
 
-const LegalForm: React.FC<FormularioProps> = ({ documentType }) => {
+const LegalForm: React.FC<FormularioProps> = ({ documentType, documentName }) => {
     const renderForm = () => {
-        switch (documentType) {
-            case 'contratos':
-                return (
-                    <div className="p-6 bg-white rounded-lg shadow-lg">
-                        <h2 className="text-2xl font-semibold mb-4">Crear un Contrato</h2>
-                        <form>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Partes del Contrato</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Empresa X y Juan Pérez"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Objetivo del Contrato</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Servicios de consultoría"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Obligaciones de las Partes</label>
-                                <textarea
-                                    placeholder="Describe las obligaciones de cada parte"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Duración del Contrato</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Desde el 1 de enero de 2024 hasta el 31 de diciembre de 2024"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Jurisdicción</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Ciudad de México, México"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Método de Firma</label>
-                                <select className="w-full border border-gray-300 p-2 rounded-lg">
-                                    <option>Firma electrónica</option>
-                                    <option>Firma manuscrita</option>
-                                </select>
-                            </div>
-                            <button className="bg-custom-base text-white p-2 rounded-lg w-full">
-                                Crear Contrato
-                            </button>
-                        </form>
-                    </div>
-                );
-            case 'convenios':
-                return (
-                    <div className="p-6 bg-white rounded-lg shadow-lg">
-                        <h2 className="text-2xl font-semibold mb-4">Crear un Convenio</h2>
-                        <form>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Partes del Convenio</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Empresa X y Proveedor Y"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Propósito del Convenio</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Colaboración para distribución"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Duración del Convenio</label>
-                                <input
-                                    type="text"
-                                    placeholder="Por ejemplo, Desde el 1 de marzo de 2024 hasta el 1 de marzo de 2026"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Obligaciones de las Partes</label>
-                                <textarea
-                                    placeholder="Describe las obligaciones de cada parte"
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Método de Firma</label>
-                                <select className="w-full border border-gray-300 p-2 rounded-lg">
-                                    <option>Firma electrónica</option>
-                                    <option>Firma manuscrita</option>
-                                </select>
-                            </div>
-                            <button className="bg-custom-base text-white p-2 rounded-lg w-full">
-                                Crear Convenio
-                            </button>
-                        </form>
-                    </div>
-                );
+        switch (documentName) {
+            case 'Contrato Laboral':
+                return <LaborContractForm />;
+            case 'Contrato de Arrendamiento':
+                return <LeaseContractForm />;
+            case 'Contrato de Compraventa':
+                return <SaleContractForm />;
+            case 'Contrato de Prestación de Servicios':
+                return <ServiceContractForm />;
+            case 'Contrato de Confidencialidad':
+                return <NDAContractForm />;
+            case 'Contrato de Asociación':
+                return <PartnershipContractForm />;
+            case 'Contrato de Franquicia':
+                return <FranchiseContractForm />;
+            case 'Contrato de Sociedad':
+                return <SocietyContractForm />;
             default:
                 return <p>No se ha seleccionado ningún tipo de documento</p>;
         }
