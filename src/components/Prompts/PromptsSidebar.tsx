@@ -146,7 +146,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                     <h1 className="text-lg font-semibold">Prompts Base</h1>
                 </div>
 
-                <div className="px-4 mb-2 h-[vh] overflow-y-auto">
+                <div className="px-4 mb-2 h-[65vh] overflow-y-auto">
                     {promptCategories.map((category: IPromptCategory) => (
                         <div key={category.id} className="mb-4">
                             <div
