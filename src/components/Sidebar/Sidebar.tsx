@@ -109,7 +109,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
 
     return (
         <React.Fragment>
-            <div className={`w-64 pt-6 transform transition-transform duration-300`}>
+            <div className={`w-72 pt-6 transform transition-transform duration-300`}>
                 <div>
                     <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
                         <div className="opacity-75">Apps</div>
@@ -123,7 +123,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation, }) => {
 
                 <div className="px-4">
                     <div className="text-gray-700 mb-5 mt-3">Historial de Chats</div>
-                    <div className="overflow-y-auto">
+                    <div className="overflow-y-auto h-[65vh]">
                         {menuItems.map((item) => (
                             <SidebarItem
                                 key={item.conversationId}
