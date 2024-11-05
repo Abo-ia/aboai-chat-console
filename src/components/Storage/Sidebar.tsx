@@ -4,17 +4,18 @@ import { FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud, FiFile
 import logo from '@src/assets/harvee_logo.png';
 import { IoChatboxOutline } from "react-icons/io5";
 
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 import { GoLaw } from "react-icons/go";
 
 const menuItems = [
-    { icon: <FiHardDrive />, label: 'Mi Unidad' },
-    { icon: <IoChatboxOutline />, label: 'Chat' },
-    { icon: <GoLaw />, label: 'Legal' },
-    { icon: <FiUsers />, label: 'Compartidos conmigo' },
-    { icon: <FiClock />, label: 'Recientes' },
-    { icon: <FiStar />, label: 'Destacados' },
-    { icon: <FiTrash />, label: 'Papelera' },
+    { icon: <IoChatboxOutline />, label: 'Chat', path: '/' },
+    { icon: <FiHardDrive />, label: 'Mi Unidad', path: '/almacenamiento' },
+    { icon: <GoLaw />, label: 'Legal', path: '/contratos-y-acuerdos' },
+    { icon: <FiClock />, label: 'Recientes', path: '/almacenamiento' },
+    { icon: <FiStar />, label: 'Destacados', path: '/almacenamiento' },
+    { icon: <FiTrash />, label: 'Papelera', path: '/almacenamiento' },
 ];
 
 interface SidebarProps {
@@ -26,6 +27,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [targetFolder, setTargetFolder] = useState<string>('');
+
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
 
     const s3Client = new S3Client({
         region: 'us-west-2',
@@ -82,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
             <button
                 className="flex items-center p-3 mb-6 bg-[#006d5b] text-white rounded-lg shadow transition hover:bg-[#004f45] hover:shadow-xl duration-200"
                 onClick={() => {
-                    if (props.activeView !== "Chat") {
+                    if (pathname !== '/') {
                         setShowModal(true);
                     } else {
                         window.location.reload();
@@ -91,13 +95,14 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
             >
                 <span className="flex items-center justify-center w-6 h-6 bg-white text-[#006d5b] rounded-full mr-2">+</span>
                 <span className="font-semibold">
-                    {props.activeView !== "Chat" ? "Nuevo archivo" : "Nueva conversación"}
+
+                    {pathname === '/' ? 'Nuevo chat' : 'Nuevo archivo'}
                 </span>
             </button>
             <ul className="flex-1 space-y-3">
                 {menuItems.map((item, index) => (
                     <li
-                        onClick={() => props.setActiveView(item.label)}
+                        onClick={() => navigate(item.path)}
                         key={index}
                         className={`cursor-pointer text-sm py-2 px-2 rounded hover:bg-[#e9eaee] flex items-center text-[#484b4b] transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''}`}
                     >
@@ -116,13 +121,11 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 </div>
             </div>
 
-            {/* Modal para subir archivos */}
             {showModal && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]">
                         <h2 className="text-xl font-semibold text-black mb-4">Subir archivos</h2>
 
-                        {/* Subir archivos */}
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Seleccionar archivos</label>
                             <input
@@ -133,7 +136,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                             />
                         </div>
 
-                        {/* Input para especificar la carpeta de destino */}
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Carpeta de destino</label>
                             <input
@@ -145,7 +147,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                             />
                         </div>
 
-                        {/* Mostrar lista de archivos seleccionados */}
                         {selectedFiles && (
                             <div className="mb-4">
                                 <h3 className="text-sm font-medium text-gray-700 mb-2">Archivos seleccionados:</h3>

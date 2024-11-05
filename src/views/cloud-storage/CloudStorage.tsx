@@ -13,7 +13,7 @@ import SyncKnowledgeBase from "@src/services/syncKnowledgeBase.service"
 
 import LegalSectionBody from '@src/components/LegalSection/LegalSectionBody';
 
-import ChatView from '@src/views/admin/ChatView';
+import ChatView from '@src/components/Chat/ChatView';
 
 const organizeFilesByFolders = (items: any[]) => {
     const folderStructure: { folder_path: string; files: { file_name: string; file_size: number, key: string }[] }[] = [];
@@ -53,7 +53,7 @@ const organizeFilesByFolders = (items: any[]) => {
     return folderStructure;
 };
 
-const FileExplorerTable: React.FC = () => {
+const CloudStorage: React.FC = () => {
     const [organizedData, setOrganizedData] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
@@ -206,7 +206,7 @@ const FileExplorerTable: React.FC = () => {
             />
             <div className="flex-1 flex flex-col">
                 <Header />
-                <div className="px-8 m-6 rounded-lg bg-white relative">
+                <div className="px-8 m-6 rounded-lg relative">
                     {isDeleting && (
                         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-2 rounded-lg shadow-lg z-50">
                             Eliminando archivo...
@@ -217,8 +217,8 @@ const FileExplorerTable: React.FC = () => {
                     {showSyncAlert && (<Alert type="info" message="Sincronización en progreso..." />)}
 
                     <div className="overflow-y-auto max-h-[80vh]">
-                        <table className="bg-white shadow-md rounded-lg min-w-full">
-                            <thead className="sticky top-0 bg-white z-10">
+                        <table className="shadow-md rounded-lg min-w-full">
+                            <thead className="sticky top-0">
                                 <tr className="border-b-[1px] border-gray-200">
                                     <th className="p-4 text-left text-custom-dark font-semibold">Nombre</th>
                                     <th className="p-4 text-left text-custom-dark font-semibold">Propietario</th>
@@ -302,7 +302,7 @@ const FileExplorerTable: React.FC = () => {
                                                                 onClick={() => toggleMenu(file.key)}
                                                             />
                                                             {openMenu === file.key && (
-                                                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
+                                                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
                                                                     <ul>
                                                                         <li
                                                                             className="py-2 pl-4 cursor-pointer hover:bg-gray-100"
@@ -335,4 +335,4 @@ const FileExplorerTable: React.FC = () => {
     );
 };
 
-export default FileExplorerTable;
+export default CloudStorage;

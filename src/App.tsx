@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import ChatView from '@src/views/admin/ChatView';
+import ChatView from '@src/components/Chat/ChatView';
 
 import { fetchAuthSession } from "aws-amplify/auth";
 import { Amplify } from 'aws-amplify';
@@ -8,8 +8,12 @@ import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 
 import { AWS_COGNITO_USER_POOL_ID, AWS_COGNITO_USER_POOL_WEB_CLIENT_ID } from '@src/config/env';
 import '@aws-amplify/ui-react/styles.css';
-import StorageView from './views/storage/StorageView';
+
+
+import CloudStorage from './views/cloud-storage/CloudStorage';
 import PaymentForm from './views/payment/PaymentForm';
+import ContractsBuilder from './views/contracts-builder/ContractsBuilder';
+import AIChat from './views/ai-chat/AIChat';
 
 
 Amplify.configure({
@@ -241,8 +245,10 @@ const App: React.FC = () => {
         >
             <Router>
                 <Routes>
-                    <Route path="/" element={<StorageView />} />
-                    <Route path='/payment' element={<PaymentForm/>}/>
+                    <Route path="/" element={<AIChat/>} />
+                    <Route path="/almacenamiento" element={<CloudStorage />} />
+                    <Route path="/contratos-y-acuerdos" element={<ContractsBuilder />} />
+                    <Route path='/suscripcion' element={<PaymentForm/>}/>
                 </Routes>
             </Router>
         </Authenticator>
