@@ -15,6 +15,8 @@ import FinancingAgreementForm from '../LegalForms/FinancingAgreementForm';
 import DistributionAgreementForm from '../LegalForms/DistributionAgreementForm';
 import SubcontractingAgreementForm from '../LegalForms/SubcontractingAgreementForm';
 
+import ComplaintsForm from '../LegalForms/ComplaintsForm';
+
 interface FormularioProps {
     documentType: string;
     documentName: string | null;
@@ -37,6 +39,7 @@ const LegalForm: React.FC<FormularioProps> = ({ documentType, documentName }) =>
         'Convenio de Financiación': <FinancingAgreementForm />,
         'Convenio de Distribución': <DistributionAgreementForm />,
         'Convenio de Subcontratación': <SubcontractingAgreementForm />,
+        'Creación de Denuncia': <ComplaintsForm />,
     };
 
     return <div>{documentName ? formComponents[documentName] || <p>No se ha seleccionado ningún tipo de documento</p> : <p>No se ha seleccionado ningún tipo de documento</p>}</div>;

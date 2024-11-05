@@ -31,6 +31,9 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
             'Convenio de Distribución',
             'Convenio de Subcontratación',
         ],
+        denuncias: [
+            'Creación de Denuncia',
+        ]
     };
 
     const alternarMenu = (menu: string) => {
@@ -44,7 +47,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
 
     return (
         <div className="flex">
-            <div className="w-1/4 h-screen bg-gray-100 p-4 shadow-lg">
+            <div className="w-1/4 h- bg-gray-100 p-4 shadow-lg">
                 <div className="text-2xl font-bold text-gray-800 mb-6">Documentos</div>
 
                 <div className="mb-4">
@@ -110,7 +113,41 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                         </div>
                     )}
                 </div>
+
+                <div className="mb-4">
+                    <button
+                        onClick={() => alternarMenu('denuncias')}
+                        className="w-full flex justify-between items-center bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-300"
+                    >
+                        <div className="flex items-center">
+                            <FaHandshake className="mr-2 text-gray-700" />
+                            Denuncias
+                        </div>
+                        <span>{openMenu === 'denuncia' ? '-' : '+'}</span>
+                    </button>
+                    {openMenu === 'denuncias' && (
+                        <div className="pl-6 pt-2">
+                            <ul className="space-y-2">
+                                {optionsDocuments.denuncias.map((denuncia, index) => (
+                                    <li key={index} className="flex items-center">
+                                        {documentName === denuncia && (
+                                            <span className="w-2 h-2 bg-custom-base rounded-full mr-2"></span>
+                                        )}
+                                        <button
+                                            onClick={() => seleccionarDocumento('denuncia', denuncia)}
+                                            className="text-left text-gray-700 hover:bg-gray-200 py-1 px-2 transition-colors duration-300 flex-grow"
+                                        >
+                                            {denuncia}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
             </div>
+
+
 
             <div className="w-3/4 h-screen p-8 bg-gray-50">
                 {documentType && documentName ? (
