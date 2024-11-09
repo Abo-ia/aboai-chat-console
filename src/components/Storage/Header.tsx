@@ -16,7 +16,7 @@ const Header: React.FC = () => {
                 </span>
                 <input
                     type="text"
-                    placeholder="Search in Harvee AI"
+                    placeholder="Search in Harvey AI"
                     className="bg-gray-100 w-[500px] pl-12 pr-12 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-custom-base focus:ring-opacity-50"
                 />
 

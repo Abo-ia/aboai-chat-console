@@ -254,7 +254,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                                         src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
                                                                                         alt="Assistant Avatar"
                                                                                     />
-                                                                                    <span className="text-sm font-semibold text-gray-900">Harvee</span>
+                                                                                    <span className="text-sm font-semibold text-gray-900">Harvey</span>
                                                                                     <span className="text-sm font-normal text-gray-500">{date}</span>
                                                                                 </div>
                                                                             </div>

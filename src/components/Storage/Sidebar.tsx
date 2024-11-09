@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud, FiFile, FiX } from 'react-icons/fi';
-import logo from '@src/assets/harvee_logo.png';
+import logo from '@src/assets/Harvey_logo.png';
 import { IoChatboxOutline } from "react-icons/io5";
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
 import { GoLaw } from "react-icons/go";
+import { FaObjectGroup } from 'react-icons/fa';
 
 const menuItems = [
     { icon: <IoChatboxOutline />, label: 'Chat', path: '/' },
     { icon: <FiHardDrive />, label: 'Mi Unidad', path: '/almacenamiento' },
     { icon: <GoLaw />, label: 'Legal', path: '/contratos-y-acuerdos' },
-    { icon: <FiClock />, label: 'Recientes', path: '/almacenamiento' },
+    {icon: <FaObjectGroup />, label: 'Organizaciones', path: '/organizaciones'},
     { icon: <FiStar />, label: 'Destacados', path: '/almacenamiento' },
     { icon: <FiTrash />, label: 'Papelera', path: '/almacenamiento' },
 ];
@@ -80,8 +81,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     return (
         <div className="bg-[#f8fbfc] p-4 w-64 h-screen shadow-lg flex flex-col">
             <div className='flex items-center cursor-pointer mb-5'>
-                <img src={logo} alt="Harvee" className="w-12 h-12" />
-                <h1 className='font-semibold ml-2'>Harvee AI</h1>
+                <img src={logo} alt="Harvey" className="w-12 h-12" />
+                <h1 className='font-semibold ml-2'>Harvey AI</h1>
             </div>
             <button
                 className="flex items-center p-3 mb-6 bg-[#006d5b] text-white rounded-lg shadow transition hover:bg-[#004f45] hover:shadow-xl duration-200"
