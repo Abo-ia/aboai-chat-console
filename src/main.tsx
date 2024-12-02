@@ -5,12 +5,12 @@ import { AppProvider } from '@src/context/AppContext.tsx'
 import { AuthProvider } from "react-oidc-context";
 
 const cognitoAuthConfig = {
-    authority: "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_Zi2dM23gS",
-    client_id: "4455nvqq8t9dd979a33e0nlc0e",
-    redirect_uri: "https://development.dbe4134e5l979.amplifyapp.com",
+    authority: "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_x8qEjt0hx",
+    client_id: "5m159m99fpk1uv41ip0vdh74lc",
+    redirect_uri: "https://development.d3jkwmni3crdra.amplifyapp.com/",
     response_type: "code",
-    scope: "email openid phone",
-  };
+    scope: "phone openid email",
+};
 
 import App from './App.tsx'
 import './index.css'
