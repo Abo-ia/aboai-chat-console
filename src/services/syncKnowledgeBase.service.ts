@@ -9,7 +9,7 @@ class SyncKnowledgeBase {
 
     async syncKnowledgeBase(): Promise<any> {
         try {
-            const response = await fetch(`${IABOGADO_API_URL}/ingestion`, {
+            const response = await fetch(`${IABOGADO_API_URL}/api/ingestion`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ class SyncKnowledgeBase {
     }
     async getSyncKnowledgeBaseStatus(): Promise<any> {
         try {
-            const response = await fetch(`${IABOGADO_API_URL}/sync-history`, {
+            const response = await fetch(`${IABOGADO_API_URL}/api/sync-history`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

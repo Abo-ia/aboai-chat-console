@@ -109,50 +109,51 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                 </div>
 
                 <div className="px-4 mb-2 h-[65vh] overflow-y-auto">
-                    {promptCategories.map((category: IPromptCategory) => (
-                        <div key={category.id} className="mb-4">
-                            <div
-                                className="flex text-sm justify-between items-center cursor-pointer p-2 bg-gray-50 rounded transition-colors duration-200"
-                                onClick={() => toggleCategory(category.id)}
-                            >
-                                <span className="font-semibold">{category.category}</span>
-                                <svg
-                                    className={`w-5 h-5 transform transition-transform ${category.isOpen ? 'rotate-180' : 'rotate-0'}`}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
+                    {/* {promptCategories.length > 0 &&
+                        promptCategories.map((category: IPromptCategory) => (
+                            <div key={category.id} className="mb-4">
+                                <div
+                                    className="flex text-sm justify-between items-center cursor-pointer p-2 bg-gray-50 rounded transition-colors duration-200"
+                                    onClick={() => toggleCategory(category.id)}
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </div>
-
-                            {category.isOpen && (
-                                <div className="pl-4">
-                                    {category.prompts.map((prompt) => (
-                                        <div
-                                            key={prompt.id}
-                                            onClick={() => handleQueyChange(prompt.title)}
-                                            className="flex justify-between cursor-pointer items-center p-2 mt-2 bg-gray-50 rounded transition-colors duration-200"
-                                        >
-                                            <p className="text-sm">{prompt.title}</p>
-                                            <button className="text-red-400 hover:text-white">
-                                                <svg
-                                                    className="w-5 h-5"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    ))}
+                                    <span className="font-semibold">{category.category}</span>
+                                    <svg
+                                        className={`w-5 h-5 transform transition-transform ${category.isOpen ? 'rotate-180' : 'rotate-0'}`}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
                                 </div>
-                            )}
-                        </div>
-                    ))}
+
+                                {category.isOpen && (
+                                    <div className="pl-4">
+                                        {category.prompts.map((prompt) => (
+                                            <div
+                                                key={prompt.id}
+                                                onClick={() => handleQueyChange(prompt.title)}
+                                                className="flex justify-between cursor-pointer items-center p-2 mt-2 bg-gray-50 rounded transition-colors duration-200"
+                                            >
+                                                <p className="text-sm">{prompt.title}</p>
+                                                <button className="text-red-400 hover:text-white">
+                                                    <svg
+                                                        className="w-5 h-5"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))} */}
                 </div>
             </div>
 
@@ -184,7 +185,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                                         className="p-2 border rounded w-3/4"
                                     />
                                     <button onClick={() => removePrompt(index)} className="text-red-400">
-                                        <FaTrash/>
+                                        <FaTrash />
                                     </button>
                                 </div>
                             ))}

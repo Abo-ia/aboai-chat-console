@@ -69,15 +69,15 @@ const CloudStorage: React.FC = () => {
     const s3Client = new S3Client({
         region: 'us-west-2',
         credentials: {
-            accessKeyId: 'AKIAQEFWA3RHL6DN3NVI',
-            secretAccessKey: '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',
+            accessKeyId: 'AKIAYRH5NASZRGMHECUZ',
+            secretAccessKey: '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',
         },
     });
 
     const fetchFilesFromS3 = async () => {
         setIsLoading(true);
         const command = new ListObjectsV2Command({
-            Bucket: 'iabogado-bucket',
+            Bucket: 'dev-harvey-bucket',
         });
 
         try {
