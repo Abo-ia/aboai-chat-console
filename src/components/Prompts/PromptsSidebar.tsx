@@ -109,7 +109,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                 </div>
 
                 <div className="px-4 mb-2 h-[65vh] overflow-y-auto">
-                    {promptCategories.length > 0 &&
+                    {/* {promptCategories.length > 0 &&
                         promptCategories.map((category: IPromptCategory) => (
                             <div key={category.id} className="mb-4">
                                 <div
@@ -152,7 +152,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                                     </div>
                                 )}
                             </div>
-                        ))}
+                        ))} */}
                 </div>
             </div>
 
