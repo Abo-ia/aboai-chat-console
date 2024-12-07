@@ -1,4 +1,4 @@
-import { IABOGADO_API_URL } from "@src/config/env";
+import { HARVEY_REST_API_URL } from "@src/config/env";
 
 class ConversationsHistoryService {
     private idToken: string | null;
@@ -9,7 +9,7 @@ class ConversationsHistoryService {
 
     async getConversationsHistory(userId: string): Promise<any> {
         try {
-            const response = await fetch(`${IABOGADO_API_URL}/api/query-chat`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api/query-chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ class ConversationsHistoryService {
 
     async getConversation(userId: string, conversationId: string): Promise<any> {
         try {
-            const response = await fetch(`${IABOGADO_API_URL}/api/query-chat`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api/query-chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
