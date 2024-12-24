@@ -10,13 +10,18 @@ export function AppProvider(props: AppProviderProps) {
     const [uploadFileShowModal, setUploadFileShowModal] = useState(false);
     const [syncHistoryShowModal, setSyncHistoryShowModal] = useState(false);
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     const appContext: AppContextType = {
         showModal: showModal,
         setShowModal: setShowModal,
         uploadFileShowModal: uploadFileShowModal,
         setUploadFileShowModal: setUploadFileShowModal,
         syncHistoryShowModal: syncHistoryShowModal,
-        setSyncHistoryShowModal: setSyncHistoryShowModal
+        setSyncHistoryShowModal: setSyncHistoryShowModal,
+
+        isSidebarOpen: isSidebarOpen,
+        setIsSidebarOpen: setIsSidebarOpen
     }
 
     return (

@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
+
 
 import { fetchAuthSession } from "aws-amplify/auth";
 import MessageService from '@src/services/messages.service';
@@ -49,6 +51,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    const [isChatHistoryOpen, setIsChatHistoryOpen] = useState<boolean>(false);
     const [textInput, setTextInput] = useState<string>("");
     const [activeQuestion, setActiveQuestion] = useState<string>("");
     const [messages, setMessages] = useState<any[]>([]);
@@ -168,7 +171,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 currentConversationId,
                 messages.map((msg) => msg.query).join(" "),
             );
-            const responseBody = response
+            const responseBody = response;
 
             setMessages((prevMessages) => [
                 ...prevMessages,
@@ -198,31 +201,28 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         setIsModalOpen(false);
     };
 
-
-
-    const handleQueyChange = (query: string) => {
-        setTextInput(query);
-    }
+    const handleChangeChatHistory = () => setIsChatHistoryOpen(!isChatHistoryOpen);
 
     return (
         <div>
-            <SidebarIcons />
-
-            <div className="font-sans flex">
-                {isSidebarOpen && (
+            <SidebarIcons
+                openChatHistory={handleChangeChatHistory}
+            />
+            <div className="font-sans flex w-full">
+                {isChatHistoryOpen ? (
                     <Sidebar
                         loadConversation={loadConversation}
                         isSidebarOpen={isSidebarOpen}
                     />
-                )}
+                ) : null}
 
-                <div className="flex-1 flex flex-col overflow-hidden">
-                    <div className="lg:w-[90%] w-[94%] mx-auto">
+                <div className="flex overflow-hidden">
+                    <div className="w-[90%] mx-auto">
                         <div className="mx-auto h-[84vh]">
-                            <div className="flex flex-row h-full w-full overflow-x-hidden">
+                            <div className="flex flex-col lg:flex-row h-full w-full overflow-x-hidden">
                                 <div className="flex flex-col flex-auto h-full">
                                     <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
-                                        <div className="flex  flex-col h-full overflow-y-auto mb-4">
+                                        <div className="flex flex-col h-full overflow-y-auto mb-4">
                                             <div className="flex flex-col h-full">
                                                 <div className="pt-4 gap-y-1">
                                                     {messages.map((msg, index) => {
@@ -276,60 +276,57 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                     )}
                                                                 </div>
                                                             </div>
-                                                        )
+                                                        );
                                                     })}
                                                     <div ref={messagesEndRef}></div>
                                                     {isLoading && <LoadingComponent />}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex">
-                                            <div className="flex-grow ml-4">
-                                                <div className="relative w-full">
-                                                    <textarea
-                                                        placeholder="Escribe un mensaje..."
-                                                        value={textInput}
-                                                        onChange={(e) => setTextInput(e.target.value)}
-                                                        onKeyPress={(e) => {
-                                                            if (e.key === "Enter" && !e.shiftKey) {
-                                                                e.preventDefault();
-                                                                sendMessage(textInput);
-                                                                setTextInput("");
-                                                            }
-                                                        }}
-                                                        className="flex w-full p-4 h-20 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-transparent hover:border-gray-400 resize-none shadow-sm"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="ml-4">
-                                                <button
-                                                    onClick={() => {
-                                                        sendMessage(textInput);
-                                                        setTextInput("");
+                                        <div className="flex-grow">
+                                            <div className="relative w-full">
+                                                <textarea
+                                                    placeholder="Escribe un mensaje..."
+                                                    value={textInput}
+                                                    onChange={(e) => setTextInput(e.target.value)}
+                                                    onKeyPress={(e) => {
+                                                        if (e.key === "Enter" && !e.shiftKey) {
+                                                            e.preventDefault();
+                                                            sendMessage(textInput);
+                                                            setTextInput("");
+                                                        }
                                                     }}
-                                                    className="flex items-center justify-center bg-slate-600 text-white h-10 px-4 rounded-lg hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
-                                                >
-                                                    <span className="mr-2">Enviar</span>
-                                                    <span className="transform rotate-45">
-                                                        <svg
-                                                            className="w-5 h-5"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth="2"
-                                                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                                            ></path>
-                                                        </svg>
-                                                    </span>
-                                                </button>
+                                                    className="flex w-full p-4 h-20 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-transparent hover:border-gray-400 resize-none shadow-sm"
+                                                />
                                             </div>
+                                        </div>
 
+                                        <div className="mt-2 sm:mt-0">
+                                            <button
+                                                onClick={() => {
+                                                    sendMessage(textInput);
+                                                    setTextInput("");
+                                                }}
+                                                className="flex items-center justify-center bg-slate-600 text-white h-10 px-4 rounded-lg hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
+                                            >
+                                                <span className="mr-2">Enviar</span>
+                                                <span className="transform rotate-45">
+                                                    <svg
+                                                        className="w-5 h-5"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth="2"
+                                                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                                        ></path>
+                                                    </svg>
+                                                </span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -341,22 +338,14 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     )}
                 </div>
 
-                {isSidebarOpen && (
-                    <PromptSidebar
-                        handleQueyChange={handleQueyChange}
-                        loadConversation={loadConversation}
-                        isSidebarOpen={isSidebarOpen}
-                    />
-                )}
-
                 <GoogleDriveModal />
                 <UploadFileModal />
                 <SyncHistoryModal />
             </div>
-
         </div>
     );
 };
+
 
 const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> = ({ content, onClose }) => {
     const uniqueReferences = useMemo(() => {
@@ -376,7 +365,7 @@ const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> =
             <div className="bg-black opacity-50 absolute inset-0" onClick={onClose}></div>
             <div className="bg-white rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
                 <h2 className="text-2xl font-bold mb-4">Referencias</h2>
-                {uniqueReferences.map((ref, index) => (
+                {uniqueReferences.map((ref: any, index: any) => (
                     <ReferenceItem key={index} content={ref} />
                 ))}
                 <button

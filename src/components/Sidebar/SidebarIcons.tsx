@@ -1,20 +1,24 @@
 import React from 'react'
 
 import { AppContext } from '@src/context/AppContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { BsChatSquareDotsFill } from "react-icons/bs";
 
-const SidebarIcons = () => {
+interface SidebarIconsProps {
+    openChatHistory: () => void;
+}
+
+const SidebarIcons: React.FC <SidebarIconsProps> = (props) => {
     const appContext = React.useContext(AppContext);
-    const handleSignOut = () => {
-        localStorage.clear();
-        window.location.href = '/auth/signin';
-    };
-
+    const { openChatHistory } = props;
 
     return (
-        <div className='flex shadow justify-end gap-7 mr-5 py-1 bg-gray-50 items-center cursor-pointer px-2 rounded-lg transition-all'>
-            <div className="cursor-pointer ">
+        <div className='flex shadow justify-between gap-7 mt-1 py-2 bg-gray-50 items-center cursor-pointer px-5 rounded-lg transition-all'>
+            <BsChatSquareDotsFill 
+                onClick={openChatHistory}
+                className='text-2xl text-gray-500 hover:text-gray-700'
+            />
+
+            <div className='flex gap-3'>
                 <div
                     onClick={() => appContext?.setShowModal(true)}
                     className="h-8 w-8 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">
@@ -23,8 +27,7 @@ const SidebarIcons = () => {
                         alt="Google Drive"
                     />
                 </div>
-            </div>
-            <div className="cursor-pointer ">
+
                 <div
                     onClick={() => appContext?.setSyncHistoryShowModal(true)}
                     className="h-8 w-8 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">

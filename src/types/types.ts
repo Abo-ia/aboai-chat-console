@@ -12,6 +12,11 @@ interface AppContextType {
     // Sync history modal
     setSyncHistoryShowModal: (syncHistoryShowModal: boolean) => void;
     syncHistoryShowModal: boolean;
+
+
+    // Sidebar
+    setIsSidebarOpen: (isSidebarOpen: boolean) => void;
+    isSidebarOpen: boolean;
 }
 
 interface AppProviderProps {
