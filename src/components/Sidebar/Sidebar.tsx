@@ -228,7 +228,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
 
     return (
         <React.Fragment>
-            <div className={`w-72 pt-6 transform transition-transform duration-300`}>
+            <div className={`w-1/4 pt-6 transform transition-transform duration-300`}>
                 <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
                     <div className="opacity-75">Apps</div>
                     <div>

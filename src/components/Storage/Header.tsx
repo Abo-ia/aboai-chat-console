@@ -13,7 +13,9 @@ const Header: React.FC = () => {
     return (
         <div className="bg-white p-4 shadow-md flex justify-between items-center">
             <button
-                onClick={() => appContext?.setIsSidebarOpen(!appContext?.isSidebarOpen)}
+                onClick={() => {
+                    appContext?.setIsSidebarOpen(!appContext?.isSidebarOpen);
+                }}
                 className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-300"
                 aria-controls="mobile-menu"
                 aria-expanded={hamburgerMenuState}

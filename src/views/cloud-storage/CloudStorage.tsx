@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+import { AppContext } from '@src/context/AppContext';
+
 import { S3Client, ListObjectsV2Command, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import Sidebar from '@src/components/Storage/Sidebar';
 import Header from '@src/components/Storage/Header';
@@ -66,6 +69,8 @@ const CloudStorage: React.FC = () => {
 
     const [activeView, setActiveView] = useState<string>('Inicio');
 
+    const appContext = useContext(AppContext);
+
     const s3Client = new S3Client({
         region: 'us-west-2',
         credentials: {
@@ -124,7 +129,7 @@ const CloudStorage: React.FC = () => {
         window.open(fileUrl, '_blank');
     };
 
-    const handleSync = async() => {
+    const handleSync = async () => {
         setShowSyncAlert(true);
         setTimeout(() => setShowSyncAlert(false), 3000);
 
@@ -174,23 +179,29 @@ const CloudStorage: React.FC = () => {
     if (activeView === 'Chat') {
         return (
             <div className="flex">
-                <Sidebar
-                    activeView={activeView}
-                    setActiveView={setActiveView}
-                />
+                {appContext?.isSidebarOpen || window.innerWidth > 768 ?
+                    (
+                        <Sidebar
+                            activeView={activeView}
+                            setActiveView={setActiveView}
+                        />
+                    ) : null}
                 <div className="flex-1 flex flex-col">
                     <Header />
-                    <ChatView conversation={""}/>
+                    <ChatView conversation={""} />
                 </div>
             </div>
         )
     } else if (activeView === 'Legal') {
         return (
             <div className="flex">
-                <Sidebar
-                    activeView={activeView}
-                    setActiveView={setActiveView}
-                />
+                {appContext?.isSidebarOpen || window.innerWidth > 768 ?
+                    (
+                        <Sidebar
+                            activeView={activeView}
+                            setActiveView={setActiveView}
+                        />
+                    ) : null}
                 <div className="flex-1 flex flex-col">
                     <Header />
                     <LegalSectionBody activeView={activeView} />
@@ -200,10 +211,13 @@ const CloudStorage: React.FC = () => {
     }
     return (
         <div className="flex">
-            <Sidebar
-                activeView={activeView}
-                setActiveView={setActiveView}
-            />
+            {appContext?.isSidebarOpen || window.innerWidth > 768 ?
+                (
+                    <Sidebar
+                        activeView={activeView}
+                        setActiveView={setActiveView}
+                    />
+                ) : null}
             <div className="flex-1 flex flex-col">
                 <Header />
                 <div className="px-8 m-6 rounded-lg relative">
