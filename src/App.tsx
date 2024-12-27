@@ -236,7 +236,6 @@ const components = {
 
 
 const App: React.FC = () => {
-
     return (
         <Authenticator
             components={components}
