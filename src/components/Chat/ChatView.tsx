@@ -216,7 +216,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     />
                 ) : null}
 
-                <div className="lg:w-3/5 w-4/5 mx-auto h-[84vh]">
+                <div className="lg:w-1/2 mx-5 h-[84vh]">
                     <div className="flex flex-col lg:flex-row h-full  overflow-x-hidden">
                         <div className="flex flex-col flex-auto h-full">
                             <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
@@ -331,6 +331,14 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 {isModalOpen && (
                     <ReferencesModal content={documentReferences} onClose={closeModal} />
                 )}
+
+                {isChatHistoryOpen ? (
+                    <PromptSidebar
+                        loadConversation={loadConversation}
+                        isSidebarOpen={isSidebarOpen}
+                        handleQueyChange={sendMessage}
+                    />
+                ) : null}
 
                 <GoogleDriveModal />
                 <UploadFileModal />
