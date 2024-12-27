@@ -15,6 +15,7 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import SyncKnowledgeBase from "@src/services/syncKnowledgeBase.service"
 
 import LegalSectionBody from '@src/components/LegalSection/LegalSectionBody';
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_BUCKET_NAME } from '@src/config/env';
 
 import ChatView from '@src/components/Chat/ChatView';
 
@@ -74,15 +75,15 @@ const CloudStorage: React.FC = () => {
     const s3Client = new S3Client({
         region: 'us-west-2',
         credentials: {
-            accessKeyId: 'AKIAYRH5NASZRGMHECUZ',
-            secretAccessKey: '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',
+            accessKeyId: AWS_ACCESS_KEY_ID,
+            secretAccessKey: AWS_SECRET_ACCESS_KEY
         },
     });
 
     const fetchFilesFromS3 = async () => {
         setIsLoading(true);
         const command = new ListObjectsV2Command({
-            Bucket: 'dev-harvey-bucket',
+            Bucket: AWS_BUCKET_NAME,
         });
 
         try {
@@ -112,7 +113,7 @@ const CloudStorage: React.FC = () => {
         setIsDeleting(true);
         try {
             const command = new DeleteObjectCommand({
-                Bucket: 'iabogado-bucket',
+                Bucket: AWS_BUCKET_NAME,
                 Key: fileKey,
             });
             await s3Client.send(command);
@@ -125,7 +126,7 @@ const CloudStorage: React.FC = () => {
     };
 
     const handleOpenFile = (fileKey: string) => {
-        const fileUrl = `https://iabogado-bucket.s3.amazonaws.com/${fileKey}`;
+        const fileUrl = `https://harvey-knowledge-base-bucket.s3.us-west-2.amazonaws.com/${fileKey}`;
         window.open(fileUrl, '_blank');
     };
 
@@ -153,7 +154,7 @@ const CloudStorage: React.FC = () => {
         const folderKey = `${newFolderName}/`;
 
         const command = new PutObjectCommand({
-            Bucket: 'iabogado-bucket',
+            Bucket: AWS_BUCKET_NAME,
             Key: folderKey,
             Body: '',
         });
@@ -316,7 +317,7 @@ const CloudStorage: React.FC = () => {
                                                                 onClick={() => toggleMenu(file.key)}
                                                             />
                                                             {openMenu === file.key && (
-                                                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+                                                                <div className="absolumt-2 w-48 bg-white rounded-lg shadow-lg">
                                                                     <ul>
                                                                         <li
                                                                             className="py-2 pl-4 cursor-pointer hover:bg-gray-100"

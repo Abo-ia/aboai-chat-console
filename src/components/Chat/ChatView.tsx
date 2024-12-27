@@ -208,7 +208,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             <SidebarIcons
                 openChatHistory={handleChangeChatHistory}
             />
-            <div className="font-sans flex w-full">
+            <div className="font-sans flex ">
                 {isChatHistoryOpen ? (
                     <Sidebar
                         loadConversation={loadConversation}
@@ -216,127 +216,121 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     />
                 ) : null}
 
-                <div className="flex overflow-hidden">
-                    <div className="w-[90%] mx-auto">
-                        <div className="mx-auto h-[84vh]">
-                            <div className="flex flex-col lg:flex-row h-full w-full overflow-x-hidden">
-                                <div className="flex flex-col flex-auto h-full">
-                                    <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
-                                        <div className="flex flex-col h-full overflow-y-auto mb-4">
-                                            <div className="flex flex-col h-full">
-                                                <div className="pt-4 gap-y-1">
-                                                    {messages.map((msg, index) => {
-                                                        const date = new Date(msg.timestamp).toLocaleTimeString();
-                                                        return (
-                                                            <div key={index} className="flex items-start mb-4 text-sm">
-                                                                <div className="w-full">
-                                                                    <div className="mt-1 p-3 rounded-lg">
-                                                                        <div className="flex items-start gap-2.5 mb-4">
+                <div className="lg:w-3/5 w-4/5 mx-auto h-[84vh]">
+                    <div className="flex flex-col lg:flex-row h-full  overflow-x-hidden">
+                        <div className="flex flex-col flex-auto h-full">
+                            <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
+                                <div className="flex flex-col h-full overflow-y-auto mb-4">
+                                    <div className="flex flex-col h-full">
+                                        <div className="pt-4 gap-y-1">
+                                            {messages.map((msg, index) => {
+                                                const date = new Date(msg.timestamp).toLocaleTimeString();
+                                                return (
+                                                    <div key={index} className="flex items-start mb-4 text-sm">
+                                                        <div className="">
+                                                            <div className="mt-1 p-3 rounded-lg">
+                                                                <div className="flex items-start gap-2.5 mb-4">
+                                                                    <img
+                                                                        className="w-8 h-8 rounded-full"
+                                                                        src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
+                                                                        alt="User Avatar"
+                                                                    />
+                                                                    <div className="flex flex-col leading-1.5">
+                                                                        <div className="flex items-center space-x-2">
+                                                                            <span className="text-sm font-semibold text-gray-900">Tú</span>
+                                                                            <span className="text-sm font-normal text-gray-500">{date}</span>
+                                                                        </div>
+                                                                        <p className="py-2 text-gray-900">{msg.query}</p>
+                                                                        <span className="text-sm font-normal text-gray-500">Enviado</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="flex flex-col gap-2.5">
+                                                                    <div className="flex flex-col leading-1.5">
+                                                                        <div className="flex items-center space-x-2">
                                                                             <img
                                                                                 className="w-8 h-8 rounded-full"
-                                                                                src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
-                                                                                alt="User Avatar"
+                                                                                src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
+                                                                                alt="Assistant Avatar"
                                                                             />
-                                                                            <div className="flex flex-col leading-1.5">
-                                                                                <div className="flex items-center space-x-2">
-                                                                                    <span className="text-sm font-semibold text-gray-900">Tú</span>
-                                                                                    <span className="text-sm font-normal text-gray-500">{date}</span>
-                                                                                </div>
-                                                                                <p className="py-2 text-gray-900">{msg.query}</p>
-                                                                                <span className="text-sm font-normal text-gray-500">Enviado</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="flex flex-col gap-2.5">
-                                                                            <div className="flex flex-col leading-1.5">
-                                                                                <div className="flex items-center space-x-2">
-                                                                                    <img
-                                                                                        className="w-8 h-8 rounded-full"
-                                                                                        src="https://cdn.icon-icons.com/icons2/2136/PNG/512/google_assistant_icon_131681.png"
-                                                                                        alt="Assistant Avatar"
-                                                                                    />
-                                                                                    <span className="text-sm font-semibold text-gray-900">Harvey</span>
-                                                                                    <span className="text-sm font-normal text-gray-500">{date}</span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div
-                                                                                className="w-full h-full bg-gray-50 pt-6 py-2 px-5 pb-6 rounded prose prose-sm"
-                                                                                dangerouslySetInnerHTML={{ __html: msg.response }}
-                                                                            />
-
-                                                                            <span className="text-sm font-normal text-gray-500 mt-1">Entregado</span>
+                                                                            <span className="text-sm font-semibold text-gray-900">Harvey</span>
+                                                                            <span className="text-sm font-normal text-gray-500">{date}</span>
                                                                         </div>
                                                                     </div>
-                                                                    {msg.references && msg.references.length > 0 && (
-                                                                        <button
-                                                                            className="bg-custom-base text-white px-3 py-2 rounded mt-2 hover:bg-custom-lighter transition-colors duration-300 text-sm font-semibold"
-                                                                            onClick={() => showReferences(msg.references, msg.query)}
-                                                                        >
-                                                                            Mostrar referencias.
-                                                                        </button>
-                                                                    )}
+                                                                    <div
+                                                                        className=" h-full bg-gray-50 pt-6 py-2 px-5 pb-6 rounded prose prose-sm"
+                                                                        dangerouslySetInnerHTML={{ __html: msg.response }}
+                                                                    />
+
+                                                                    <span className="text-sm font-normal text-gray-500 mt-1">Entregado</span>
                                                                 </div>
                                                             </div>
-                                                        );
-                                                    })}
-                                                    <div ref={messagesEndRef}></div>
-                                                    {isLoading && <LoadingComponent />}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex-grow">
-                                            <div className="relative w-full">
-                                                <textarea
-                                                    placeholder="Escribe un mensaje..."
-                                                    value={textInput}
-                                                    onChange={(e) => setTextInput(e.target.value)}
-                                                    onKeyPress={(e) => {
-                                                        if (e.key === "Enter" && !e.shiftKey) {
-                                                            e.preventDefault();
-                                                            sendMessage(textInput);
-                                                            setTextInput("");
-                                                        }
-                                                    }}
-                                                    className="flex w-full p-4 h-20 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-transparent hover:border-gray-400 resize-none shadow-sm"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="mt-2 sm:mt-0">
-                                            <button
-                                                onClick={() => {
-                                                    sendMessage(textInput);
-                                                    setTextInput("");
-                                                }}
-                                                className="flex items-center justify-center bg-slate-600 text-white h-10 px-4 rounded-lg hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
-                                            >
-                                                <span className="mr-2">Enviar</span>
-                                                <span className="transform rotate-45">
-                                                    <svg
-                                                        className="w-5 h-5"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth="2"
-                                                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                                        ></path>
-                                                    </svg>
-                                                </span>
-                                            </button>
+                                                            {msg.references && msg.references.length > 0 && (
+                                                                <button
+                                                                    className="bg-custom-base text-white px-3 py-2 rounded mt-2 hover:bg-custom-lighter transition-colors duration-300 text-sm font-semibold"
+                                                                    onClick={() => showReferences(msg.references, msg.query)}
+                                                                >
+                                                                    Mostrar referencias.
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                            <div ref={messagesEndRef}></div>
+                                            {isLoading && <LoadingComponent />}
                                         </div>
                                     </div>
+                                </div>
+                                <div className="flex-grow">
+                                    <textarea
+                                        placeholder="Escribe un mensaje..."
+                                        value={textInput}
+                                        onChange={(e) => setTextInput(e.target.value)}
+                                        onKeyPress={(e) => {
+                                            if (e.key === "Enter" && !e.shiftKey) {
+                                                e.preventDefault();
+                                                sendMessage(textInput);
+                                                setTextInput("");
+                                            }
+                                        }}
+                                        className="p-4 w-full h-20 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-transparent hover:border-gray-400 shadow-sm"
+                                    />
+                                </div>
+
+                                <div className="mt-2 sm:mt-0">
+                                    <button
+                                        onClick={() => {
+                                            sendMessage(textInput);
+                                            setTextInput("");
+                                        }}
+                                        className="flex items-center justify-center bg-slate-600 text-white h-10 px-4 rounded-lg hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
+                                    >
+                                        <span className="mr-2">Enviar</span>
+                                        <span className="transform rotate-45">
+                                            <svg
+                                                className="w-5 h-5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                                ></path>
+                                            </svg>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {isModalOpen && (
-                        <ReferencesModal content={documentReferences} onClose={closeModal} />
-                    )}
                 </div>
+                {isModalOpen && (
+                    <ReferencesModal content={documentReferences} onClose={closeModal} />
+                )}
 
                 <GoogleDriveModal />
                 <UploadFileModal />
@@ -396,7 +390,7 @@ const ReferenceItem: React.FC<{ content: Reference }> = ({ content }) => {
                 </span>
             </p>
             {isOpen && (
-                <div className="mt-2 w-full h-96 overflow-y-auto">
+                <div className="mt-2 h-96 overflow-y-auto">
                     <p>{content.content.text}</p>
                 </div>
             )}
