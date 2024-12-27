@@ -242,25 +242,6 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
                     </div>
                 </div>
 
-                <div className="px-4 mb-5">
-                    <div className="text-gray-700 mb-2 font-semibold">Favoritos</div>
-                    <div className="space-y-1 overflow-y-auto h-[10vh]">
-                        {favoriteItems.map((item) => (
-                            <SidebarItem
-                                key={item.conversationId}
-                                conversationId={item.conversationId}
-                                conversationName={item.conversation_name}
-                                getConversation={getConversation}
-                                selected={selectedId === item.conversationId}
-                                setSelected={setSelectedId}
-                                onDeleteConversation={handleDeleteConversation}
-                                onMarkFavorite={handleMarkFavorite}
-                                isFavorite={true}
-                            />
-                        ))}
-                    </div>
-                </div>
-
                 <div className="px-4">
                     <div className="text-gray-700 mb-5 mt-3 font-semibold">Historial de Chats</div>
                     <div className="overflow-y-auto h-[55vh]">
