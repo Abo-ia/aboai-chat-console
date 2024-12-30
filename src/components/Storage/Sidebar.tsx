@@ -53,8 +53,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
             try {
                 const command = new PutObjectCommand(uploadParams);
                 const response = await s3Client.send(command);
-                console.log('File uploaded:', response);
-                console.log(`Archivo ${file.name} subido correctamente a ${folderPath || 'root'}`);
             } catch (error) {
                 console.error(`Error subiendo archivo ${file.name}: `, error);
             }

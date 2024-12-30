@@ -63,7 +63,6 @@ const ComplaintsForm: React.FC = () => {
             setSubmissionStatus('success');
             setSubmissionResult(response);
             setIsModalOpen(true);
-            console.log('Complaint created successfully:', response);
         } catch (error) {
             console.error('Error creating complaint:', error);
             setSubmissionStatus('error');
