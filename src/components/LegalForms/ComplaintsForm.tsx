@@ -76,6 +76,26 @@ const ComplaintsForm: React.FC = () => {
         setIsModalOpen(false);
     };
 
+    const formatTextWithLineBreaks = (text: string) => {
+        return text
+            .split('\n\n') // Primero manejamos doble salto de línea
+            .map((paragraph, index) =>
+                paragraph
+                    .split('\n') // Luego manejamos los saltos de línea simples
+                    .map((line, lineIndex) => (
+                        <span key={`${index}-${lineIndex}`}>
+                            {line}
+                            <br />
+                        </span>
+                    ))
+            )
+            .map((lines, paragraphIndex) => (
+                <p key={`paragraph-${paragraphIndex}`} className="mb-4">
+                    {lines}
+                </p>
+            ));
+    };
+
     return (
         <div className="p-6 max-w-4xl mx-auto bg-white rounded-md shadow-md">
             <h1 className="text-2xl font-bold mb-4">Formulario para la Generación de Denuncias</h1>
@@ -225,7 +245,6 @@ const ComplaintsForm: React.FC = () => {
                 </div>
             </div>
 
-            {/* Modal para mostrar el resultado */}
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white rounded-lg p-6 max-w-2xl w-full h-[70vh] overflow-y-auto">
@@ -233,13 +252,15 @@ const ComplaintsForm: React.FC = () => {
                         <p className="mb-4 text-gray-700 text-center">
                             Esta funcionalidad ayuda a desarrollar la sección "Descripción de los Hechos" generada con base en los datos recabados. Asegúrate de revisar y confirmar que la información es correcta.
                         </p>
-                        <pre className="text-sm whitespace-pre-wrap bg-gray-100 p-4 rounded-md overflow-y-auto max-h-[70vh] border border-gray-300">
-                            {JSON.stringify(submissionResult, null, 2)}
-                        </pre>
+                        <div className="text-sm whitespace-pre-wrap bg-gray-100 p-4 rounded-md overflow-y-auto max-h-[70vh] border border-gray-300">
+                            {submissionResult && typeof submissionResult === 'string'
+                                ? formatTextWithLineBreaks(submissionResult)
+                                : JSON.stringify(submissionResult, null, 2)}
+                        </div>
                         <div className="flex justify-center mt-4">
                             <button
                                 onClick={closeModal}
-                                className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="bg-custom-base text-white px-6 py-2 transition rounded-md hover:bg-custom-dark focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 Cerrar
                             </button>
