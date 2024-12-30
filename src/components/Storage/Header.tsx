@@ -11,7 +11,7 @@ const Header: React.FC = () => {
     };
 
     return (
-        <div className="bg-white p-4 shadow-md flex justify-between items-center">
+        <div className="bg-white p-4 shadow-md flex justify-between lg:justify-end items-center">
             <button
                 onClick={() => {
                     appContext?.setIsSidebarOpen(!appContext?.isSidebarOpen);
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
             </button>
 
             {/* User Dropdown */}
-            <div className="relative inline-block text-left justify-end">
+            <div className="relative inline-block text-left justify-e">
                 <button
                     onClick={handleOptionsState}
                     type="button"

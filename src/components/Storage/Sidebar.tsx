@@ -14,7 +14,7 @@ const menuItems = [
     { icon: <IoChatboxOutline />, label: 'Chat', path: '/' },
     { icon: <FiHardDrive />, label: 'Mi Unidad', path: '/almacenamiento' },
     { icon: <GoLaw />, label: 'Legal', path: '/contratos-y-acuerdos' },
-    {icon: <FaObjectGroup />, label: 'Organizaciones', path: '/organizaciones'},
+    { icon: <FaObjectGroup />, label: 'Organizaciones', path: '/organizaciones' },
     { icon: <FiStar />, label: 'Destacados', path: '/almacenamiento' },
     { icon: <FiTrash />, label: 'Papelera', path: '/almacenamiento' },
 ];

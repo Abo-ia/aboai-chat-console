@@ -102,7 +102,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
 
     return (
         <React.Fragment>
-            <div className="text-[#292828] flex-none w-[300px] py-6 transition-transform duration-300 shadow-lg">
+            <div className="text-[#292828] flex-none w-[300px] py-6 transition-transform duration-300 border-l border-gray-300">
                 <div className="px-4 py-2 mb-4 flex justify-between items-center rounded-md">
                     <h1 className="text-lg font-semibold">Prompts Base</h1>
                     <button onClick={openModal} className="bg-custom-base text-white px-2 py-1 rounded">+ Nuevo</button>

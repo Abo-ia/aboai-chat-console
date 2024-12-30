@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
-
-
 import { fetchAuthSession } from "aws-amplify/auth";
 import MessageService from '@src/services/messages.service';
 import ConversationsHistoryService from '@src/services/conversationsHistory.service';
+
+import useWindowSize from '@src/hooks/useWindowSize';
 
 import Sidebar from "@src/components/Sidebar/Sidebar";
 import LoadingComponent from "@src/components/LoadingComponent/LoadingComponent";
@@ -42,14 +39,15 @@ type ChatDashboardProps = {
 };
 
 const ChatView: React.FC<ChatDashboardProps> = () => {
+    const { width } = useWindowSize();
     const [isSidebarOpen, setIsSidebarOpen] = useState(
-        window.innerWidth > 768 ? true : false
+        width > 768 // Visible inicialmente en modo desktop
     );
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+    useEffect(() => {
+        setIsSidebarOpen(width > 768);
+    }, [width]);
 
     const [isChatHistoryOpen, setIsChatHistoryOpen] = useState<boolean>(false);
     const [textInput, setTextInput] = useState<string>("");
@@ -209,12 +207,12 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 openChatHistory={handleChangeChatHistory}
             />
             <div className="font-sans flex ">
-                {isChatHistoryOpen ? (
+                {(isChatHistoryOpen || width > 541) && (
                     <Sidebar
                         loadConversation={loadConversation}
                         isSidebarOpen={isSidebarOpen}
                     />
-                ) : null}
+                )}
 
                 <div className="lg:w-1/2 mx-5 h-[84vh]">
                     <div className="flex flex-col lg:flex-row h-full  overflow-x-hidden">
@@ -332,7 +330,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     <ReferencesModal content={documentReferences} onClose={closeModal} />
                 )}
 
-                {isChatHistoryOpen ? (
+                {!isChatHistoryOpen && width > 541 ? (
                     <PromptSidebar
                         loadConversation={loadConversation}
                         isSidebarOpen={isSidebarOpen}
