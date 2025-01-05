@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '@src/components/Storage/Sidebar';
 import Header from '@src/components/Storage/Header';
 import ChatView from '@src/components/Chat/ChatView';
-import Organizations from '@src/components/Organizations/Organizations';
+import OrganizationWrapped from '@src/components/Organizations/OrganizationWrapped';
 
 const OrganizationsView: React.FC = () => {
     const [activeView, setActiveView] = useState<string>('Inicio');
@@ -15,7 +15,7 @@ const OrganizationsView: React.FC = () => {
             />
             <div className="flex-1 flex flex-col">
                 <Header />
-                <Organizations/>
+                <OrganizationWrapped/>
             </div>
         </div>
     )

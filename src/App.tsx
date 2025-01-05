@@ -14,7 +14,7 @@ import CloudStorage from './views/cloud-storage/CloudStorage';
 import PaymentForm from './views/payment/PaymentForm';
 import ContractsBuilder from './views/contracts-builder/ContractsBuilder';
 import AIChat from './views/ai-chat/AIChat';
-
+import OrganizationsView from './views/organizations/OrganizationsView';
 
 Amplify.configure({
     Auth: {
@@ -247,6 +247,9 @@ const App: React.FC = () => {
                     <Route path="/almacenamiento" element={<CloudStorage />} />
                     <Route path="/contratos-y-acuerdos" element={<ContractsBuilder />} />
                     <Route path='/suscripcion' element={<PaymentForm />} />
+                    <Route 
+                        path='/organizaciones' element={<OrganizationsView />}
+                    />
                 </Routes>
             </Router>
         </Authenticator>

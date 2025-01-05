@@ -11,7 +11,7 @@ const Header: React.FC = () => {
     };
 
     return (
-        <div className="bg-white p-4 shadow-md flex justify-between lg:justify-end items-center">
+        <div className="bg-custom-bg-main p-4 flex justify-between lg:justify-end items-center">
             <button
                 onClick={() => {
                     appContext?.setIsSidebarOpen(!appContext?.isSidebarOpen);
@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                 <button
                     onClick={handleOptionsState}
                     type="button"
-                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     id="menu-button"
                     aria-expanded={optionsState}
                     aria-haspopup="true"
@@ -60,13 +60,13 @@ const Header: React.FC = () => {
                 </button>
 
                 {optionsState && (
-                    <div className="absolute z-10 right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                    <div className="absolute z-10 right-0 mt-2 w-56 origin-top-right rounded-md bg-custom-bg-secondary text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                         <div className="py-1" role="none">
-                            <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" id="menu-item-0">Chat</a>
-                            <a href="/almacenamiento" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" id="menu-item-1">Almacenamiento</a>
-                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" id="menu-item-2">Ajustes</a>
+                            <a href="/" className="block px-4 py-2 text-sm  hover:bg-gray-100" role="menuitem" id="menu-item-0">Chat</a>
+                            <a href="/almacenamiento" className="block px-4 py-2 text-sm  hover:bg-gray-100" role="menuitem" id="menu-item-1">Almacenamiento</a>
+                            <a href="#" className="block px-4 py-2 text-sm  hover:bg-gray-100" role="menuitem" id="menu-item-2">Ajustes</a>
                             <form method="POST" action="#" role="none">
-                                <button type="submit" className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100" role="menuitem" id="menu-item-3">Cerrar sesión</button>
+                                <button type="submit" className="block w-full px-4 py-2 text-left text-sm  hover:bg-gray-100" role="menuitem" id="menu-item-3">Cerrar sesión</button>
                             </form>
                         </div>
                     </div>

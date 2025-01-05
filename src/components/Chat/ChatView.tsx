@@ -206,7 +206,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             <SidebarIcons
                 openChatHistory={handleChangeChatHistory}
             />
-            <div className="font-sans flex ">
+            <div className="font-sans flex">
                 {(isChatHistoryOpen || width > 541) && (
                     <Sidebar
                         loadConversation={loadConversation}
@@ -279,7 +279,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex-grow">
+                                <div className="flex flex-row items-center justify-center p-4 gap-4">
                                     <textarea
                                         placeholder="Escribe un mensaje..."
                                         value={textInput}
@@ -293,9 +293,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                         }}
                                         className="p-4 w-full h-20 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-transparent hover:border-gray-400 shadow-sm"
                                     />
-                                </div>
 
-                                <div className="mt-2 sm:mt-0">
                                     <button
                                         onClick={() => {
                                             sendMessage(textInput);
