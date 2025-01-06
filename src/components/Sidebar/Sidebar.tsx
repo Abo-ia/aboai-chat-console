@@ -53,7 +53,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     };
 
     return (
-        <div className="relative group block mb-1">
+        <div className="relative group block mb-1 text-custom-font-main hover:bg-custom-bg-hover">
             <div
                 className={`flex justify-between items-center cursor-pointer px-2 border-custom-base rounded-lg transition-all ${selected ? 'border-[1px] border-custom-base' : 'group-hover:bg-custom-base'}`}
                 onClick={handleClick}>
@@ -68,7 +68,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" />
                         </svg>
                     )}
-                    <p className={`truncate pl-2 ${selected ? 'text-custom-base' : 'text-gray-800 group-hover:text-white'}`}>
+                    <p className={`truncate pl-2`}>
                         {conversationName}
                     </p>
                 </div>
@@ -225,9 +225,10 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
 
     return (
         <React.Fragment>
-            <div className={`w-[25%] bg-neutral-50 border-r border-neutral-200 pt-6 transform transition-transform duration-300`}>
+            <div
+                className={`w-[25%] bg-custom-bg-sidebar pt-6 transform transition-transform duration-300`}>
                 <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
-                    <div className="opacity-75">Apps</div>
+                    <div className="text-custom-font-main">Apps</div>
                     <div>
                         <svg
                             className="fill-current h-4 w-4 opacity-50"
@@ -240,7 +241,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
                 </div>
 
                 <div className="px-4">
-                    <div className="text-gray-700 mb-5 mt-3 font-semibold">Historial de Chats</div>
+                    <div className="text-custom-font-main mb-5 mt-3 font-semibold">Historial de Chats</div>
                     <div className="overflow-y-auto h-[55vh]">
                         {menuItems.map((item) => (
                             <SidebarItem

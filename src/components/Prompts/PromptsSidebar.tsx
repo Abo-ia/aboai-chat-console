@@ -24,7 +24,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newCategory, setNewCategory] = useState({ category: "", isOpen: false, prompts: [{ id: generateUniqueId(), title: "" }] });
 
-    const idToken = "your-authentication-token"; // Replace with actual token
+    const idToken = "your-authentication-token";
     const promptService = new PromptCategoryService(idToken);
 
     useEffect(() => {
@@ -102,10 +102,10 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
 
     return (
         <React.Fragment>
-            <div className="text-[#292828] flex-none w-[300px] py-6 transition-transform duration-300 border-l border-gray-300">
+            <div className="bg-custom-bg-sidebar text-custom-font-main flex-none w-[300px] py-6 transition-transform duration-300">
                 <div className="px-4 py-2 mb-4 flex justify-between items-center rounded-md">
                     <h1 className="text-lg font-semibold">Prompts Base</h1>
-                    <button onClick={openModal} className="bg-custom-base text-white px-2 py-1 rounded">+ Nuevo</button>
+                    <button onClick={openModal} className="bg-custom-gradient px-2 py-1 rounded">+ Nuevo</button>
                 </div>
 
                 <div className="px-4 mb-2 h-[65vh] overflow-y-auto">

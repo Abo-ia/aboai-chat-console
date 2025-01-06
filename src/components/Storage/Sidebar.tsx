@@ -80,8 +80,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     };
 
     return (
-        <div className="relative">
-            <div className={`bg-[#f8fbfc] h-screen shadow-lg flex flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-60' : 'w-16'}`}>
+        <div className="relative text-custom-font-main border-r border-custom-border">
+            <div className={`bg-custom-bg-sidebar h-screen shadow-lg flex flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-60' : 'w-16'}`}>
                 <div className={`flex items-center justify-center p-4 ${isSidebarOpen ? 'space-x-2' : ''}`}>
                     <img
                         src={logo}
@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 </div>
 
                 <button
-                    className="flex items-center justify-center gap-3 p-4 mb-3 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-lg shadow-lg transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    className="flex items-center justify-center gap-3 p-4 mb-3 bg-custom-gradient text-white rounded-lg shadow-lg transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     onClick={() => {
                         if (pathname !== '/') {
                             setShowModal(true);
@@ -112,12 +112,12 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     )}
                 </button>
 
-                <ul className="flex-1 space-y-2">
+                <ul className="flex-1">
                     {menuItems.map((item, index) => (
                         <li
                             onClick={() => navigate(item.path)}
                             key={index}
-                            className={`cursor-pointer text-sm px-2 rounded hover:bg-[#e9eaee] flex items-center justify-center text-[#484b4b] transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
+                            className={`cursor-pointer text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
                                 }`}
                         >
                             <div className="flex items-center justify-center w-full">
@@ -136,7 +136,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
 
                 <button
-                    className="flex items-center justify-center p-4 bg-[#f8fbfc] text-[#484b4b] rounded-lg shadow transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    className="flex items-center justify-center p-4 rounded-lg shadow transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                     aria-label={isSidebarOpen ? 'Ocultar Sidebar' : 'Mostrar Sidebar'}
                 >
@@ -148,13 +148,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 </button>
 
 
-                <div className={`bg-white p-3 rounded-lg transition-all duration-300 ${!isSidebarOpen && 'hidden'}`}>
-                    <div className="flex items-center justify-between text-sm text-[#484b4b]">
+                <div className={`p-3 rounded-lg transition-all duration-300 ${!isSidebarOpen && 'hidden'}`}>
+                    <div className="flex items-center justify-between text-sm text-custom-font-base">
                         <span>13.2 GB de 15 GB usados</span>
-                        <button className="text-[#006d5b] hover:underline text-xs">Más almacenamiento</button>
+                        <button className="text-custom-gradient hover:underline text-xs">Más almacenamiento</button>
                     </div>
                     <div className="w-full h-2 bg-[#e9eaee] mt-2 rounded-full overflow-hidden">
-                        <div className="h-2 bg-[#006d5b] rounded-full transition-all duration-500 ease-in-out" style={{ width: '88%' }}></div>
+                        <div className="h-2 bg-custom-gradient rounded-full transition-all duration-500 ease-in-out" style={{ width: '88%' }}></div>
                     </div>
                 </div>
             </div>

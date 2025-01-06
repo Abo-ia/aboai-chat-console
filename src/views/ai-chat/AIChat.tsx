@@ -11,7 +11,7 @@ const AIChat: React.FC = () => {
     const appContext = useContext(AppContext);
 
     return (
-        <div className="flex">
+        <div className="flex h-screen">
             {appContext?.isSidebarOpen || window.innerWidth > 768 ?
                 (
                     <Sidebar
