@@ -3,7 +3,7 @@ import { HARVEY_REST_API_URL } from "@src/config/env";
 export const createComplaint = async (data: any) => {
     try {
         // Envía los datos a la API
-        const apiResponse = await fetch(`${HARVEY_REST_API_URL}/api/complaints`,
+        const apiResponse = await fetch(`${HARVEY_REST_API_URL}/complaints`,
             {
                 method: 'POST',
                 headers: {

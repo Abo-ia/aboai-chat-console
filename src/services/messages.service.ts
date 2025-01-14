@@ -9,7 +9,7 @@ class MessageService {
 
     async createConversation(userId: string, message: string): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/api/query-chat`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/query-chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ class MessageService {
                 throw new Error("Missing idToken. Authentication may be required.");
             }
     
-            const response = await fetch(`${HARVEY_REST_API_URL}/api/inference`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/inference`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

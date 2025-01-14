@@ -9,7 +9,7 @@ class SyncKnowledgeBase {
 
     async syncKnowledgeBase(): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/api/ingestion`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/ingestion`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ class SyncKnowledgeBase {
     }
     async getSyncKnowledgeBaseStatus(): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/api/sync-history`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/sync-history`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ class PromptCategoryService {
 
     async getPromptCategories(): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/api/prompts`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/prompts`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ class PromptCategoryService {
                 throw new Error("Missing idToken. Authentication may be required.");
             }
 
-            const response = await fetch(`${HARVEY_REST_API_URL}/api/prompts`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/prompts`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
