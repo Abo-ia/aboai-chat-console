@@ -235,7 +235,7 @@ const ComplaintsForm: React.FC = () => {
                 <div className="flex justify-end space-x-4">
                     <button
                         onClick={handleSubmit}
-                        className={`bg-custom-base text-white px-4 py-2 rounded-md shadow-sm ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                        className={`bg-custom-bg-main text-white px-4 py-2 rounded-md shadow-sm ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                             }`}
                         disabled={isSubmitting}
                     >
@@ -256,10 +256,10 @@ const ComplaintsForm: React.FC = () => {
                                 ? formatTextWithLineBreaks(submissionResult)
                                 : JSON.stringify(submissionResult, null, 2)}
                         </div>
-                        <div className="flex justify-center mt-4">
+                        <div className="flex justify-end mt-4">
                             <button
                                 onClick={closeModal}
-                                className="bg-custom-base text-white px-6 py-2 transition rounded-md hover:bg-custom-dark focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="bg-custom-bg-main text-white px-6 py-2 transition rounded-md hover:bg-custom-dark focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 Cerrar
                             </button>
