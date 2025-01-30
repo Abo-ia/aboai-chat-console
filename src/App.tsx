@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ChatView from '@src/components/Chat/ChatView';
 
-import { fetchAuthSession } from "aws-amplify/auth";
 import { Amplify } from 'aws-amplify';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 
@@ -247,9 +246,7 @@ const App: React.FC = () => {
                     <Route path="/almacenamiento" element={<CloudStorage />} />
                     <Route path="/contratos-y-acuerdos" element={<ContractsBuilder />} />
                     <Route path='/suscripcion' element={<PaymentForm />} />
-                    <Route 
-                        path='/organizaciones' element={<OrganizationsView />}
-                    />
+                    <Route path='/organizaciones' element={<OrganizationsView />}/>
                 </Routes>
             </Router>
         </Authenticator>

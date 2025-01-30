@@ -54,9 +54,14 @@ const Header: React.FC = () => {
                             <a href="/" className="block px-4 py-2 text-sm hover:bg-custom-bg-hover" role="menuitem" id="menu-item-0">Chat</a>
                             <a href="/" className="block px-4 py-2 text-sm hover:bg-custom-bg-hover" role="menuitem" id="menu-item-1">Almacenamiento</a>
                             <a href="/" className="block px-4 py-2 text-sm hover:bg-custom-bg-hover" role="menuitem" id="menu-item-2">Ajustes</a>
-                            <form method="POST" action="#" role="none">
-                                <button type="submit" className="block w-full px-4 py-2 text-left text-sm  " role="menuitem" id="menu-item-3">Cerrar sesión</button>
-                            </form>
+                            <button
+                                onClick={() => {
+                                    localStorage.clear();
+                                    window.location.reload();
+                                }}
+                                className="block w-full px-4 py-2 text-left text-sm"
+                                role="menuitem"
+                                id="menu-item-3">Cerrar sesión</button>
                         </div>
                     </div>
                 )}

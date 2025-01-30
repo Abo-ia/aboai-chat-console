@@ -30,29 +30,29 @@ const OrganizationTeams: React.FC = () => {
         setTeamMembers(updatedMembers);
     };
 
-    const handleCreateTeam = () => {
-        const newTeam = {
-            name: teamName,
-            members: teamMembers
-                .filter((member) => member.name && member.role) // Filtra miembros válidos
-                .map((member) => ({
-                    ...member,
-                    initial: member.name[0]?.toUpperCase() || "", // Genera el campo initial
-                })),
-        };
+    // const handleCreateTeam = () => {
+    //     const newTeam = {
+    //         name: teamName,
+    //         members: teamMembers
+    //             .filter((member) => member.name && member.role) // Filtra miembros válidos
+    //             .map((member) => ({
+    //                 ...member,
+    //                 initial: member.name[0]?.toUpperCase() || "", // Genera el campo initial
+    //             })),
+    //     };
 
-        dispatch({
-            type: "ADD_TEAM_TO_ORGANIZATION",
-            payload: {
-                organizationId: activeOrganization.id,
-                team: newTeam,
-            },
-        });
+    //     dispatch({
+    //         type: "ADD_TEAM_TO_ORGANIZATION",
+    //         payload: {
+    //             organizationId: activeOrganization.id,
+    //             team: newTeam,
+    //         },
+    //     });
 
-        setShowModal(false);
-        setTeamName("");
-        setTeamMembers([{ name: "", role: "" }]);
-    };
+    //     setShowModal(false);
+    //     setTeamName("");
+    //     setTeamMembers([{ name: "", role: "" }]);
+    // };
 
 
     return (
@@ -166,12 +166,12 @@ const OrganizationTeams: React.FC = () => {
                             >
                                 Cancelar
                             </button>
-                            <button
+                            {/* <button
                                 className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition"
                                 onClick={handleCreateTeam}
                             >
                                 Guardar Equipo
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-export const HARVEY_REST_API_URL = "https://r0972t0gel.execute-api.us-west-2.amazonaws.com/dev"
+export const HARVEY_REST_API_URL = "https://aovdb5k5g0.execute-api.us-west-2.amazonaws.com/dev"
 
 export const AWS_COGNITO_USER_POOL_CLIENT_ID = import.meta.env.VITE_AWS_COGNITO_USER_POOL_CLIENT_ID;
 export const AWS_COGNITO_USER_POOL_ID = import.meta.env.VITE_AWS_COGNITO_USER_POOL_ID;
