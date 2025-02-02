@@ -87,7 +87,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
                 dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: foundOrganization });
             } else if (organizations.length > 0) {
                 dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: organizations[0] });
-                localStorage.setItem('activeOrganizationId', organizations[0].organization_id);
+                localStorage.setItem('activeOrganization', organizations[0]);
             }
 
         } catch (error) {
@@ -97,7 +97,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     const setActiveOrganization = (organization: Organization) => {
         dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: organization });
-        localStorage.setItem('activeOrganizationId', organization.organization_id);
+        localStorage.setItem('activeOrganization', JSON.stringify(organization));
     };
 
     const createOrganization = async (
@@ -142,7 +142,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
             dispatch({ type: 'CREATE_ORGANIZATION', payload: newOrganization });
 
-            localStorage.setItem('activeOrganizationId', newOrganization.organization_id);
+            localStorage.setItem('activeOrganization', newOrganization);
 
             window.location.reload();
         } catch (error) {

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FaUsers, FaCogs, FaProjectDiagram, FaPlus, FaTimes } from 'react-icons/fa';
-import { FaSpinner, FaCheck } from "react-icons/fa";
-
+import { FaUsers, FaCogs, FaProjectDiagram, FaPlus, FaSpinner, FaTimes, FaCheck } from 'react-icons/fa';
 import { RiOrganizationChart } from "react-icons/ri";
 import { useOrganization } from '@src/context/OrganizationContext';
 import OrganizationsDetails from './OrganizationsDetails';
 import OrganizationMember from './OrganizationsMembers';
 import OrganizationSyncs from './OrganizationsSyncs';
 import OrganizationsSettings from './OrganizationsSettings';
+import OrganizationsService from '@src/services/organization.service';
+
 
 const tailwindColors = [
     'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
@@ -23,9 +23,33 @@ const OrganizationWrapped: React.FC = () => {
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [organizationColor, setOrganizationColor] = useState<string>('bg-teal-500');
-    const [loading, setLoading] = useState(true);
     const { state, setActiveOrganization } = useOrganization();
-    const { organizations = [], activeOrganization } = state;
+    const { activeOrganization } = state;
+
+    const [organizations, setOrganizations] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(true); 
+
+    useEffect(() => {
+        const fetchOrganizations = async () => {
+            setLoading(true);
+
+            try {
+                const organizationsService = new OrganizationsService("");
+                const organizations = await organizationsService.getUserOrganizations("jrauljperez02.dev@gmail.com");
+
+                setOrganizations(organizations);
+                if (organizations.length > 0) {
+                    handleSelectOrganization(organizations[0].organization_id);
+                }
+            } catch (error) {
+                console.error("Error fetching organizations:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOrganizations();
+    }, []);
 
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -39,17 +63,6 @@ const OrganizationWrapped: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-        if (organizations.length > 0 && !activeOrganization) {
-            handleSelectOrganization(organizations[0].organization_id);
-        }
-        setLoading(false);
-    }, [organizations, activeOrganization]);
-
-    const created_at = activeOrganization?.created_at
-        ? new Date(activeOrganization.created_at).toLocaleDateString()
-        : 'Fecha no disponible';
-
     const handleTabChange = (tab: Tab) => {
         setActiveTab(tab);
         localStorage.setItem('activeTab', tab);
@@ -59,8 +72,9 @@ const OrganizationWrapped: React.FC = () => {
         <div className="pb-6 py-2 overflow-x-hidden">
             <div className="max-w-5xl mx-auto bg-white rounded-lg p-6">
                 {loading ? (
-                    <div className="flex justify-center items-center py-10">
-                        <div className="w-8 h-8 border-4 border-gray-300 border-t-teal-500 rounded-full animate-spin"></div>
+                    <div className="flex flex-col items-center justify-center py-12">
+                        <FaSpinner className="w-8 h-8 text-teal-500 animate-spin mb-2" />
+                        <p className="text-gray-600">Cargando organizaciones...</p>
                     </div>
                 ) : organizations.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-12 bg-white rounded-lg max-w-md mx-auto">
@@ -69,20 +83,17 @@ const OrganizationWrapped: React.FC = () => {
                             alt="No organizations"
                             className="w-24 h-24 mb-4 opacity-90"
                         />
-
                         <h2 className="text-2xl font-bold text-gray-800">Aún no tienes organizaciones</h2>
-                        <p className="text-gray-600 mt-2 text-center px-6">Para comenzar, necesitas registrar una organización y administrar su información.</p>
+                        <p className="text-gray-600 mt-2 text-center px-6">
+                            Para comenzar, necesitas registrar una organización y administrar su información.
+                        </p>
                         <button
                             onClick={handleOpenModal}
                             className="mt-6 flex items-center gap-2 bg-custom-bg-main text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-105"
                         >
-                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 4v16m8-8H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            Crear Organización
+                            <FaPlus /> Crear Organización
                         </button>
                     </div>
-
                 ) : (
                     <>
                         <div className="flex items-center space-x-4 mt-4 justify-between">
@@ -93,7 +104,7 @@ const OrganizationWrapped: React.FC = () => {
                                 <div>
                                     <h2 className="text-lg font-bold">{activeOrganization?.name}</h2>
                                     <p className="text-sm text-gray-600">
-                                        Organización creada el {created_at}
+                                        Organización creada el {new Date(activeOrganization?.created_at || "").toLocaleDateString()}
                                     </p>
                                 </div>
                             </div>
@@ -128,10 +139,11 @@ const OrganizationWrapped: React.FC = () => {
                                 ].map((tab) => (
                                     <button
                                         key={tab.value}
-                                        className={`flex items-center py-3 px-4 border-b-2 ${activeTab === tab.value
-                                            ? 'border-teal-500 text-teal-500 font-semibold'
-                                            : 'border-transparent text-gray-600 hover:text-gray-800'
-                                            }`}
+                                        className={`flex items-center py-3 px-4 border-b-2 ${
+                                            activeTab === tab.value
+                                                ? 'border-teal-500 text-teal-500 font-semibold'
+                                                : 'border-transparent text-gray-600 hover:text-gray-800'
+                                        }`}
                                         onClick={() => handleTabChange(tab.value as Tab)}
                                     >
                                         <tab.icon className="mr-2" /> {tab.label}
@@ -154,6 +166,7 @@ const OrganizationWrapped: React.FC = () => {
 };
 
 export default OrganizationWrapped;
+
 
 const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     const { createOrganization } = useOrganization();
