@@ -10,7 +10,17 @@ class OrganizationsService {
     async createOrganization(
         organization_name: string,
         owner_id: string,
-        owner_email: string
+        owner_email: string,
+        practice_areas: string[],
+        bar_association: string,
+        registration_number: string,
+        legal_structure: string,
+        operating_countries: string[],
+        contact_email: string,
+        contact_phone: string,
+        clients_served: number,
+        active_cases: number,
+        legal_documents: string[]
     ): Promise<any> {
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/organizations/create`, {
@@ -23,6 +33,16 @@ class OrganizationsService {
                     organization_name,
                     owner_id,
                     owner_email,
+                    practice_areas,
+                    bar_association,
+                    registration_number,
+                    legal_structure,
+                    operating_countries,
+                    contact_email,
+                    contact_phone,
+                    clients_served,
+                    active_cases,
+                    legal_documents
                 }),
             });
 
@@ -37,6 +57,7 @@ class OrganizationsService {
             throw error;
         }
     }
+
 
     async getUserOrganizations(email: string): Promise<any> {
         try {
@@ -54,11 +75,37 @@ class OrganizationsService {
             if (!response.ok) {
                 throw new Error("Error fetching user organizations");
             }
-
             const jsonResponse = await response.json();
-            return jsonResponse.body.organizations;
+            return jsonResponse.body.user.organizations;
         } catch (error) {
             console.error("Service: Error fetching user organizations:", error);
+            throw error;
+        }
+    }
+
+    async inviteUserToOrganization(organization_id: string, email: string, role: string = "member"): Promise<any> {
+        try {
+            const response = await fetch(`${HARVEY_REST_API_URL}/organizations/invite`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${this.idToken}`,
+                },
+                body: JSON.stringify({
+                    organization_id,
+                    invited_email: email,
+                    role,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Error inviting user to organization");
+            }
+
+            const jsonResponse = await response.json();
+            return jsonResponse.body;
+        } catch (error) {
+            console.error("Service: Error inviting user to organization:", error);
             throw error;
         }
     }

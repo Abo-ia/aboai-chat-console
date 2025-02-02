@@ -1,4 +1,5 @@
 export interface Member {
+    user_id: string;
     email: string;
     role: string;
 }
@@ -16,4 +17,14 @@ export interface Organization {
     };
     region: string;
     members: Member[];
+    practice_areas: string[];
+    bar_association: string;
+    registration_number: string;
+    legal_structure: string;
+    operating_countries: string[];
+    contact_email: string;
+    contact_phone: string;
+    clients_served: number;
+    active_cases: number;
+    legal_documents: string[];
 }

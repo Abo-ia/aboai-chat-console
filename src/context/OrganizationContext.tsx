@@ -21,18 +21,18 @@ const initialState: OrganizationState = {
 const organizationReducer = (state: OrganizationState, action: OrganizationAction): OrganizationState => {
     switch (action.type) {
         case 'CONSULT_ORGANIZATIONS_BY_USER':
-            return { 
-                ...state, 
-                organizations: action.payload 
+            return {
+                ...state,
+                organizations: action.payload
             };
         case 'SET_ACTIVE_ORGANIZATION':
-            return { 
-                ...state, 
-                activeOrganization: action.payload 
+            return {
+                ...state,
+                activeOrganization: action.payload
             };
         case 'CREATE_ORGANIZATION':
-            return { 
-                ...state, 
+            return {
+                ...state,
                 organizations: [...state.organizations, action.payload],
                 activeOrganization: action.payload
             };
@@ -45,12 +45,26 @@ const OrganizationContext = createContext<{
     state: OrganizationState;
     dispatch: React.Dispatch<OrganizationAction>;
     setActiveOrganization: (organization: Organization) => void;
-    createOrganization: (organization_name: string) => Promise<void>;
+    createOrganization: (
+        organization_name: string,
+        practice_areas: string[],
+        bar_association: string,
+        registration_number: string,
+        legal_structure: string,
+        operating_countries: string[],
+        contact_email: string,
+        contact_phone: string,
+        clients_served: number,
+        active_cases: number,
+        legal_documents: string[]
+    ) => Promise<void>;
+    inviteUserToOrganization: (organization_id: string, email: string, role?: string) => Promise<void>;
 }>({
     state: initialState,
     dispatch: () => null,
-    setActiveOrganization: () => {},
-    createOrganization: async () => {},
+    setActiveOrganization: () => { },
+    createOrganization: async () => { },
+    inviteUserToOrganization: async () => { },
 });
 
 export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -68,7 +82,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
             const savedOrganizationId = localStorage.getItem('activeOrganizationId');
             const foundOrganization = organizations.find((org: any) => org.organization_id === savedOrganizationId);
-            
+
             if (foundOrganization) {
                 dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: foundOrganization });
             } else if (organizations.length > 0) {
@@ -83,10 +97,22 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     const setActiveOrganization = (organization: Organization) => {
         dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: organization });
-        localStorage.setItem('activeOrganizationId', organization.organization_id); // 🔹 Guardar en localStorage
+        localStorage.setItem('activeOrganizationId', organization.organization_id);
     };
 
-    const createOrganization = async (organization_name: string) => {
+    const createOrganization = async (
+        organization_name: string,
+        practice_areas: string[],
+        bar_association: string,
+        registration_number: string,
+        legal_structure: string,
+        operating_countries: string[],
+        contact_email: string,
+        contact_phone: string,
+        clients_served: number,
+        active_cases: number,
+        legal_documents: string[]
+    ) => {
         if (!authUserId || !authEmail) {
             console.error("No se puede crear la organización porque falta información del usuario autenticado.");
             return;
@@ -95,19 +121,44 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         const idToken = localStorage.getItem('idToken') || '';
         const service = new OrganizationsService(idToken);
 
+        console.log(authEmail, authUserId);
+
         try {
             const newOrganization = await service.createOrganization(
                 organization_name,
                 authUserId,
-                authEmail
+                authEmail,
+                practice_areas,
+                bar_association,
+                registration_number,
+                legal_structure,
+                operating_countries,
+                contact_email,
+                contact_phone,
+                clients_served,
+                active_cases,
+                legal_documents
             );
+
             dispatch({ type: 'CREATE_ORGANIZATION', payload: newOrganization });
 
             localStorage.setItem('activeOrganizationId', newOrganization.organization_id);
-            
+
             window.location.reload();
         } catch (error) {
             console.error('Error creando la organización:', error);
+        }
+    };
+
+    const inviteUserToOrganization = async (organization_id: string, email: string, role: string = "member") => {
+        const idToken = localStorage.getItem('idToken') || '';
+        const service = new OrganizationsService(idToken);
+
+        try {
+            await service.inviteUserToOrganization(organization_id, email, role);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error invitando usuario a la organización:", error);
         }
     };
 
@@ -135,7 +186,13 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }, [authEmail]);
 
     return (
-        <OrganizationContext.Provider value={{ state, dispatch, setActiveOrganization, createOrganization }}>
+        <OrganizationContext.Provider value={{
+            state,
+            dispatch,
+            setActiveOrganization,
+            createOrganization,
+            inviteUserToOrganization
+        }}>
             {children}
         </OrganizationContext.Provider>
     );
