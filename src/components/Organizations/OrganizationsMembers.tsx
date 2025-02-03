@@ -32,7 +32,11 @@ const OrganizationMembers = () => {
         if (!email.trim()) return;
         setLoading(true);
         try {
-            await inviteUserToOrganization(activeOrganization.organization_id, email, role);
+            await inviteUserToOrganization(
+                activeOrganization.organization_id, 
+                email, 
+                role
+            );
             closeModal();
         } catch (error) {
             console.error('Error invitando usuario:', error);
@@ -47,7 +51,7 @@ const OrganizationMembers = () => {
                 <div className='flex items-center justify-center gap-10'>
                     <div>
                         <h2 className="text-2xl font-extrabold text-gray-900">
-                            Miembros {">"} {activeOrganization?.name} {">"}
+                            Miembros {">"} {activeOrganization?.name} {">"} {activeOrganization?.members?.length}
                         </h2>
                         <p className="text-gray-500 mt-2">
                             Conoce a las personas que hacen posible que nuestra empresa siga creciendo.

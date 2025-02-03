@@ -27,15 +27,6 @@ const SidebarIcons: React.FC <SidebarIconsProps> = (props) => {
                         alt="Google Drive"
                     />
                 </div>
-
-                <div
-                    onClick={() => appContext?.setSyncHistoryShowModal(true)}
-                    className="h-8 w-8 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden">
-                    <img
-                        src='https://cdn-icons-png.flaticon.com/512/5582/5582334.png'
-                        alt="Slack"
-                    />
-                </div>
             </div>
         </div>
     )

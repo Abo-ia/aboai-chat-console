@@ -58,7 +58,7 @@ const OrganizationContext = createContext<{
         active_cases: number,
         legal_documents: string[]
     ) => Promise<void>;
-    inviteUserToOrganization: (organization_id: string, email: string, role?: string) => Promise<void>;
+    inviteUserToOrganization: (organization_id: string, user_email: string, role?: string) => Promise<void>;
 }>({
     state: initialState,
     dispatch: () => null,
@@ -150,12 +150,12 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         }
     };
 
-    const inviteUserToOrganization = async (organization_id: string, email: string, role: string = "member") => {
+    const inviteUserToOrganization = async (organization_id: string, user_email: string, role: string = "member") => {
         const idToken = localStorage.getItem('idToken') || '';
         const service = new OrganizationsService(idToken);
 
         try {
-            await service.inviteUserToOrganization(organization_id, email, role);
+            await service.inviteUserToOrganization(organization_id, user_email, role);
             window.location.reload();
         } catch (error) {
             console.error("Error invitando usuario a la organización:", error);

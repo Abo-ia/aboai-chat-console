@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { fetchAuthSession } from "aws-amplify/auth";
 import MessageService from '@src/services/messages.service';
 import ConversationsHistoryService from '@src/services/conversationsHistory.service';
+import { useOrganization } from '@src/context/OrganizationContext';
 
 import useWindowSize from '@src/hooks/useWindowSize';
 
@@ -41,9 +42,13 @@ type ChatDashboardProps = {
 const ChatView: React.FC<ChatDashboardProps> = () => {
     const { width } = useWindowSize();
     const [isSidebarOpen, setIsSidebarOpen] = useState(
-        width > 768 // Visible inicialmente en modo desktop
+        width > 768
     );
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const { state } = useOrganization();
+    const { activeOrganization } = state;
+
+    console.log(activeOrganization);
 
     useEffect(() => {
         setIsSidebarOpen(width > 768);
@@ -168,6 +173,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 userId,
                 currentConversationId,
                 messages.map((msg) => msg.query).join(" "),
+                activeOrganization?.knowledge_base_id || ''
             );
             const responseBody = response;
 
@@ -340,7 +346,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
                 <GoogleDriveModal />
                 <UploadFileModal />
-                <SyncHistoryModal />
+                {/* <SyncHistoryModal /> */}
             </div>
         </div>
     );

@@ -29,7 +29,13 @@ class MessageService {
         }
     }    
 
-    async sendMessage(message: string, userId: string, conversationId: string, chatThread: string): Promise<any> {
+    async sendMessage(
+        message: string, 
+        userId: string, 
+        conversationId: string, 
+        chatThread: string,
+        knowledgeBaseId: string
+    ): Promise<any> {
         try {
             if (!this.idToken) {
                 throw new Error("Missing idToken. Authentication may be required.");
@@ -48,6 +54,7 @@ class MessageService {
                     instruction: 'ADD_MESSAGE',
                     prompt: message,
                     timestamp: new Date().toISOString(),
+                    knowledgeBaseId: knowledgeBaseId
                 }),
             });
     

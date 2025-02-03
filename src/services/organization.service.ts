@@ -100,7 +100,7 @@ class OrganizationsService {
                 },
                 body: JSON.stringify({
                     organization_id,
-                    invited_email: email,
+                    user_email: email,
                     role,
                 }),
             });
