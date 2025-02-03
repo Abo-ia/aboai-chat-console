@@ -18,23 +18,30 @@ class SyncKnowledgeBase {
             })
             const data = await response.json();
             return data;
-        }catch (error) {
+        } catch (error) {
             console.error('Error syncing knowledge base:', error);
             throw error;
         }
     }
-    async getSyncKnowledgeBaseStatus(): Promise<any> {
+    async getSyncKnowledgeBaseStatus(
+        knowledgeBaseId: string,
+        dataSourceId: string,
+    ): Promise<any> {
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/sync-history`, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.idToken}`
                 },
+                body: JSON.stringify({
+                    knowledgeBaseId,
+                    dataSourceId,
+                }),
             })
             const data = await response.json();
             return JSON.parse(data.body);
-        }catch (error) {
+        } catch (error) {
             console.error('Error getting sync knowledge base status:', error);
             throw error;
         }
