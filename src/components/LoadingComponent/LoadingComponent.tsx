@@ -23,20 +23,20 @@ const LoadingComponent: React.FC = () => {
     }, [messageDuration]);
 
     return (
-        <div className="flex flex-col items-center justify-center my-5">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md">
+        <div className="flex flex-col items-center justify-center my-5 border w-3/4 rounded-xl mx-auto">
+            <div className="bg-custon-bg-main rounded-lg p-6 max-w-md">
                 <div className="flex items-center justify-center mb-4">
-                    <FaCircleNotch className="text-neutral-800 animate-spin text-3xl" />
+                    <FaCircleNotch className="text-white animate-spin text-3xl" />
                 </div>
-                <h2 className="text-lg font-bold text-center text-gray-800 mb-4">
+                <h2 className="text-lg font-bold text-center text-gray-200 mb-4">
                     Procesando solicitud
                 </h2>
                 <ul className="space-y-2 text-center">
                     {messages.map((message, index) => (
-                        <li key={index} className={index === messageIndex ? "text-custom-base font-semibold flex items-center justify-center" : "text-gray-600"}>
+                        <li key={index} className={index === messageIndex ? "text-white font-semibold flex items-center justify-center" : "text-gray-500"}>
                             {message}
                             {index === messageIndex && (
-                                <span className="ml-2 animate-pulse text-custom-base">
+                                <span className="ml-2 animate-pulse text-white">
                                     <FaCircleNotch className="animate-spin" />
                                 </span>
                             )}

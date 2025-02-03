@@ -255,7 +255,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                     <div className="flex items-center space-x-2">
                                                                         <img
                                                                             className="w-8 h-8 rounded-full"
-                                                                            src="https://cdn-icons-png.freepik.com/256/4712/4712106.png?semt=ais_hybrid"
+                                                                            src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png"
                                                                             alt="Assistant Avatar"
                                                                         />
                                                                         <span className="text-sm font-semibold text-custom-font-user">Harvee</span>
