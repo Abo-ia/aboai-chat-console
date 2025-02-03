@@ -7,10 +7,15 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheckCircle, faExclamationCircle, faHourglassHalf, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
+import { useOrganization } from '@src/context/OrganizationContext';
+
 const SyncHistoryModal = () => {
     const appContext = useContext(AppContext);
     const [syncHistory, setSyncHistory] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const { state } = useOrganization();
+    const { activeOrganization } = state;
 
     useEffect(() => {
         const fetchSyncHistory = async () => {
@@ -20,7 +25,10 @@ const SyncHistoryModal = () => {
                 const idToken = session?.tokens?.idToken?.toString() as string;
 
                 const syncKnowledgeBaseInstance = new SyncKnowledgeBase(idToken);
-                const response = await syncKnowledgeBaseInstance.getSyncKnowledgeBaseStatus();
+                const response = await syncKnowledgeBaseInstance.getSyncKnowledgeBaseStatus(
+                    activeOrganization?.knowledge_base_id || "",
+                    activeOrganization?.data_source_id || ""
+                );
                 setSyncHistory(response);
             } catch (error) {
                 toast.error("Error al obtener el historial de sincronización");
@@ -29,10 +37,11 @@ const SyncHistoryModal = () => {
             }
         };
 
-        if (appContext?.syncHistoryShowModal) {
-            fetchSyncHistory();
-        }
-    }, [appContext?.syncHistoryShowModal]);
+        fetchSyncHistory();
+    }, [
+        activeOrganization?.knowledge_base_id,
+        activeOrganization?.data_source_id,
+    ]);
 
     if (!appContext?.syncHistoryShowModal) {
         return null;
