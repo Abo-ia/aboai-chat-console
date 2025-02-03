@@ -59,7 +59,7 @@ class OrganizationsService {
     }
 
 
-    async getUserOrganizations(email: string): Promise<any> {
+    async getUserOrganizations(email: string): Promise<any[]> {
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/organizations/consult`, {
                 method: "POST",
@@ -67,21 +67,28 @@ class OrganizationsService {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${this.idToken}`,
                 },
-                body: JSON.stringify({
-                    email,
-                }),
+                body: JSON.stringify({ email }),
             });
 
             if (!response.ok) {
-                throw new Error("Error fetching user organizations");
+                throw new Error(`Error fetching user organizations: ${response.statusText}`);
             }
+
             const jsonResponse = await response.json();
-            return jsonResponse.body.user.organizations;
+            console.log(jsonResponse);
+
+            if (!jsonResponse.body || !Array.isArray(jsonResponse.body.organizations)) {
+                console.error("Service: Unexpected response format", jsonResponse);
+                return [];
+            }
+
+            return jsonResponse.body.organizations;
         } catch (error) {
             console.error("Service: Error fetching user organizations:", error);
-            throw error;
+            return [];
         }
     }
+
 
     async inviteUserToOrganization(organization_id: string, email: string, role: string = "member"): Promise<any> {
         try {

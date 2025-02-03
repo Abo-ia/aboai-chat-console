@@ -1,7 +1,14 @@
 export interface Member {
+    PK: string;
+    joined_at: string;
     user_id: string;
     email: string;
     role: string;
+    permissions?: {
+        can_invite_users: boolean;
+        can_manage_cases: boolean;
+        can_view_reports: boolean;
+    }
 }
 
 export interface Organization {

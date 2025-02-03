@@ -369,12 +369,7 @@ const OrganizationSyncs = () => {
                         </table>
                     </div>
                     <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                            Showing
-                            <span className="font-semibold text-gray-900 ">1-10</span>
-                            of
-                            <span className="font-semibold text-gray-900 ">1000</span>
-                        </span>
+                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400"></span>
                         <ul className="inline-flex items-stretch -space-x-px">
                             <li>
                                 <a href="#" className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700  dark:border-gray-700 dark:text-gray-400  dark:hover:">

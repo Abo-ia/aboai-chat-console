@@ -8,6 +8,7 @@ import OrganizationSyncs from './OrganizationsSyncs';
 import OrganizationsSettings from './OrganizationsSettings';
 import OrganizationsService from '@src/services/organization.service';
 
+import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const tailwindColors = [
     'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
@@ -27,7 +28,25 @@ const OrganizationWrapped: React.FC = () => {
     const { activeOrganization } = state;
 
     const [organizations, setOrganizations] = useState<any[]>([]);
-    const [loading, setLoading] = useState<boolean>(true); 
+    const [loading, setLoading] = useState<boolean>(true);
+    const [authEmail, setAuthEmail] = useState<string>('');
+    const [authUserId, setAuthUserId] = useState<string>('');
+
+
+    useEffect(() => {
+        const fetchAttributes = async () => {
+            try {
+                const attributes = await fetchUserAttributes();
+                if (attributes.email && attributes.sub) {
+                    setAuthEmail(attributes.email);
+                    setAuthUserId(attributes.sub);
+                }
+            } catch (err) {
+                console.error('Error al obtener atributos del usuario:', err);
+            }
+        };
+        fetchAttributes();
+    }, []);
 
     useEffect(() => {
         const fetchOrganizations = async () => {
@@ -35,8 +54,7 @@ const OrganizationWrapped: React.FC = () => {
 
             try {
                 const organizationsService = new OrganizationsService("");
-                const organizations = await organizationsService.getUserOrganizations("jrauljperez02.dev@gmail.com");
-
+                const organizations = await organizationsService.getUserOrganizations(authEmail);
                 setOrganizations(organizations);
                 if (organizations.length > 0) {
                     handleSelectOrganization(organizations[0].organization_id);
@@ -48,8 +66,10 @@ const OrganizationWrapped: React.FC = () => {
             }
         };
 
-        fetchOrganizations();
-    }, []);
+        if (authEmail) {
+            fetchOrganizations();
+        }
+    }, [authEmail]);
 
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -139,11 +159,10 @@ const OrganizationWrapped: React.FC = () => {
                                 ].map((tab) => (
                                     <button
                                         key={tab.value}
-                                        className={`flex items-center py-3 px-4 border-b-2 ${
-                                            activeTab === tab.value
-                                                ? 'border-teal-500 text-teal-500 font-semibold'
-                                                : 'border-transparent text-gray-600 hover:text-gray-800'
-                                        }`}
+                                        className={`flex items-center py-3 px-4 border-b-2 ${activeTab === tab.value
+                                            ? 'border-teal-500 text-teal-500 font-semibold'
+                                            : 'border-transparent text-gray-600 hover:text-gray-800'
+                                            }`}
                                         onClick={() => handleTabChange(tab.value as Tab)}
                                     >
                                         <tab.icon className="mr-2" /> {tab.label}
@@ -438,6 +457,18 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                         )}
                     </button>
                 </div>
+
+                {loading && (
+                    <div role="alert" className="mt-3 relative flex flex-col w-full p-3 text-sm border-2 rounded-md">
+                        <p className="flex text-base">
+                            <FaSpinner className="w-5 h-5 text-teal-500 animate-spin mr-2" />
+                            Organización en proceso de creación
+                        </p>
+                        <p className="ml-4 px-3">
+                            La organización está siendo creada, por favor espera unos minutos. Una vez creada, podrás comenzar a administrarla. Puedes cerrar esta ventana en cualquier momento.
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );

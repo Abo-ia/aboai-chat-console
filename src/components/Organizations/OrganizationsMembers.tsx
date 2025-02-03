@@ -47,7 +47,7 @@ const OrganizationMembers = () => {
                 <div className='flex items-center justify-center gap-10'>
                     <div>
                         <h2 className="text-2xl font-extrabold text-gray-900">
-                            Miembros {">"} {activeOrganization?.name} {">"} {activeOrganization?.members.length}
+                            Miembros {">"} {activeOrganization?.name} {">"}
                         </h2>
                         <p className="text-gray-500 mt-2">
                             Conoce a las personas que hacen posible que nuestra empresa siga creciendo.
@@ -66,16 +66,17 @@ const OrganizationMembers = () => {
             </div>
 
             <div className="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {activeOrganization.members.map((member: Member, index: number) => {
-                    console.log(member);
+                {activeOrganization?.members?.map((member: Member, index: number) => {
                     return (
                         <div
                             key={index}
                             className="text-center text-gray-500 dark:text-gray-400">
                             <img className="mx-auto mb-4 w-36 h-36 rounded-full" src="https://icons.veryicon.com/png/o/miscellaneous/two-color-webpage-small-icon/user-244.png" alt="Neil Avatar" />
-                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:">
-                                {member?.email?.split('@')[0]}
-                            </h3>
+                            <p className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:">
+                                {member?.PK && member.PK.includes('#') && member.PK.includes('@')
+                                    ? member.PK.split('#')[1]?.split('@')[0] || 'Usuario Desconocido'
+                                    : 'Usuario Desconocido'}
+                            </p>
                             <p>Miembro</p>
                             <ul className="flex justify-center mt-4 space-x-4">
                                 <li>
