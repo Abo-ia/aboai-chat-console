@@ -139,7 +139,9 @@ const CloudStorage: React.FC = () => {
 
 
         const syncKnowledgeBaseInstance = new SyncKnowledgeBase(idToken);
-        await syncKnowledgeBaseInstance.syncKnowledgeBase();
+        await syncKnowledgeBaseInstance.syncKnowledgeBase(
+            '...', '...'
+        );
     };
 
 

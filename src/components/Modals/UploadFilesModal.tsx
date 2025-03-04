@@ -52,7 +52,9 @@ const UploadFileModal = () => {
                 await Promise.all(uploadPromises);
 
                 const syncKnowledgeBaseInstance = new SyncKnowledgeBase(idToken);
-                await syncKnowledgeBaseInstance.syncKnowledgeBase();
+                await syncKnowledgeBaseInstance.syncKnowledgeBase(
+                    '...', '...'
+                );
 
                 toast.info("Proceso de sincronización iniciado. Por favor, espere unos minutos para que los cambios se reflejen en la base de conocimiento.");
             } catch (error) {
