@@ -23,7 +23,7 @@ class OrganizationsService {
         legal_documents: string[]
     ): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/organizations/create`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api-organizations-create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -61,7 +61,7 @@ class OrganizationsService {
 
     async getUserOrganizations(email: string): Promise<any[]> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/organizations/consult`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api-organizations-consult`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -75,7 +75,6 @@ class OrganizationsService {
             }
 
             const jsonResponse = await response.json();
-            console.log(jsonResponse);
 
             if (!jsonResponse.body || !Array.isArray(jsonResponse.body.organizations)) {
                 console.error("Service: Unexpected response format", jsonResponse);
@@ -92,7 +91,7 @@ class OrganizationsService {
 
     async inviteUserToOrganization(organization_id: string, email: string, role: string = "member"): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/organizations/invite`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api-organizations-invite`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

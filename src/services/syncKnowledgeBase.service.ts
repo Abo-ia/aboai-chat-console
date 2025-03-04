@@ -7,14 +7,21 @@ class SyncKnowledgeBase {
         this.idToken = idToken;
     }
 
-    async syncKnowledgeBase(): Promise<any> {
+    async syncKnowledgeBase(
+        knowledgeBaseId: string,
+        dataSourceId: string,
+    ): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/ingestion`, {
-                method: 'GET',
+            const response = await fetch(`${HARVEY_REST_API_URL}/api-data-ingestion`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.idToken}`
                 },
+                body: JSON.stringify({
+                    knowledgeBaseId,
+                    dataSourceId,
+                }),
             })
             const data = await response.json();
             return data;
@@ -28,7 +35,7 @@ class SyncKnowledgeBase {
         dataSourceId: string,
     ): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/sync-history`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api-sync-history`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ class ConversationsHistoryService {
 
     async getConversationsHistory(userId: string): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/query-chat`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api-chat-registry`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ class ConversationsHistoryService {
 
     async getConversation(userId: string, conversationId: string): Promise<any> {
         try {
-            const response = await fetch(`${HARVEY_REST_API_URL}/query-chat`, {
+            const response = await fetch(`${HARVEY_REST_API_URL}/api-chat-registry`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
