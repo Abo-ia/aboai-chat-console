@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
             <div className={`bg-custom-bg-sidebar h-screen shadow-lg flex flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-60' : 'w-16'}`}>
                 <div className={`flex items-center justify-center p-4 ${isSidebarOpen ? 'space-x-2' : ''}`}>
                     <img
-                        src={logo}
+                        src={"https://img.freepik.com/premium-vector/minimalist-law-firm-logo-icon-vector-illustration_1046239-905.jpg"}
                         alt="Harvey"
                         className="w-12 h-12 rounded-full shadow-lg object-cover"
                     />
@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 </div>
 
                 <button
-                    className="flex items-center justify-center gap-3 p-4 mb-3 bg-custom-gradient text-white rounded-lg shadow-lg transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    className="flex items-center justify-center gap-3 p-4 mb-3 bg-custom-primary text-white rounded-lg shadow-lg transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     onClick={() => {
                         if (pathname !== '/') {
                             setShowModal(true);
@@ -154,7 +154,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         <button className="text-custom-gradient hover:underline text-xs">Más almacenamiento</button>
                     </div>
                     <div className="w-full h-2 bg-[#e9eaee] mt-2 rounded-full overflow-hidden">
-                        <div className="h-2 bg-custom-gradient rounded-full transition-all duration-500 ease-in-out" style={{ width: '88%' }}></div>
+                        <div className="h-2 bg-custom-primary rounded-full transition-all duration-500 ease-in-out" style={{ width: '88%' }}></div>
                     </div>
                 </div>
             </div>

@@ -53,9 +53,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     };
 
     return (
-        <div className="relative group block mb-1 text-custom-font-main hover:bg-custom-bg-hover">
+        <div className="relative group block mb-1 text-custom-font-main hover:bg-custom-secondary hover:rounded hover:text-white transition-all">
             <div
-                className={`flex justify-between items-center cursor-pointer px-2 border-custom-base rounded-lg transition-all ${selected ? 'border-[1px] border-custom-base' : 'group-hover:bg-custom-base'}`}
+                className={`flex justify-between items-center cursor-pointer px-2 border-custom-base rounded-lg transition-all ${selected && 'bg-custom-primary text-white'}`}
                 onClick={handleClick}>
                 <div className="flex items-center gap-2 flex-grow overflow-hidden">
                     {isFavorite && (
@@ -226,7 +226,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
     return (
         <React.Fragment>
             <div
-                className={`w-[25%] bg-custom-bg-sidebar pt-6 transform transition-transform duration-300`}>
+                className={`w-[25%] pt-6 transform border-r transition-transform duration-300`}>
                 <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
                     <div className="text-custom-font-main">Apps</div>
                     <div>

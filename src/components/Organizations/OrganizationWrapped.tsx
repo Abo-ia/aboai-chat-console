@@ -118,7 +118,7 @@ const OrganizationWrapped: React.FC = () => {
                     <>
                         <div className="flex items-center space-x-4 mt-4 justify-between">
                             <div className='flex items-center space-x-4'>
-                                <p className={`flex items-center justify-center w-14 h-14 bg-custom-bg-main text-white text-2xl font-semibold rounded-lg`}>
+                                <p className={`flex items-center justify-center w-14 h-14 bg-custom-secondary text-white text-2xl font-semibold rounded-lg`}>
                                     {activeOrganization?.name?.charAt(0).toUpperCase() || ''}
                                 </p>
                                 <div>
@@ -130,7 +130,7 @@ const OrganizationWrapped: React.FC = () => {
                             </div>
 
                             <button
-                                className="flex items-center bg-custom-bg-main text-white px-4 py-2 rounded-lg shadow-md"
+                                className="flex items-center bg-custom-primary text-white px-4 py-2 rounded-lg shadow-md"
                                 onClick={handleOpenModal}
                             >
                                 <FaPlus className="mr-2" /> Nueva Organización

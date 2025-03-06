@@ -8,24 +8,11 @@ export default {
         extend: {
             colors: {
                 custom: {
-                    "font-main": "#dce3e9",
-                    "font-user": "#e9eff5",
-
-                    "bg-hover": "#262c36",
-                    "bg-header": "#0b131b",
-                    "bg-main": "#01040a",
-                    "bg-sidebar": "#141d23",
-
-                    
-                    "chat-bg": "#0d1118",
-                    "chat-message": "#141d23",
-        
-
-                    border: "#30363d",
+                    'primary': '#3e4b56',
+                    'secondary': '#91b6ca',
+                    'accent': '#d4e2e2',
+                    'light': '#edf1ef',
                 },
-            },
-            backgroundImage: {
-                'custom-gradient': 'linear-gradient(to right,rgb(34, 34, 197),rgb(20, 61, 184))',
             },
         },
     },

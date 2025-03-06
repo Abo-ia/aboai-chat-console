@@ -48,8 +48,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     const { state } = useOrganization();
     const { activeOrganization } = state;
 
-    console.log(activeOrganization);
-
     useEffect(() => {
         setIsSidebarOpen(width > 768);
     }, [width]);
@@ -231,8 +229,8 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                 const date = new Date(msg.timestamp).toLocaleTimeString();
                                                 return (
                                                     <div key={index} className="flex items-start mb-4 text-sm">
-                                                        <div className="w-full bg-custom-chat-bg p-4 rounded-lg border-[1px] border-[#30363d]">
-                                                            <div className="flex flex-col gap-2.5">
+                                                        <div className="w-full bg-custom-chat-bg p-4 rounded-lg">
+                                                            <div className="flex flex-col gap-2.5 items-end">
                                                                 <div className="flex flex-col leading-1.5">
                                                                     <div className="flex items-center space-x-2">
                                                                         <img
@@ -244,10 +242,10 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                         <span className="text-sm font-normal text-gray-500">{date}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div className="h-full pt-3 py-2 px-5 pb-3 rounded prose prose-sm bg-custom-chat-message">
+                                                                <div className="h-full pt-3 py-2 px-5 pb-3 rounded prose prose-sm bg-custom-light">
                                                                     <p className="text-custom-font-main">{msg.query}</p>
                                                                 </div>
-                                                                <span className="text-sm font-normal text-gray-500 mt-1">Enviado</span>
+                                                                <span className="text-sm font-normal text-gray-500 mb-2">Enviado</span>
                                                             </div>
 
                                                             <div className="flex flex-col gap-2.5">
@@ -263,7 +261,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                                     </div>
                                                                 </div>
                                                                 <div
-                                                                    className="h-full pt-3 px-5 pb-3 rounded prose prose-sm bg-custom-chat-message text-custom-font-main"
+                                                                    className="h-full pt-3 px-5 pb-3 rounded prose prose-sm bg-custom-light"
                                                                     dangerouslySetInnerHTML={{ __html: msg.response }}
                                                                 />
                                                                 <span className="text-sm font-normal text-gray-500 mt-1">Entregado</span>
@@ -271,7 +269,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
                                                             {msg.references && msg.references.length > 0 && (
                                                                 <button
-                                                                    className="px-3 py-2 rounded mt-2 bg-custom-gradient text-white transition-colors duration-300 text-sm font-semibold"
+                                                                    className="px-3 py-2 rounded mt-2 bg-custom-primary text-white transition-colors duration-300 text-sm font-semibold"
                                                                     onClick={() => showReferences(msg.references, msg.query)}
                                                                 >
                                                                     Mostrar referencias.
@@ -298,7 +296,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                 setTextInput("");
                                             }
                                         }}
-                                        className="px-4 py-2 w-full h-14 rounded-lg bg-[#0d1117] text-white placeholder-gray-400  border-[1px] border-bg-custom-gradient focus:border-[3px] focus:border-transparent focus:ring-offset-2 focus:ring-offset-[#0d1117] focus:border-gradient-to-r from-green-500 to-teal-600"
+                                        className="px-4 py-2 w-full h-20 rounded-lg  border-[1px] border-bg-custom-secondary focus:outline-none focus:ring-2 focus:ring-[#3e4b56] focus:ring-opacity-50 transition duration-300 ease-in-out"
                                     />
 
 
@@ -307,7 +305,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                             sendMessage(textInput);
                                             setTextInput("");
                                         }}
-                                        className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-gradient focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
+                                        className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
                                     >
                                         <span className="mr-2">Enviar</span>
                                         <span className="transform rotate-45">

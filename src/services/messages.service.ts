@@ -8,6 +8,7 @@ class MessageService {
     }
 
     async createConversation(userId: string, message: string): Promise<any> {
+        console.log('Service: Creating conversation - createConversation');
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/api-chat-registry`, {
                 method: 'POST',
@@ -22,6 +23,7 @@ class MessageService {
                 }),
             });
             const data = await response.json();
+            console.log('Service: Created conversation:', data);
             return data;
         } catch (error) {
             console.error('Error creating conversation:', error);

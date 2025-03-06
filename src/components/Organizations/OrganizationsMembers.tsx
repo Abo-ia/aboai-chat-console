@@ -60,7 +60,7 @@ const OrganizationMembers = () => {
                     <button
                         onClick={openModal}
                         className="mt-4 flex items-center justify-center px-6 py-3 
-                            text-white font-semibold bg-gradient-to-r from-custom-bg-main to-blue-700 
+                            text-white font-semibold bg-custom-primary
                             hover:from-custom-bg-main hover:to-blue-800 focus:ring-4 focus:ring-blue-300 
                             rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300"
                     >

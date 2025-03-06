@@ -82,7 +82,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                         {optionsDocuments.contratos.map((contrato, index) => (
                                             <li key={index} className="flex items-center">
                                                 {documentName === contrato && (
-                                                    <span className="w-2 h-2 bg-custom-gradient rounded-full mr-2"></span>
+                                                    <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
                                                 <button
                                                     onClick={() => seleccionarDocumento('contratos', contrato)}
@@ -114,7 +114,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                         {optionsDocuments.convenios.map((convenio, index) => (
                                             <li key={index} className="flex items-center">
                                                 {documentName === convenio && (
-                                                    <span className="w-2 h-2 bg-custom-gradient rounded-full mr-2"></span>
+                                                    <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
                                                 <button
                                                     onClick={() => seleccionarDocumento('convenios', convenio)}
@@ -146,7 +146,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                         {optionsDocuments.denuncias.map((denuncia, index) => (
                                             <li key={index} className="flex items-center">
                                                 {documentName === denuncia && (
-                                                    <span className="w-2 h-2 bg-custom-gradient rounded-full mr-2"></span>
+                                                    <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
                                                 <button
                                                     onClick={() => seleccionarDocumento('denuncia', denuncia)}

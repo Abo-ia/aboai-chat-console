@@ -8,6 +8,8 @@ class ConversationsHistoryService {
     }
 
     async getConversationsHistory(userId: string): Promise<any> {
+        console.log('Service: Getting conversations history - getConversationsHistory');
+
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/api-chat-registry`, {
                 method: 'POST',
@@ -21,6 +23,7 @@ class ConversationsHistoryService {
                 }),
             });
             const data = await response.json();
+
             return data;
         } catch (error) {
             console.error('Service: Error getting conversations history:', error);
@@ -29,6 +32,8 @@ class ConversationsHistoryService {
     }    
 
     async getConversation(userId: string, conversationId: string): Promise<any> {
+        console.log('Service: Getting conversation - getConversation');
+
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/api-chat-registry`, {
                 method: 'POST',
