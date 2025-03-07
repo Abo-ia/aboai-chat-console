@@ -95,10 +95,10 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 >
                     <img
                         src={
-                            'https://img.freepik.com/premium-vector/minimalist-law-firm-logo-icon-vector-illustration_1046239-905.jpg'
+                            'https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png'
                         }
                         alt="Harvey"
-                        className="w-12 h-12 rounded-full shadow-lg object-cover"
+                        className="rounded-full shadow-lg object-cover"
                     />
                     {isSidebarOpen && <h1 className="font-semibold text-sm text-center">Abo.AI</h1>}
                 </div>
