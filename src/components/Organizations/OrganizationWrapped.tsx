@@ -138,7 +138,7 @@ const OrganizationWrapped: React.FC = () => {
                         <div className="flex items-center space-x-4 mt-4 justify-between">
                             <div className="flex items-center space-x-4">
                                 <p
-                                    className={`flex items-center justify-center w-14 h-14 bg-custom-secondary text-white text-2xl font-semibold rounded-lg`}
+                                    className={`flex items-center justify-center w-14 h-14 bg-custom-secondary text-white text-2xl font-semibold rounded-lg border-2 border-custom-primary`}
                                 >
                                     {activeOrganization?.name?.charAt(0).toUpperCase() || ''}
                                 </p>
@@ -515,7 +515,7 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                         Cancelar
                     </button>
                     <button
-                        className={`px-4 py-2 rounded-lg bg-custom-bg-main text-white flex items-center justify-center transition-all ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-custom-bg-hover'}`}
+                        className={`px-4 py-2 rounded-lg bg-custom-primary text-white flex items-center justify-center transition-all ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-custom-bg-hover'}`}
                         onClick={handleSubmit}
                         disabled={!formData.name.trim() || loading}
                     >

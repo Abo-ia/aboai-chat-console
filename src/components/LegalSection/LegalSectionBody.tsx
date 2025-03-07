@@ -60,14 +60,14 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
             <div className="flex w-full">
                 {isSidebarOpen && (
                     <div className="w-[40%] bg-custom-bg-sidebar p-4 shadow-lg">
-                        <div className="text-2xl font-bold text-custom-font-main mb-6">
+                        <div className="text-2xl font-bold mb-6">
                             Documentos
                         </div>
 
                         <div className="mb-4">
                             <button
                                 onClick={() => alternarMenu('contratos')}
-                                className="w-full flex justify-between items-center bg-custom-chat-bg text-custom-font-main p-3 rounded-lg hover:bg-custom-bg-hover transition-colors duration-300"
+                                className="w-full flex justify-between items-center bg-custom-primary text-custom-light p-3 rounded-lg  transition-colors duration-300"
                             >
                                 <div className="flex items-center">
                                     <FaFileContract className="mr-2" />
@@ -79,7 +79,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 <div className="pl-6 pt-2">
                                     <ul className="space-y-2">
                                         {optionsDocuments.contratos.map((contrato, index) => (
-                                            <li key={index} className="flex items-center">
+                                            <li key={index} className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300">
                                                 {documentName === contrato && (
                                                     <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
@@ -87,7 +87,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                                     onClick={() =>
                                                         seleccionarDocumento('contratos', contrato)
                                                     }
-                                                    className="text-left text-custom-font-main hover:bg-custom-bg-hover py-1 px-2 transition-colors duration-300 flex-grow"
+                                                    className="text-left   py-1 px-2 transition-colors duration-300 flex-grow"
                                                 >
                                                     {contrato}
                                                 </button>
@@ -101,7 +101,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                         <div className="mb-4">
                             <button
                                 onClick={() => alternarMenu('convenios')}
-                                className="w-full flex justify-between items-center bg-custom-chat-bg text-custom-font-main p-3 rounded-lg hover:bg-custom-bg-hover transition-colors duration-300"
+                                className="w-full flex justify-between items-center bg-custom-primary text-custom-light p-3 rounded-lg  transition-colors duration-300"
                             >
                                 <div className="flex items-center">
                                     <FaHandshake className="mr-2" />
@@ -113,7 +113,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 <div className="pl-6 pt-2">
                                     <ul className="space-y-2">
                                         {optionsDocuments.convenios.map((convenio, index) => (
-                                            <li key={index} className="flex items-center">
+                                            <li key={index} className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300">
                                                 {documentName === convenio && (
                                                     <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
@@ -121,7 +121,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                                     onClick={() =>
                                                         seleccionarDocumento('convenios', convenio)
                                                     }
-                                                    className="text-left text-custom-font-main hover:bg-custom-bg-hover py-1 px-2 transition-colors duration-300 flex-grow"
+                                                    className="text-left   py-1 px-2 transition-colors duration-300 flex-grow"
                                                 >
                                                     {convenio}
                                                 </button>
@@ -135,7 +135,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                         <div className="mb-4">
                             <button
                                 onClick={() => alternarMenu('denuncias')}
-                                className="w-full flex justify-between items-center bg-custom-chat-bg text-custom-font-main p-3 rounded-lg hover:bg-custom-bg-hover transition-colors duration-300"
+                                className="w-full flex justify-between items-center bg-custom-primary text-custom-light p-3 rounded-lg  transition-colors duration-300"
                             >
                                 <div className="flex items-center">
                                     <FaHandshake className="mr-2" />
@@ -147,7 +147,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 <div className="pl-6 pt-2">
                                     <ul className="space-y-2">
                                         {optionsDocuments.denuncias.map((denuncia, index) => (
-                                            <li key={index} className="flex items-center">
+                                            <li key={index} className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300">
                                                 {documentName === denuncia && (
                                                     <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
@@ -155,7 +155,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                                     onClick={() =>
                                                         seleccionarDocumento('denuncia', denuncia)
                                                     }
-                                                    className="text-left text-custom-font-main hover:bg-custom-bg-hover py-1 px-2 transition-colors duration-300 flex-grow"
+                                                    className="text-left   py-1 px-2 transition-colors duration-300 flex-grow"
                                                 >
                                                     {denuncia}
                                                 </button>

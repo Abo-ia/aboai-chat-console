@@ -97,6 +97,7 @@ const CloudStorage: React.FC = () => {
         setIsLoading(true);
         const command = new ListObjectsV2Command({
             Bucket: AWS_BUCKET_NAME,
+            Prefix: 'fe6a5c45-69d8-4470-8603-b7b6340132e8',
         });
 
         try {
