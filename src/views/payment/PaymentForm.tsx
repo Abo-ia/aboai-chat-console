@@ -1,205 +1,382 @@
-import React from 'react';
+import { useState } from "react";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { BsInfoCircle } from "react-icons/bs";
+import { HiOutlineLockClosed } from "react-icons/hi";
+import { motion } from "framer-motion";
+
+import { HiOutlineTruck } from "react-icons/hi";
+import { MdOutlineLocalOffer } from "react-icons/md";
 
 const PaymentForm = () => {
+
+    const plans = [
+        {
+            name: "Basic",
+            price: "$29.99/month",
+            description: "Perfect for small teams and individual users.",
+            features: [
+                "5 Users",
+                "1 Organization",
+                "10,000 queries/month",
+                "50GB Storage",
+                "Community Support",
+            ],
+        },
+        {
+            name: "Pro",
+            price: "$99.99/month",
+            description: "For growing teams needing advanced features.",
+            features: [
+                "20 Users",
+                "5 Organizations",
+                "100,000 queries/month",
+                "500GB Storage",
+                "Priority Support",
+            ],
+        },
+        {
+            name: "Enterprise",
+            price: "Custom Pricing",
+            description: "Tailored solutions for large enterprises.",
+            features: [
+                "Unlimited Users",
+                "Unlimited Organizations",
+                "Unlimited queries",
+                "2TB Storage",
+                "Dedicated Support",
+            ],
+        },
+    ];
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
-            <div className="font-[sans-serif] bg-white p-4 w-4/5 mx-auto shadow-lg rounded-md">
-                <div className="grid lg:grid-cols-3 gap-10">
-                    <div className="lg:col-span-2 max-lg:order-1">
-                        <div className="flex items-start">
-                            <div className="w-full">
-                                <div className="flex items-center w-full">
-                                    <div className="w-8 h-8 shrink-0 mx-[-1px] bg-gray-800 p-1.5 flex items-center justify-center rounded-full">
-                                        <span className="text-sm text-white font-bold">1</span>
-                                    </div>
-                                    <div className="w-full h-[3px] mx-4 rounded-lg bg-gray-800"></div>
-                                </div>
-                                <div className="mt-2 mr-4">
-                                    <h6 className="text-sm font-bold text-gray-800">Shipping</h6>
-                                </div>
-                            </div>
+        <div className="max-w-5xl mx-auto p-6 flex flex-col bg-white rounded-lg ">
+            <h2 className="text-xl font-semibold mb-4">Payment</h2>
 
-                            <div className="w-full">
-                                <div className="flex items-center w-full">
-                                    <div className="w-8 h-8 shrink-0 mx-[-1px] bg-gray-800 p-1.5 flex items-center justify-center rounded-full">
-                                        <span className="text-sm text-white font-bold">2</span>
-                                    </div>
-                                    <div className="w-full h-[3px] mx-4 rounded-lg bg-gray-300"></div>
-                                </div>
-                                <div className="mt-2 mr-4">
-                                    <h6 className="text-sm font-bold text-gray-800">Billing</h6>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div className="flex items-center">
-                                    <div className="w-8 h-8 shrink-0 mx-[-1px] bg-gray-200 p-1.5 flex items-center justify-center rounded-full">
-                                        <span className="text-sm text-white font-bold">3</span>
-                                    </div>
-                                </div>
-                                <div className="mt-2">
-                                    <h6 className="text-sm font-bold text-gray-300">Confirm</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <form className="mt-16 max-w-lg">
-                            <h2 className="text-2xl font-extrabold text-gray-800">
-                                Payment method
-                            </h2>
-
-                            <div className="grid gap-4 sm:grid-cols-2 mt-8">
-                                <div className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        className="w-5 h-5 cursor-pointer"
-                                        id="card"
-                                        checked
-                                    />
-                                    <label
-                                        htmlFor="card"
-                                        className="ml-4 flex gap-2 cursor-pointer"
-                                    >
-                                        <img
-                                            src="https://readymadeui.com/images/visa.webp"
-                                            className="w-12"
-                                            alt="card1"
-                                        />
-                                        <img
-                                            src="https://readymadeui.com/images/american-express.webp"
-                                            className="w-12"
-                                            alt="card2"
-                                        />
-                                        <img
-                                            src="https://readymadeui.com/images/master.webp"
-                                            className="w-12"
-                                            alt="card3"
-                                        />
-                                    </label>
-                                </div>
-
-                                <div className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        className="w-5 h-5 cursor-pointer"
-                                        id="paypal"
-                                    />
-                                    <label
-                                        htmlFor="paypal"
-                                        className="ml-4 flex gap-2 cursor-pointer"
-                                    >
-                                        <img
-                                            src="https://readymadeui.com/images/paypal.webp"
-                                            className="w-20"
-                                            alt="paypalCard"
-                                        />
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className="grid gap-4 mt-8">
-                                <input
-                                    type="text"
-                                    placeholder="Cardholder's Name"
-                                    className="px-4 py-3.5 bg-white text-gray-800 w-full text-sm border-b-2 focus:border-gray-800 outline-none"
-                                />
-
-                                <div className="flex bg-white border-b-2 focus-within:border-gray-800 overflow-hidden">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-12 ml-3"
-                                        viewBox="0 0 291.764 291.764"
-                                    >
-                                        <path
-                                            fill="#2394bc"
-                                            d="m119.259 100.23-14.643 91.122h23.405l14.634-91.122h-23.396zm70.598 37.118c-8.179-4.039-13.193-6.765-13.193-10.896.1-3.756 4.24-7.604 13.485-7.604 7.604-.191 13.193 1.596 17.433 3.374l2.124.948 3.182-19.065c-4.623-1.787-11.953-3.756-21.007-3.756-23.113 0-39.388 12.017-39.489 29.204-.191 12.683 11.652 19.721 20.515 23.943 9.054 4.331 12.136 7.139 12.136 10.987-.1 5.908-7.321 8.634-14.059 8.634-9.336 0-14.351-1.404-21.964-4.696l-3.082-1.404-3.273 19.813c5.498 2.444 15.609 4.595 26.104 4.705 24.563 0 40.546-11.835 40.747-30.152.08-10.048-6.165-17.744-19.659-24.035zm83.034-36.836h-18.108c-5.58 0-9.82 1.605-12.236 7.331l-34.766 83.509h24.563l6.765-18.08h27.481l3.51 18.153h21.664l-18.873-90.913zm-26.97 54.514c.474.046 9.428-29.514 9.428-29.514l7.13 29.514h-16.558zM85.059 100.23l-22.931 61.909-2.498-12.209c-4.24-14.087-17.533-29.395-32.368-36.999l20.998 78.33h24.764l36.799-91.021H85.059v-.01z"
-                                            data-original="#2394bc"
-                                        />
-                                        <path
-                                            fill="#efc75e"
-                                            d="M51.916 111.982c-1.787-6.948-7.486-11.634-15.226-11.734H.374L0 101.934c28.329 6.984 52.107 28.474 59.821 48.688l-7.905-38.64z"
-                                            data-original="#efc75e"
-                                        />
-                                    </svg>
-                                    <input
-                                        type="number"
-                                        placeholder="Card Number"
-                                        className="px-4 py-3.5 bg-white text-gray-800 w-full text-sm outline-none"
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-6">
-                                    <input
-                                        type="number"
-                                        placeholder="EXP."
-                                        className="px-4 py-3.5 bg-white text-gray-800 w-full text-sm border-b-2 focus:border-gray-800 outline-none"
-                                    />
-                                    <input
-                                        type="number"
-                                        placeholder="CVV"
-                                        className="px-4 py-3.5 bg-white text-gray-800 w-full text-sm border-b-2 focus:border-gray-800 outline-none"
-                                    />
-                                </div>
-
-                                <div className="flex items-center">
-                                    <input
-                                        id="remember-me"
-                                        name="remember-me"
-                                        type="checkbox"
-                                        className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                    />
-                                    <label htmlFor="remember-me" className="ml-3 block text-sm">
-                                        I accept the{' '}
-                                        <a
-                                            href="javascript:void(0);"
-                                            className="text-blue-600 font-semibold hover:underline ml-1"
-                                        >
-                                            Terms and Conditions
-                                        </a>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-4 mt-8">
-                                <button
-                                    type="button"
-                                    className="min-w-[150px] px-6 py-3.5 text-sm bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200"
-                                >
-                                    Back
-                                </button>
-                                <button
-                                    type="button"
-                                    className="min-w-[150px] px-6 py-3.5 text-sm bg-gray-800 text-white rounded-md hover:bg-[#111]"
-                                >
-                                    Pay $750
+            <div className="py-12">
+                <div className="max-w-6xl mx-auto text-center">
+                    <h2 className="text-4xl font-bold text-gray-900 mb-6">Available Plans</h2>
+                    <p className="text-gray-600 text-lg mb-12">
+                        Choose the best plan that fits your needs.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {plans.map((plan) => (
+                            <div
+                                key={plan.name}
+                                className="bg-white shadow-lg rounded-lg p-8 border border-gray-200 hover:shadow-2xl transition duration-300"
+                            >
+                                <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                                    {plan.name}
+                                </h3>
+                                <p className="text-xl font-bold text-blue-600 mb-4">
+                                    {plan.price}
+                                </p>
+                                <p className="text-gray-600 mb-6">{plan.description}</p>
+                                <ul className="text-gray-700 space-y-2 mb-6">
+                                    {plan.features.map((feature, index) => (
+                                        <li key={index} className="flex items-center">
+                                            <span className="text-green-500 mr-2">✔</span> {feature}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                                    Choose Plan
                                 </button>
                             </div>
-                        </form>
-                    </div>
-
-                    <div className="bg-gray-100 p-6 rounded-md">
-                        <h2 className="text-4xl font-extrabold text-gray-800">$750</h2>
-
-                        <ul className="text-gray-800 mt-8 space-y-4">
-                            <li className="flex flex-wrap gap-4 text-sm">
-                                Split Sneakers <span className="ml-auto font-bold">$150.00</span>
-                            </li>
-                            <li className="flex flex-wrap gap-4 text-sm">
-                                Echo Elegance <span className="ml-auto font-bold">$200.00</span>
-                            </li>
-                            <li className="flex flex-wrap gap-4 text-sm">
-                                VelvetGlide Boots <span className="ml-auto font-bold">$300.00</span>
-                            </li>
-                            <li className="flex flex-wrap gap-4 text-sm">
-                                Tax <span className="ml-auto font-bold">$100.00</span>
-                            </li>
-                            <li className="flex flex-wrap gap-4 text-sm font-bold border-t-2 pt-4">
-                                Total <span className="ml-auto">$750.00</span>
-                            </li>
-                        </ul>
+                        ))}
                     </div>
                 </div>
             </div>
+
+
+            <div className="grid grid-cols-[65%_35%] gap-4 mb-6">
+                <PaymentMethods />
+                <OrderSummary />
+                <NewPaymentForm />
+                <Promotions />
+            </div>
+        </div>
+    );
+};
+
+const PaymentMethods = () => {
+    const methods = [
+        {
+            id: 1,
+            type: "Visa",
+            lastDigits: "7658",
+            expiry: "10/2024",
+            logo: "https://1000marcas.net/wp-content/uploads/2019/12/VISA-Logo-2014.png",
+            selected: true,
+        },
+        {
+            id: 2,
+            type: "Mastercard",
+            lastDigits: "8429",
+            expiry: "04/2026",
+            logo: "https://1000marcas.net/wp-content/uploads/2019/12/logo-Mastercard.png",
+            selected: false,
+        },
+        {
+            id: 3,
+            type: "Paypal",
+            lastDigits: "",
+            expiry: "",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png",
+            selected: false,
+        },
+    ];
+
+    return (
+        <div className="space-y-4">
+            {methods.map((method) => (
+                <div
+                    key={method.id}
+                    className="border rounded-lg p-4 flex justify-between items-center border-2 border-custom-accent bg-custom-light"
+                >
+                    <div className="flex items-center">
+                        <input
+                            type="radio"
+                            name="payment"
+                            className="mr-3"
+                            defaultChecked={method.selected}
+                        />
+                        <div>
+                            <p className="font-medium">{`${method.type} ending in ${method.lastDigits}`}</p>
+                            {method.expiry && (
+                                <p className="text-sm text-gray-500">Expiry {method.expiry}</p>
+                            )}
+                            <div className="text-sm text-custom-secondary mt-1">
+                                <span className="cursor-pointer">Delete</span> |
+                                <span className="cursor-pointer ml-2">Edit</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img
+                        src={method.logo}
+                        alt={method.type}
+                        className="h-8"
+                    />
+                </div>
+            ))}
+        </div>
+    );
+};
+
+
+
+const NewPaymentForm = () => {
+    const [cardNumber, setCardNumber] = useState("");
+    const [expiry, setExpiry] = useState("");
+    const [cvv, setCvv] = useState("");
+    const [errors, setErrors] = useState({ card: "", expiry: "", cvv: "" });
+
+    const handleCardInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value.replace(/\D/g, "");
+        value = value.replace(/(.{4})/g, "$1 ").trim();
+        setCardNumber(value);
+
+        if (value.length < 19) {
+            setErrors((prev) => ({ ...prev, card: "Invalid card number" }));
+        } else {
+            setErrors((prev) => ({ ...prev, card: "" }));
+        }
+    };
+
+    const handleExpiryInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length > 4) return;
+
+        if (value.length >= 2) {
+            value = value.slice(0, 2) + "/" + value.slice(2);
+        }
+        setExpiry(value);
+
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+            setErrors((prev) => ({ ...prev, expiry: "Invalid expiry date" }));
+        } else {
+            setErrors((prev) => ({ ...prev, expiry: "" }));
+        }
+    };
+
+    const handleCvvInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length > 4) return;
+        setCvv(value);
+
+        if (value.length < 3) {
+            setErrors((prev) => ({ ...prev, cvv: "Invalid CVV" }));
+        } else {
+            setErrors((prev) => ({ ...prev, cvv: "" }));
+        }
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className=" rounded-lg p-6 bg-white"
+        >
+            <h3 className="text-lg font-medium text-gray-700 mb-4">
+                Add a new payment method
+            </h3>
+            <form className="grid grid-cols-2 gap-4">
+                {/* Full Name */}
+                <motion.div whileFocus={{ scale: 1.05 }} className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700 mb-1">
+                        Full name (as displayed on card)*
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Bonnie Green"
+                        required
+                        className="border rounded-lg p-2 bg-gray-100 text-gray-700 focus:ring-2 focus:ring-blue-500"
+                    />
+                </motion.div>
+
+                {/* Card Number */}
+                <motion.div whileFocus={{ scale: 1.05 }} className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700 mb-1">
+                        Card number*
+                    </label>
+                    <input
+                        type="text"
+                        value={cardNumber}
+                        onChange={handleCardInput}
+                        placeholder="XXXX XXXX XXXX XXXX"
+                        maxLength={19}
+                        required
+                        className={`border rounded-lg p-2 bg-gray-100 text-gray-700 focus:ring-2 focus:ring-blue-500 ${errors.card ? "border-red-500" : ""
+                            }`}
+                    />
+                    {errors.card && <span className="text-red-500 text-xs">{errors.card}</span>}
+                </motion.div>
+
+                {/* Card Expiration */}
+                <motion.div whileFocus={{ scale: 1.05 }} className="flex flex-col relative">
+                    <label className="text-sm font-medium text-gray-700 mb-1">
+                        Card expiration*
+                    </label>
+                    <div className="relative">
+                        <input
+                            type="text"
+                            value={expiry}
+                            onChange={handleExpiryInput}
+                            placeholder="MM/YY"
+                            maxLength={5}
+                            required
+                            className={`border rounded-lg p-2 bg-gray-100 text-gray-700 w-full pl-10 focus:ring-2 focus:ring-blue-500 ${errors.expiry ? "border-red-500" : ""
+                                }`}
+                        />
+                        <FaRegCalendarAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                    </div>
+                    {errors.expiry && <span className="text-red-500 text-xs">{errors.expiry}</span>}
+                </motion.div>
+
+                {/* CVV */}
+                <motion.div whileFocus={{ scale: 1.05 }} className="flex flex-col relative">
+                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
+                        CVV* <BsInfoCircle className="ml-1 text-gray-500 cursor-pointer" title="Card Verification Value" />
+                    </label>
+                    <div className="relative">
+                        <input
+                            type="password"
+                            value={cvv}
+                            onChange={handleCvvInput}
+                            placeholder="•••"
+                            maxLength={4}
+                            required
+                            className={`border rounded-lg p-2 bg-gray-100 text-gray-700 w-full pl-10 focus:ring-2 focus:ring-blue-500 ${errors.cvv ? "border-red-500" : ""
+                                }`}
+                        />
+                        <HiOutlineLockClosed className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                    </div>
+                    {errors.cvv && <span className="text-red-500 text-xs">{errors.cvv}</span>}
+                </motion.div>
+
+                <motion.div whileHover={{ scale: 1.02 }} className="col-span-2">
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 text-white text-lg font-medium py-2 rounded-lg hover:bg-blue-700 transition"
+                    >
+                        Pay now
+                    </button>
+                </motion.div>
+            </form>
+        </motion.div>
+    );
+};
+
+const OrderSummary = () => {
+    const orderDetails = {
+        originalPrice: 6592.0,
+        savings: -299.0,
+        storePickup: 99,
+        tax: 799,
+        total: 7191.0,
+    };
+
+    const summaryItems = [
+        { label: "Original price", value: orderDetails.originalPrice },
+        { label: "Savings", value: orderDetails.savings, className: "text-green-600" },
+        { label: "Store Pickup", value: orderDetails.storePickup },
+        { label: "Tax", value: orderDetails.tax },
+    ];
+
+    return (
+        <div className="border rounded-lg p-6 bg-gray-50">
+            <h3 className="sr-only">Order Summary</h3>
+            <div className="space-y-3">
+                {summaryItems.map((item, index) => (
+                    <div key={index} className="flex justify-between text-sm text-gray-700">
+                        <span>{item.label}</span>
+                        <span className={`font-semibold ${item.className || ""}`}>
+                            {item.value < 0 ? `-$${Math.abs(item.value).toFixed(2)}` : `$${item.value.toFixed(2)}`}
+                        </span>
+                    </div>
+                ))}
+                <div className="border-t pt-3 flex justify-between text-lg font-semibold">
+                    <span>Total</span>
+                    <span className="text-gray-900">${orderDetails.total.toFixed(2)}</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+
+const Promotions = () => {
+
+    const promotions = [
+        {
+            id: 1,
+            icon: <HiOutlineTruck className="text-gray-500 text-2xl" />,
+            title: "Free shipping",
+            description: "You have 3 months to try free shipping and exclusive Genius offers.",
+            linkText: "Try Flowbite PRO 3 months free",
+        },
+        {
+            id: 2,
+            icon: <MdOutlineLocalOffer className="text-gray-500 text-2xl" />,
+            title: "-10% Extra",
+            description: "You get 10% extra when purchasing this product, for orders of at least $100!",
+            linkText: "Save the promo code in your account",
+        },
+    ];
+    return (
+        <div className="grid grid-cols-1 gap-4">
+            {promotions.map((promo) => (
+                <div key={promo.id} className="border rounded-lg p-4 flex items-start gap-4 bg-gray-50">
+                    <div className="p-2 bg-gray-100 rounded-lg">{promo.icon}</div>
+                    <div>
+                        <h4 className="font-semibold">{promo.title}</h4>
+                        <p className="text-sm text-gray-600">{promo.description}</p>
+                        <a href="#" className="text-blue-600 text-sm font-medium hover:underline flex items-center">
+                            {promo.linkText} <span className="ml-1">→</span>
+                        </a>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };

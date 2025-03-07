@@ -342,9 +342,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                         handleQueyChange={sendMessage}
                     />
                 ) : null}
-
-                <GoogleDriveModal />
-                <UploadFileModal />
             </div>
         </div>
     );

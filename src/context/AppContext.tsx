@@ -5,8 +5,8 @@ export const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider(props: AppProviderProps) {
     const [showModal, setShowModal] = useState(false);
-    const [uploadFileShowModal, setUploadFileShowModal] = useState(false);
-    const [syncHistoryShowModal, setSyncHistoryShowModal] = useState(false);
+    const [uploadFileShowModal, setUploadFileShowModal] = useState(true);
+    const [syncHistoryShowModal, setSyncHistoryShowModal] = useState(true);
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

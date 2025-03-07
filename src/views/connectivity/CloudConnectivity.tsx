@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
 import { AppContext } from '@src/context/AppContext';
+import Sidebar from '@src/components/Storage/Sidebar';
+import Header from '@src/components/Storage/Header';
 
 import { fetchAuthSession } from 'aws-amplify/auth';
 import { gapi } from 'gapi-script';
@@ -33,12 +36,10 @@ interface GoogleDriveFile {
     webViewLink?: string;
 }
 
-const GoogleDriveModal = () => {
-    const appContext = React.useContext(AppContext);
 
-    if (!appContext?.showModal) {
-        return null;
-    }
+const CloudConnectivity: React.FC = () => {
+    const [activeView, setActiveView] = useState<string>('Inicio');
+    const appContext = useContext(AppContext);
 
     const [folders, setFolders] = useState<any[]>([]);
     const [files, setFiles] = useState<{ [key: string]: any[] }>({});
@@ -247,26 +248,121 @@ const GoogleDriveModal = () => {
     };
 
     return (
-        <>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-1/2 my-6 mx-auto max-w-3xl">
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        
-                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+        <div className="flex">
+            {appContext?.isSidebarOpen || window.innerWidth > 768 ? (
+                <Sidebar activeView={activeView} setActiveView={setActiveView} />
+            ) : null}
+            <div className="flex-1 flex flex-col">
+                <Header />
+
+                <div className='flex flex-col w-2/3 mx-auto h-full'>
+                    <div className="flex flex-row justify-between px-4 py-5 border-b items-center bg-white shadow">
+                        <div className="flex items-center space-x-2">
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Drive_icon_%282020%29.svg/1200px-Google_Drive_icon_%282020%29.svg.png"
+                                alt="Google Drive"
+                                className="w-10 h-10"
+                            />
+                            <span className="text-2xl font-semibold text-gray-700">
+                                Google Drive
+                            </span>
+                        </div>
+                        {localStorage.getItem('googleAccessToken') ? (
                             <button
-                                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button"
-                                onClick={() => appContext?.setShowModal(false)}
+                                onClick={handleSignOutClick}
+                                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 flex items-center justify-center"
                             >
-                                Cerrar
+                                <FontAwesomeIcon
+                                    icon={faArrowRightFromBracket}
+                                    className="mr-2"
+                                />
+                                Cerrar sesión
                             </button>
+                        ) : (
+                            <button
+                                onClick={handleAuthClick}
+                                className="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300 flex items-center justify-center"
+                            >
+                                <FontAwesomeIcon icon={faGoogle} className="mr-2" />
+                                Iniciar sesión
+                            </button>
+                        )}
+                    </div>
+                    <div className="relative p-6 flex-auto">
+                        <div className="flex flex-col">
+                            <ToastContainer />
+                            <div className="bg-white rounded-lg p-6 w-full max-w-3xl">
+                                {isConnected ? (
+                                    <ul className="space-y-1">
+                                        {folders.map((folder) => (
+                                            <li key={folder.id} className="px-4 rounded">
+                                                <div
+                                                    className="flex bg-slate-100 p-2 justify-between items-center cursor-pointer"
+                                                    onClick={() => handleFolderClick(folder.id)}
+                                                >
+                                                    <span>{folder.name}</span>
+                                                    <FontAwesomeIcon
+                                                        icon={faFolderOpen}
+                                                        className="text-blue-500"
+                                                    />
+                                                </div>
+                                                {expandedFolderId === folder.id &&
+                                                    files[folder.id] && (
+                                                        <ul className="pl-4 mt-2 space-y-2 max-h-60 overflow-y-auto">
+                                                            {files[folder.id].map((file) => (
+                                                                <li
+                                                                    key={file.id}
+                                                                    className="flex justify-between items-center p-2 bg-slate-50 rounded hover:bg-gray-300 transition duration-300"
+                                                                >
+                                                                    <span>{file.name}</span>
+                                                                    {file.mimeType ===
+                                                                        'application/vnd.google-apps.folder' && (
+                                                                            <FontAwesomeIcon
+                                                                                icon={faFolderOpen}
+                                                                                className="text-blue-500"
+                                                                            />
+                                                                        )}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <div className="text-center text-gray-500">
+                                        <p>
+                                            Debes iniciar sesión en Google Drive para acceder a
+                                            tus archivos.
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                            {expandedFolderId && files[expandedFolderId] && (
+                                <div className="bg-white shadow rounded-lg p-6 w-full flex justify-between max-w-3xl mt-6">
+                                    <div></div>
+                                    <button
+                                        onClick={handleDownloadFolder}
+                                        className="bg-neutral-700 text-white px-4 py-2 rounded mb-4 hover:bg-neutral-900 transition duration-300 flex items-center"
+                                        disabled={uploading}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faCloudDownloadAlt}
+                                            className="mr-2"
+                                        />
+                                        {uploading
+                                            ? 'Sincronizando conocimiento...'
+                                            : 'Sincronizar conocimiento'}
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
+        </div>
     );
 };
 
-export default GoogleDriveModal;
+export default CloudConnectivity;

@@ -1,23 +1,14 @@
 import React, { useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import {
-    FiHome,
     FiHardDrive,
-    FiUsers,
-    FiClock,
-    FiStar,
     FiTrash,
-    FiCloud,
-    FiFile,
-    FiX,
 } from 'react-icons/fi';
-import logo from '@src/assets/Harvey_logo.png';
-import { IoChatboxOutline } from 'react-icons/io5';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { IoChatboxOutline, IoCloudOutline } from 'react-icons/io5';
 import { GoLaw } from 'react-icons/go';
-import { FaObjectGroup } from 'react-icons/fa';
 import { RiOrganizationChart } from 'react-icons/ri';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
     AWS_ACCESS_KEY_ID,
@@ -31,7 +22,7 @@ const menuItems = [
     { icon: <FiHardDrive />, label: 'Mi Unidad', path: '/almacenamiento' },
     { icon: <GoLaw />, label: 'Legal', path: '/contratos-y-acuerdos' },
     { icon: <RiOrganizationChart />, label: 'Organizaciones', path: '/organizaciones' },
-    { icon: <FiStar />, label: 'Destacados', path: '/almacenamiento' },
+    { icon: <IoCloudOutline />, label: 'Conectividad', path: '/conectividad' },
     { icon: <FiTrash />, label: 'Papelera', path: '/almacenamiento' },
 ];
 
@@ -138,9 +129,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         <li
                             onClick={() => navigate(item.path)}
                             key={index}
-                            className={`cursor-pointer text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${
-                                props.activeView === item.label ? 'bg-[#e9eaee]' : ''
-                            }`}
+                            className={`cursor-pointer text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
+                                }`}
                         >
                             <div className="flex items-center justify-center w-full">
                                 <span className="text-xl flex items-center justify-center w-8 h-8">
