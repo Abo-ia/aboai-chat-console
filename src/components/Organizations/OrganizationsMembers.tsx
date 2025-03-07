@@ -213,7 +213,7 @@ const OrganizationMembers = () => {
                                 Cancelar
                             </button>
                             <button
-                                className={`px-4 py-2 rounded-lg bg-custom-bg-main text-white flex items-center gap-2`}
+                                className={`px-4 py-2 rounded-lg  text-white flex items-center gap-2`}
                                 onClick={handleInvite}
                                 disabled={!email.trim() || loading}
                             >

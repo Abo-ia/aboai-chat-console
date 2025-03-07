@@ -62,7 +62,7 @@ const Header: React.FC = () => {
                     >
                         {activeOrganization && (
                             <div className="flex items-center p-4">
-                                <div className="w-12 h-12 flex items-center justify-center bg-custom-bg-main text-gray-600 text-lg font-semibold rounded-full">
+                                <div className="w-12 h-12 flex items-center justify-center  text-gray-600 text-lg font-semibold rounded-full">
                                     {activeOrganization.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div className="ml-3">
@@ -80,21 +80,21 @@ const Header: React.FC = () => {
                         <div className="py-1" role="none">
                             <a
                                 href="/"
-                                className="block px-4 py-2 text-sm hover:bg-custom-bg-main rounded-md transition"
+                                className="block px-4 py-2 text-sm hover: rounded-md transition"
                                 role="menuitem"
                             >
                                 Chat
                             </a>
                             <a
                                 href="/almacenamiento"
-                                className="block px-4 py-2 text-sm hover:bg-custom-bg-main rounded-md transition"
+                                className="block px-4 py-2 text-sm hover: rounded-md transition"
                                 role="menuitem"
                             >
                                 Almacenamiento
                             </a>
                             <a
                                 href="/ajustes"
-                                className="block px-4 py-2 text-sm hover:bg-custom-bg-main rounded-md transition"
+                                className="block px-4 py-2 text-sm hover: rounded-md transition"
                                 role="menuitem"
                             >
                                 Ajustes
@@ -107,7 +107,7 @@ const Header: React.FC = () => {
                                     localStorage.clear();
                                     window.location.reload();
                                 }}
-                                className="block w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-custom-bg-main transition rounded-md"
+                                className="block w-full px-4 py-2 text-left text-sm text-red-500 hover: transition rounded-md"
                                 role="menuitem"
                             >
                                 Cerrar sesión

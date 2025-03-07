@@ -12,7 +12,7 @@ const SidebarIcons: React.FC<SidebarIconsProps> = (props) => {
     const { openChatHistory } = props;
 
     return (
-        <div className="flex shadow justify-between gap-7 py-2 bg-custom-bg-main items-center cursor-pointer px-5 transition-all border-y">
+        <div className="flex shadow justify-between gap-7 py-2  items-center cursor-pointer px-5 transition-all border-y">
             {/* <BsChatSquareDotsFill 
                 onClick={openChatHistory}
                 className='text-2xl text-gray-500 hover:text-gray-700'

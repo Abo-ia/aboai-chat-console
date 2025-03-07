@@ -60,8 +60,8 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
             <div className="flex w-full">
                 {isSidebarOpen && (
                     <div className="w-[40%] bg-custom-bg-sidebar p-4 shadow-lg">
-                        <div className="text-2xl font-bold mb-6">
-                            Documentos
+                        <div className="text-2xl font-bold ml-3 mb-6">
+                            Legal
                         </div>
 
                         <div className="mb-4">
