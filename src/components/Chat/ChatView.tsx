@@ -285,7 +285,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                             );
                         })}
                         <div ref={messagesEndRef}></div>
-                        {!isLoading && <LoadingComponent />}
+                        {isLoading && <LoadingComponent />}
                     </div>
 
                     {/* Input y botón de enviar */}
