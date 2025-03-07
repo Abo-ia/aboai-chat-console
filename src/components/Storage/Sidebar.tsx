@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { FiHome, FiHardDrive, FiUsers, FiClock, FiStar, FiTrash, FiCloud, FiFile, FiX } from 'react-icons/fi';
+import {
+    FiHome,
+    FiHardDrive,
+    FiUsers,
+    FiClock,
+    FiStar,
+    FiTrash,
+    FiCloud,
+    FiFile,
+    FiX,
+} from 'react-icons/fi';
 import logo from '@src/assets/Harvey_logo.png';
-import { IoChatboxOutline } from "react-icons/io5";
+import { IoChatboxOutline } from 'react-icons/io5';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GoLaw } from "react-icons/go";
+import { GoLaw } from 'react-icons/go';
 import { FaObjectGroup } from 'react-icons/fa';
-import { RiOrganizationChart } from "react-icons/ri";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
+import { RiOrganizationChart } from 'react-icons/ri';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-import { AWS_ACCESS_KEY_ID, AWS_BUCKET_NAME, AWS_SECRET_ACCESS_KEY } from '@src/config/env';
+import {
+    AWS_ACCESS_KEY_ID,
+    AWS_BUCKET_NAME,
+    AWS_REGION,
+    AWS_SECRET_ACCESS_KEY,
+} from '@src/config/env';
 
 const menuItems = [
     { icon: <IoChatboxOutline />, label: 'Chat', path: '/' },
@@ -35,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     const navigate = useNavigate();
 
     const s3Client = new S3Client({
-        region: 'us-west-2',
+        region: AWS_REGION,
         credentials: {
             accessKeyId: AWS_ACCESS_KEY_ID,
             secretAccessKey: AWS_SECRET_ACCESS_KEY,
@@ -81,14 +96,20 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
     return (
         <div className="relative text-custom-font-main border-r border-custom-border">
-            <div className={`bg-custom-bg-sidebar h-screen shadow-lg flex flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-60' : 'w-16'}`}>
-                <div className={`flex items-center justify-center p-4 ${isSidebarOpen ? 'space-x-2' : ''}`}>
+            <div
+                className={`bg-custom-bg-sidebar h-screen shadow-lg flex flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-60' : 'w-16'}`}
+            >
+                <div
+                    className={`flex items-center justify-center p-4 ${isSidebarOpen ? 'space-x-2' : ''}`}
+                >
                     <img
-                        src={"https://img.freepik.com/premium-vector/minimalist-law-firm-logo-icon-vector-illustration_1046239-905.jpg"}
+                        src={
+                            'https://img.freepik.com/premium-vector/minimalist-law-firm-logo-icon-vector-illustration_1046239-905.jpg'
+                        }
                         alt="Harvey"
                         className="w-12 h-12 rounded-full shadow-lg object-cover"
                     />
-                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">Harvee</h1>}
+                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">Abo.AI</h1>}
                 </div>
 
                 <button
@@ -102,7 +123,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     }}
                     aria-label={pathname === '/' ? 'Nuevo chat' : 'Nuevo archivo'}
                 >
-                    <span className="flex items-center justify-center w-8 h-8 bg-white text-green-600 rounded-full shadow-inner transition-transform duration-300 transform hover:rotate-45">
+                    <span className="flex items-center justify-center w-8 h-8 bg-white text-custom-primary rounded-full">
                         +
                     </span>
                     {isSidebarOpen && (
@@ -117,8 +138,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         <li
                             onClick={() => navigate(item.path)}
                             key={index}
-                            className={`cursor-pointer text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
-                                }`}
+                            className={`cursor-pointer text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${
+                                props.activeView === item.label ? 'bg-[#e9eaee]' : ''
+                            }`}
                         >
                             <div className="flex items-center justify-center w-full">
                                 <span className="text-xl flex items-center justify-center w-8 h-8">
@@ -134,7 +156,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     ))}
                 </ul>
 
-
                 <button
                     className="flex items-center justify-center p-4 rounded-lg shadow transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -147,14 +168,20 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     )}
                 </button>
 
-
-                <div className={`p-3 rounded-lg transition-all duration-300 ${!isSidebarOpen && 'hidden'}`}>
+                <div
+                    className={`p-3 rounded-lg transition-all duration-300 ${!isSidebarOpen && 'hidden'}`}
+                >
                     <div className="flex items-center justify-between text-sm text-custom-font-base">
                         <span>13.2 GB de 15 GB usados</span>
-                        <button className="text-custom-gradient hover:underline text-xs">Más almacenamiento</button>
+                        <button className="text-custom-gradient hover:underline text-xs">
+                            Más almacenamiento
+                        </button>
                     </div>
                     <div className="w-full h-2 bg-[#e9eaee] mt-2 rounded-full overflow-hidden">
-                        <div className="h-2 bg-custom-primary rounded-full transition-all duration-500 ease-in-out" style={{ width: '88%' }}></div>
+                        <div
+                            className="h-2 bg-custom-primary rounded-full transition-all duration-500 ease-in-out"
+                            style={{ width: '88%' }}
+                        ></div>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,9 @@
-import { createContext, useState } from "react"
-import { AppContextType, AppProviderProps } from "@src/types/types";
-
+import { createContext, useState } from 'react';
+import { AppContextType, AppProviderProps } from '@src/types/types';
 
 export const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider(props: AppProviderProps) {
-
     const [showModal, setShowModal] = useState(false);
     const [uploadFileShowModal, setUploadFileShowModal] = useState(false);
     const [syncHistoryShowModal, setSyncHistoryShowModal] = useState(false);
@@ -21,12 +19,8 @@ export function AppProvider(props: AppProviderProps) {
         setSyncHistoryShowModal: setSyncHistoryShowModal,
 
         isSidebarOpen: isSidebarOpen,
-        setIsSidebarOpen: setIsSidebarOpen
-    }
+        setIsSidebarOpen: setIsSidebarOpen,
+    };
 
-    return (
-        <AppContext.Provider value={appContext}>
-            {props.children}
-        </AppContext.Provider>
-    )
+    return <AppContext.Provider value={appContext}>{props.children}</AppContext.Provider>;
 }

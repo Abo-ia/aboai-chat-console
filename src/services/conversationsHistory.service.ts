@@ -1,4 +1,4 @@
-import { HARVEY_REST_API_URL } from "@src/config/env";
+import { HARVEY_REST_API_URL } from '@src/config/env';
 
 class ConversationsHistoryService {
     private idToken: string | null;
@@ -15,7 +15,7 @@ class ConversationsHistoryService {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.idToken}`
+                    Authorization: `Bearer ${this.idToken}`,
                 },
                 body: JSON.stringify({
                     userId: userId,
@@ -29,7 +29,7 @@ class ConversationsHistoryService {
             console.error('Service: Error getting conversations history:', error);
             throw error;
         }
-    }    
+    }
 
     async getConversation(userId: string, conversationId: string): Promise<any> {
         console.log('Service: Getting conversation - getConversation');
@@ -39,7 +39,7 @@ class ConversationsHistoryService {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.idToken}`
+                    Authorization: `Bearer ${this.idToken}`,
                 },
                 body: JSON.stringify({
                     userId: userId,
@@ -55,7 +55,6 @@ class ConversationsHistoryService {
             throw error;
         }
     }
-}    
-    
+}
 
 export default ConversationsHistoryService;

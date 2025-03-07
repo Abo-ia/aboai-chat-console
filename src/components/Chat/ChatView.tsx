@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { fetchAuthSession } from "aws-amplify/auth";
+import { fetchAuthSession } from 'aws-amplify/auth';
 import MessageService from '@src/services/messages.service';
 import ConversationsHistoryService from '@src/services/conversationsHistory.service';
 import { useOrganization } from '@src/context/OrganizationContext';
 
 import useWindowSize from '@src/hooks/useWindowSize';
 
-import Sidebar from "@src/components/Sidebar/Sidebar";
-import LoadingComponent from "@src/components/LoadingComponent/LoadingComponent";
+import Sidebar from '@src/components/Sidebar/Sidebar';
+import LoadingComponent from '@src/components/LoadingComponent/LoadingComponent';
 import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
 import UploadFileModal from '@src/components/Modals/UploadFilesModal';
 import SyncHistoryModal from '@src/components/Modals/SyncHistoryModal';
@@ -41,9 +41,7 @@ type ChatDashboardProps = {
 
 const ChatView: React.FC<ChatDashboardProps> = () => {
     const { width } = useWindowSize();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(
-        width > 768
-    );
+    const [isSidebarOpen, setIsSidebarOpen] = useState(width > 768);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const { state } = useOrganization();
     const { activeOrganization } = state;
@@ -53,8 +51,8 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     }, [width]);
 
     const [isChatHistoryOpen, setIsChatHistoryOpen] = useState<boolean>(false);
-    const [textInput, setTextInput] = useState<string>("");
-    const [activeQuestion, setActiveQuestion] = useState<string>("");
+    const [textInput, setTextInput] = useState<string>('');
+    const [activeQuestion, setActiveQuestion] = useState<string>('');
     const [messages, setMessages] = useState<any[]>([]);
     const [conversationMode, setConversationMode] = useState('createConversation');
     const [conversationId, setConversationId] = useState('');
@@ -67,7 +65,10 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
     useEffect(() => {
         const getUserId = () => {
             for (const key in localStorage) {
-                if (key.startsWith('CognitoIdentityServiceProvider') && key.endsWith('LastAuthUser')) {
+                if (
+                    key.startsWith('CognitoIdentityServiceProvider') &&
+                    key.endsWith('LastAuthUser')
+                ) {
                     return localStorage.getItem(key);
                 }
             }
@@ -83,7 +84,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
     useEffect(() => {
         if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [messages]);
 
@@ -99,7 +100,9 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
             setConversationMode('addMessage');
             setConversationId(conversationId);
 
-            const validMessages = response.filter((message: Message) => message.chat_response !== undefined);
+            const validMessages = response.filter(
+                (message: Message) => message.chat_response !== undefined,
+            );
 
             const sortedMessages = validMessages.sort((a: Message, b: Message) => {
                 return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(); // Ordenar por fecha ascendente
@@ -126,7 +129,12 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                     ]);
                     return { prompt: message.prompt, references: referencesList };
                 } catch (parseError) {
-                    console.error('Error parsing chat_response:', parseError, 'for message:', message);
+                    console.error(
+                        'Error parsing chat_response:',
+                        parseError,
+                        'for message:',
+                        message,
+                    );
                     return null;
                 }
             });
@@ -161,7 +169,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 currentConversationId = createBody.conversationId;
                 setConversationId(currentConversationId);
                 if (!currentConversationId) {
-                    throw new Error("Failed to create conversation.");
+                    throw new Error('Failed to create conversation.');
                 }
                 setConversationMode('addMessage');
             }
@@ -170,8 +178,8 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 message,
                 userId,
                 currentConversationId,
-                messages.map((msg) => msg.query).join(" "),
-                activeOrganization?.knowledge_base_id || ''
+                messages.map((msg) => msg.query).join(' '),
+                activeOrganization?.knowledge_base_id || '',
             );
             const responseBody = response;
 
@@ -207,129 +215,122 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
     return (
         <div>
-            <SidebarIcons
-                openChatHistory={handleChangeChatHistory}
-            />
-            <div className="font-sans flex bg-custom-bg-main">
-                {(isChatHistoryOpen || width > 541) && (
-                    <Sidebar
-                        loadConversation={loadConversation}
-                        isSidebarOpen={isSidebarOpen}
-                    />
-                )}
+            <SidebarIcons openChatHistory={handleChangeChatHistory} />
+            <div className="font-sans flex">
+                <Sidebar loadConversation={loadConversation} isSidebarOpen={isSidebarOpen} />
 
-                <div className="lg:w-1/2 mx-5 h-[88.8vh]">
-                    <div className="flex flex-col lg:flex-row h-full  overflow-x-hidden">
-                        <div className="flex flex-col flex-auto h-full">
-                            <div className="flex flex-col flex-auto flex-shrink-0 h-full overflow-y-auto">
-                                <div className="flex flex-col h-full overflow-y-auto mb-4">
-                                    <div className="flex flex-col h-full">
-                                        <div className="pt-4 gap-y-1">
-                                            {messages.map((msg, index) => {
-                                                const date = new Date(msg.timestamp).toLocaleTimeString();
-                                                return (
-                                                    <div key={index} className="flex items-start mb-4 text-sm">
-                                                        <div className="w-full bg-custom-chat-bg p-4 rounded-lg">
-                                                            <div className="flex flex-col gap-2.5 items-end">
-                                                                <div className="flex flex-col leading-1.5">
-                                                                    <div className="flex items-center space-x-2">
-                                                                        <img
-                                                                            className="w-8 h-8 rounded-full"
-                                                                            src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
-                                                                            alt="User Avatar"
-                                                                        />
-                                                                        <span className="text-sm font-semibold text-custom-font-user">Tú</span>
-                                                                        <span className="text-sm font-normal text-gray-500">{date}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="h-full pt-3 py-2 px-5 pb-3 rounded prose prose-sm bg-custom-light">
-                                                                    <p className="text-custom-font-main">{msg.query}</p>
-                                                                </div>
-                                                                <span className="text-sm font-normal text-gray-500 mb-2">Enviado</span>
-                                                            </div>
-
-                                                            <div className="flex flex-col gap-2.5">
-                                                                <div className="flex flex-col leading-1.5">
-                                                                    <div className="flex items-center space-x-2">
-                                                                        <img
-                                                                            className="w-8 h-8 rounded-full"
-                                                                            src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png"
-                                                                            alt="Assistant Avatar"
-                                                                        />
-                                                                        <span className="text-sm font-semibold text-custom-font-user">Harvee</span>
-                                                                        <span className="text-sm font-normal text-gray-500">{date}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    className="h-full pt-3 px-5 pb-3 rounded prose prose-sm bg-custom-light"
-                                                                    dangerouslySetInnerHTML={{ __html: msg.response }}
-                                                                />
-                                                                <span className="text-sm font-normal text-gray-500 mt-1">Entregado</span>
-                                                            </div>
-
-                                                            {msg.references && msg.references.length > 0 && (
-                                                                <button
-                                                                    className="px-3 py-2 rounded mt-2 bg-custom-primary text-white transition-colors duration-300 text-sm font-semibold"
-                                                                    onClick={() => showReferences(msg.references, msg.query)}
-                                                                >
-                                                                    Mostrar referencias.
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                            <div ref={messagesEndRef}></div>
-                                            {isLoading && <LoadingComponent />}
+                <div className="lg:w-1/2 mx-5 h-[88.8vh] flex flex-col">
+                    <div className="flex-auto h-full overflow-y-auto space-y-4">
+                        {messages.map((msg, index) => {
+                            const date = new Date(msg.timestamp).toLocaleTimeString();
+                            return (
+                                <div key={index} className="flex flex-col text-sm">
+                                    <div className="bg-custom-chat-bg p-4 rounded-lg space-y-3">
+                                        {/* Mensaje del usuario */}
+                                        <div className="flex items-center space-x-2">
+                                            <img
+                                                className="w-8 h-8 rounded-full"
+                                                src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
+                                                alt="User Avatar"
+                                            />
+                                            <span className="text-sm font-semibold text-custom-font-user">
+                                                Tú
+                                            </span>
+                                            <span className="text-sm font-normal text-gray-500">
+                                                {date}
+                                            </span>
                                         </div>
+                                        <div className="bg-custom-light p-4 rounded-lg shadow-sm border border-gray-300">
+                                            <p className="text-gray-900 leading-relaxed">
+                                                {msg.query}
+                                            </p>
+                                        </div>
+
+                                        <span className="text-sm text-gray-500">Enviado</span>
+
+                                        {/* Respuesta del asistente */}
+                                        <div className="flex items-center space-x-2">
+                                            <img
+                                                className="w-8 h-8 rounded-full"
+                                                src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png"
+                                                alt="Assistant Avatar"
+                                            />
+                                            <span className="text-sm font-semibold text-custom-font-user">
+                                                Abo.AI
+                                            </span>
+                                            <span className="text-sm font-normal text-gray-500">
+                                                {date}
+                                            </span>
+                                        </div>
+                                        <div
+                                            className="bg-custom-light p-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 leading-relaxed prose prose-sm prose-a:text-blue-500 hover:prose-a:underline"
+                                            dangerouslySetInnerHTML={{ __html: msg.response }}
+                                        />
+
+                                        <span className="text-sm text-gray-500">Entregado</span>
+                                        <br />
+
+                                        {msg.references?.length > 0 && (
+                                            <button
+                                                className="px-3 py-2 rounded bg-custom-primary text-white text-sm font-semibold transition-colors duration-300"
+                                                onClick={() =>
+                                                    showReferences(msg.references, msg.query)
+                                                }
+                                            >
+                                                Mostrar referencias.
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
-                                <div className="flex flex-row items-center justify-center p-4 gap-4">
-                                    <textarea
-                                        placeholder="Escribe un mensaje..."
-                                        value={textInput}
-                                        onChange={(e) => setTextInput(e.target.value)}
-                                        onKeyPress={(e) => {
-                                            if (e.key === "Enter" && !e.shiftKey) {
-                                                e.preventDefault();
-                                                sendMessage(textInput);
-                                                setTextInput("");
-                                            }
-                                        }}
-                                        className="px-4 py-2 w-full h-20 rounded-lg  border-[1px] border-bg-custom-secondary focus:outline-none focus:ring-2 focus:ring-[#3e4b56] focus:ring-opacity-50 transition duration-300 ease-in-out"
-                                    />
+                            );
+                        })}
+                        <div ref={messagesEndRef}></div>
+                        {!isLoading && <LoadingComponent />}
+                    </div>
 
-
-                                    <button
-                                        onClick={() => {
-                                            sendMessage(textInput);
-                                            setTextInput("");
-                                        }}
-                                        className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
-                                    >
-                                        <span className="mr-2">Enviar</span>
-                                        <span className="transform rotate-45">
-                                            <svg
-                                                className="w-5 h-5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="2"
-                                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                                ></path>
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    {/* Input y botón de enviar */}
+                    <div className="flex items-center p-4 gap-4">
+                        <textarea
+                            placeholder="Escribe un mensaje..."
+                            value={textInput}
+                            onChange={(e) => setTextInput(e.target.value)}
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    sendMessage(textInput);
+                                    setTextInput('');
+                                }
+                            }}
+                            className="px-4 py-2 w-full h-20 rounded-lg border border-bg-custom-secondary focus:outline-none focus:ring-2 focus:ring-[#3e4b56] focus:ring-opacity-50 transition duration-300"
+                        />
+                        <button
+                            onClick={() => {
+                                sendMessage(textInput);
+                                setTextInput('');
+                            }}
+                            className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300"
+                        >
+                            <span className="mr-2">Enviar</span>
+                            <span className="transform rotate-45">
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                    ></path>
+                                </svg>
+                            </span>
+                        </button>
                     </div>
                 </div>
+
                 {isModalOpen && (
                     <ReferencesModal content={documentReferences} onClose={closeModal} />
                 )}
@@ -344,17 +345,18 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
                 <GoogleDriveModal />
                 <UploadFileModal />
-                {/* <SyncHistoryModal /> */}
             </div>
         </div>
     );
 };
 
-
-const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> = ({ content, onClose }) => {
+const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> = ({
+    content,
+    onClose,
+}) => {
     const uniqueReferences = useMemo(() => {
         const seen = new Set();
-        return content.filter(ref => {
+        return content.filter((ref) => {
             const identifier = `${ref.location.s3Location.uri}-${ref.content.text}`;
             if (seen.has(identifier)) {
                 return false;
@@ -393,9 +395,7 @@ const ReferenceItem: React.FC<{ content: Reference }> = ({ content }) => {
                 className="flex items-center text-neutral-500 gap-2 cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <span
-                    className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold border-b border-indigo-200"
-                >
+                <span className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold border-b border-indigo-200">
                     {fileName.length > 30 ? `${fileName.slice(0, 30)}...` : fileName}
                 </span>
             </p>

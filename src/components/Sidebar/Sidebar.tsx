@@ -16,8 +16,6 @@ interface SidebarItemProps {
     isFavorite: boolean;
 }
 
-
-
 const SidebarItem: React.FC<SidebarItemProps> = ({
     conversationId,
     conversationName,
@@ -56,7 +54,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         <div className="relative group block mb-1 text-custom-font-main hover:bg-custom-secondary hover:rounded hover:text-white transition-all">
             <div
                 className={`flex justify-between items-center cursor-pointer px-2 border-custom-base rounded-lg transition-all ${selected && 'bg-custom-primary text-white'}`}
-                onClick={handleClick}>
+                onClick={handleClick}
+            >
                 <div className="flex items-center gap-2 flex-grow overflow-hidden">
                     {isFavorite && (
                         <svg
@@ -68,9 +67,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" />
                         </svg>
                     )}
-                    <p className={`truncate pl-2`}>
-                        {conversationName}
-                    </p>
+                    <p className={`truncate pl-2`}>{conversationName}</p>
                 </div>
                 <span
                     className={`text-3xl mb-2 flex-shrink-0 ${selected ? 'text-green-300' : 'text-gray-800 group-hover:text-green-300'}`}
@@ -86,8 +83,19 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                         onClick={handleDeleteConversation}
                         className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm font-medium rounded-md transition-colors hover:bg-gray-100 focus:outline-none focus:bg-gray-100 active:bg-gray-200"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
                         </svg>
                         Borrar conversación
                     </button>
@@ -112,7 +120,6 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     );
 };
 
-
 type ChatSidebarProps = {
     loadConversation: (conversationId: string) => void;
     isSidebarOpen: boolean;
@@ -133,7 +140,10 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
     useEffect(() => {
         const getUserId = () => {
             for (const key in localStorage) {
-                if (key.startsWith('CognitoIdentityServiceProvider') && key.endsWith('LastAuthUser')) {
+                if (
+                    key.startsWith('CognitoIdentityServiceProvider') &&
+                    key.endsWith('LastAuthUser')
+                ) {
                     return localStorage.getItem(key);
                 }
             }
@@ -168,22 +178,27 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
             }
 
             const sortedData = conversations.sort(
-                (a: { timestamp: string | number | Date }, b: { timestamp: string | number | Date }) => {
+                (
+                    a: { timestamp: string | number | Date },
+                    b: { timestamp: string | number | Date },
+                ) => {
                     const timestampA = new Date(a.timestamp).getTime();
                     const timestampB = new Date(b.timestamp).getTime();
                     return timestampB - timestampA;
-                }
+                },
             );
 
             const favorites = sortedData.filter((item: { isFavorite: boolean }) => item.isFavorite);
-            const nonFavorites = sortedData.filter((item: { isFavorite: boolean }) => !item.isFavorite);
+            const nonFavorites = sortedData.filter(
+                (item: { isFavorite: boolean }) => !item.isFavorite,
+            );
 
             setFavoriteItems(
                 favorites.map((item: { conversationId: string; conversation_name: string }) => ({
                     conversationId: item.conversationId,
                     conversation_name: item.conversation_name,
                     isFavorite: true,
-                }))
+                })),
             );
 
             setMenuItems(
@@ -191,7 +206,7 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
                     conversationId: item.conversationId,
                     conversation_name: item.conversation_name,
                     isFavorite: false,
-                }))
+                })),
             );
         } catch (error) {
             console.error('Sidebar: Error getting conversations history:', error);
@@ -205,10 +220,18 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
 
     const handleMarkFavorite = (conversationId: string, isFavorite: boolean) => {
         if (isFavorite) {
-            setFavoriteItems(favoriteItems.filter((item) => item.conversationId !== conversationId));
+            setFavoriteItems(
+                favoriteItems.filter((item) => item.conversationId !== conversationId),
+            );
             setMenuItems((prevItems) => [
                 ...prevItems,
-                { conversationId, conversation_name: favoriteItems.find((item) => item.conversationId === conversationId)?.conversation_name || '', isFavorite: false },
+                {
+                    conversationId,
+                    conversation_name:
+                        favoriteItems.find((item) => item.conversationId === conversationId)
+                            ?.conversation_name || '',
+                    isFavorite: false,
+                },
             ]);
         } else {
             setMenuItems((prevItems) => {
@@ -226,7 +249,8 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
     return (
         <React.Fragment>
             <div
-                className={`w-[25%] pt-6 transform border-r transition-transform duration-300`}>
+                className={`max-w-[20%] pt-6 transform border-r transition-transform duration-300`}
+            >
                 <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
                     <div className="text-custom-font-main">Apps</div>
                     <div>
@@ -241,7 +265,9 @@ const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
                 </div>
 
                 <div className="px-4">
-                    <div className="text-custom-font-main mb-5 mt-3 font-semibold">Historial de Chats</div>
+                    <div className="text-custom-font-main mb-5 mt-3 font-semibold">
+                        Historial de Chats
+                    </div>
                     <div className="overflow-y-auto h-[55vh]">
                         {menuItems.map((item) => (
                             <SidebarItem

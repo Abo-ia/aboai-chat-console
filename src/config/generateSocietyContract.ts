@@ -19,7 +19,7 @@ function generateSocietyContract({
     resolucionDisputas,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaContrato: string;
     nombreSocioA: string;
     direccionSocioA: string;
@@ -40,7 +40,7 @@ function generateSocietyContract({
     resolucionDisputas: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Contrato de Sociedad Detallado
   
@@ -148,6 +148,6 @@ function generateSocietyContract({
   Fecha: ${fechaContrato}  
   Firma: ___________________________
   `;
-  }
-  
+}
+
 export default generateSocietyContract;

@@ -38,10 +38,12 @@ const PaymentAgreementForm: React.FC = () => {
             }
         });
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0; 
+        return Object.keys(newErrors).length === 0;
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    ) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -69,7 +71,7 @@ const PaymentAgreementForm: React.FC = () => {
     return (
         <div className="px-6 rounded-lg h-[80vh] overflow-y-scroll">
             <h2 className="text-2xl font-semibold mb-4">Crear un Convenio de Pago</h2>
-            <form onSubmit={handleSubmit} className=' h-[80vh] overflow-y-scroll'>
+            <form onSubmit={handleSubmit} className=" h-[80vh] overflow-y-scroll">
                 {Object.keys(formData).map((fieldName) => (
                     <div className="mb-4" key={fieldName}>
                         <label className="block text-gray-700 capitalize">
@@ -87,7 +89,9 @@ const PaymentAgreementForm: React.FC = () => {
                                 errors[fieldName] ? 'border-red-500' : 'border-gray-300'
                             }`}
                         />
-                        {errors[fieldName] && <p className="text-red-500 text-sm">{errors[fieldName]}</p>}
+                        {errors[fieldName] && (
+                            <p className="text-red-500 text-sm">{errors[fieldName]}</p>
+                        )}
                     </div>
                 ))}
 

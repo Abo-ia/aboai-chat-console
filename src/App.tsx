@@ -5,9 +5,12 @@ import ChatView from '@src/components/Chat/ChatView';
 import { Amplify } from 'aws-amplify';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 
-import { AWS_COGNITO_USER_POOL_ID, AWS_COGNITO_USER_POOL_CLIENT_ID, AWS_COGNITO_DOMAIN } from '@src/config/env';
+import {
+    AWS_COGNITO_USER_POOL_ID,
+    AWS_COGNITO_USER_POOL_CLIENT_ID,
+    AWS_COGNITO_DOMAIN,
+} from '@src/config/env';
 import '@aws-amplify/ui-react/styles.css';
-
 
 import CloudStorage from './views/cloud-storage/CloudStorage';
 import PaymentForm from './views/payment/PaymentForm';
@@ -27,25 +30,25 @@ Amplify.configure({
                     redirectSignIn: [],
                     redirectSignOut: [],
                     responseType: 'token',
-                }
-            }
-        }
-    }
+                },
+            },
+        },
+    },
 });
 
 const formFields = {
     signIn: {
         username: {
             label: 'Email',
-            placeholder: 'Ingresa tu correo electrónico'
-        }
+            placeholder: 'Ingresa tu correo electrónico',
+        },
     },
     signUp: {
         username: {
             label: 'Email',
-            placeholder: 'Ingresa tu correo electrónico'
-        }
-    }
+            placeholder: 'Ingresa tu correo electrónico',
+        },
+    },
 };
 
 const components = {
@@ -54,7 +57,9 @@ const components = {
             return (
                 <div className="text-center mb-8">
                     <h1 className="text-4xl font-bold text-gray-800">Iniciar Sesión</h1>
-                    <p className="mt-2 text-sm text-gray-600">Ingresa tu correo electrónico y contraseña para iniciar sesión</p>
+                    <p className="mt-2 text-sm text-gray-600">
+                        Ingresa tu correo electrónico y contraseña para iniciar sesión
+                    </p>
                 </div>
             );
         },
@@ -73,7 +78,7 @@ const components = {
 
                     <div className="text-center mt-4">
                         <p className="text-sm text-gray-600">
-                            ¿No tienes cuenta?{" "}
+                            ¿No tienes cuenta?{' '}
                             <button
                                 onClick={toSignUp}
                                 className="text-blue-600 font-medium hover:underline"
@@ -100,12 +105,17 @@ const components = {
                             className="mt-1 p-3 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         />
                         {validationErrors.username && (
-                            <span className="text-red-500 text-xs mt-1">{validationErrors.username}</span>
+                            <span className="text-red-500 text-xs mt-1">
+                                {validationErrors.username}
+                            </span>
                         )}
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                        <label
+                            htmlFor="password"
+                            className="block text-sm font-medium text-gray-700"
+                        >
                             Contraseña
                         </label>
                         <input
@@ -115,7 +125,9 @@ const components = {
                             className="mt-1 p-3 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         />
                         {validationErrors.password && (
-                            <span className="text-red-500 text-xs mt-1">{validationErrors.password}</span>
+                            <span className="text-red-500 text-xs mt-1">
+                                {validationErrors.password}
+                            </span>
                         )}
                     </div>
 
@@ -126,7 +138,7 @@ const components = {
                     </div>
                 </>
             );
-        }
+        },
     },
     SignUp: {
         Header() {
@@ -142,7 +154,7 @@ const components = {
             return (
                 <div className="text-center mt-4">
                     <p className="text-sm text-gray-600">
-                        ¿Ya tienes una cuenta?{" "}
+                        ¿Ya tienes una cuenta?{' '}
                         <button
                             onClick={toSignIn}
                             className="text-blue-600 font-medium hover:underline"
@@ -177,12 +189,17 @@ const components = {
                             className="mt-1 p-3 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         />
                         {validationErrors.username && (
-                            <span className="text-red-500 text-xs mt-1">{validationErrors.username}</span>
+                            <span className="text-red-500 text-xs mt-1">
+                                {validationErrors.username}
+                            </span>
                         )}
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                        <label
+                            htmlFor="password"
+                            className="block text-sm font-medium text-gray-700"
+                        >
                             Contraseña
                         </label>
                         <input
@@ -192,12 +209,17 @@ const components = {
                             className="mt-1 p-3 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         />
                         {validationErrors.password && (
-                            <span className="text-red-500 text-xs mt-1">{validationErrors.password}</span>
+                            <span className="text-red-500 text-xs mt-1">
+                                {validationErrors.password}
+                            </span>
                         )}
                     </div>
 
                     <div className="mb-6">
-                        <label htmlFor="confirm_password" className="block text-sm font-medium text-gray-700">
+                        <label
+                            htmlFor="confirm_password"
+                            className="block text-sm font-medium text-gray-700"
+                        >
                             Confirmar Contraseña
                         </label>
                         <input
@@ -207,19 +229,22 @@ const components = {
                             className="mt-1 p-3 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         />
                         {validationErrors.confirm_password && (
-                            <span className="text-red-500 text-xs mt-1">{validationErrors.confirm_password}</span>
+                            <span className="text-red-500 text-xs mt-1">
+                                {validationErrors.confirm_password}
+                            </span>
                         )}
                     </div>
 
                     <div className="text-sm text-gray-600 text-center">
-                        Al registrarte, aceptas nuestros{" "}
+                        Al registrarte, aceptas nuestros{' '}
                         <a href="/terms" className="text-main_green font-medium hover:underline">
                             Términos de Servicio
-                        </a>{" "}
-                        y{" "}
+                        </a>{' '}
+                        y{' '}
                         <a href="/privacy" className="text-main_green font-medium hover:underline">
                             Política de Privacidad
-                        </a>.
+                        </a>
+                        .
                     </div>
 
                     <div className="mb-6">
@@ -229,12 +254,11 @@ const components = {
                     </div>
                 </>
             );
-        }
-    }
+        },
+    },
 };
 
 const App: React.FC = () => {
-
     return (
         <Authenticator
             components={components}
@@ -246,11 +270,11 @@ const App: React.FC = () => {
                     <Route path="/" element={<AIChat />} />
                     <Route path="/almacenamiento" element={<CloudStorage />} />
                     <Route path="/contratos-y-acuerdos" element={<ContractsBuilder />} />
-                    <Route path='/suscripcion' element={<PaymentForm />} />
-                    <Route path='/organizaciones' element={<OrganizationsView />}/>
+                    <Route path="/suscripcion" element={<PaymentForm />} />
+                    <Route path="/organizaciones" element={<OrganizationsView />} />
                 </Routes>
             </Router>
         </Authenticator>
     );
-}
+};
 export default App;

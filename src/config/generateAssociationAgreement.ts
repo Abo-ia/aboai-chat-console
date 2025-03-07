@@ -18,7 +18,7 @@ function generateAssociationAgreement({
     resolucionDisputas,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaConvenio: string;
     nombreAsociadoA: string;
     direccionAsociadoA: string;
@@ -38,7 +38,7 @@ function generateAssociationAgreement({
     resolucionDisputas: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Convenio de Asociación Detallado
   
@@ -138,6 +138,6 @@ function generateAssociationAgreement({
   Fecha: ${fechaConvenio}  
   Firma: ___________________________
   `;
-  }
-  
+}
+
 export default generateAssociationAgreement;

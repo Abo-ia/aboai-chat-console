@@ -18,7 +18,7 @@ function generateDistributionAgreement({
     confidencialidad,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaConvenio: string;
     nombreDistribuidor: string;
     direccionDistribuidor: string;
@@ -38,7 +38,7 @@ function generateDistributionAgreement({
     confidencialidad: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Convenio de Distribución Detallado
   
@@ -123,6 +123,6 @@ function generateDistributionAgreement({
   Fecha: ${fechaConvenio}  
   Firma: ___________________________
   `;
-  }
-  
+}
+
 export default generateDistributionAgreement;

@@ -1,4 +1,4 @@
-import { HARVEY_REST_API_URL } from "@src/config/env";
+import { HARVEY_REST_API_URL } from '@src/config/env';
 
 class SyncKnowledgeBase {
     private idToken: string | null;
@@ -7,22 +7,19 @@ class SyncKnowledgeBase {
         this.idToken = idToken;
     }
 
-    async syncKnowledgeBase(
-        knowledgeBaseId: string,
-        dataSourceId: string,
-    ): Promise<any> {
+    async syncKnowledgeBase(knowledgeBaseId: string, dataSourceId: string): Promise<any> {
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/api-data-ingestion`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.idToken}`
+                    Authorization: `Bearer ${this.idToken}`,
                 },
                 body: JSON.stringify({
                     knowledgeBaseId,
                     dataSourceId,
                 }),
-            })
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -30,22 +27,19 @@ class SyncKnowledgeBase {
             throw error;
         }
     }
-    async getSyncKnowledgeBaseStatus(
-        knowledgeBaseId: string,
-        dataSourceId: string,
-    ): Promise<any> {
+    async getSyncKnowledgeBaseStatus(knowledgeBaseId: string, dataSourceId: string): Promise<any> {
         try {
             const response = await fetch(`${HARVEY_REST_API_URL}/api-sync-history`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.idToken}`
+                    Authorization: `Bearer ${this.idToken}`,
                 },
                 body: JSON.stringify({
                     knowledgeBaseId,
                     dataSourceId,
                 }),
-            })
+            });
             const data = await response.json();
             return JSON.parse(data.body);
         } catch (error) {

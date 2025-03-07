@@ -75,7 +75,7 @@ function generateServiceContract({
   ## 4. Duración del Contrato y Renovación
   
   - **Duración Inicial:** El contrato tendrá una duración de **${duracionServicio}**, comenzando el **${inicioServicio}**.
-  - **Renovación Automática:** ${renovacionAutomatica ? "Este contrato se renovará automáticamente por períodos adicionales si ninguna de las partes notifica su intención de no renovar con al menos 30 días de antelación." : "No se contempla la renovación automática; se renegociará al finalizar el término actual."}
+  - **Renovación Automática:** ${renovacionAutomatica ? 'Este contrato se renovará automáticamente por períodos adicionales si ninguna de las partes notifica su intención de no renovar con al menos 30 días de antelación.' : 'No se contempla la renovación automática; se renegociará al finalizar el término actual.'}
   
   ## 5. Obligaciones del Proveedor de Servicios
   

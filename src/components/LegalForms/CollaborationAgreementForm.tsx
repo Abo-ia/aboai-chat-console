@@ -40,7 +40,9 @@ const CollaborationAgreementForm: React.FC = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    ) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -68,7 +70,7 @@ const CollaborationAgreementForm: React.FC = () => {
     return (
         <div className="px-6 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Crear un Convenio de Colaboración</h2>
-            <form onSubmit={handleSubmit} className=' h-[80vh] overflow-y-scroll'>
+            <form onSubmit={handleSubmit} className=" h-[80vh] overflow-y-scroll">
                 {Object.keys(formData).map((fieldName) => (
                     <div className="mb-4" key={fieldName}>
                         <label className="block text-gray-700 capitalize">
@@ -82,17 +84,21 @@ const CollaborationAgreementForm: React.FC = () => {
                             value={formData[fieldName as keyof typeof formData]}
                             onChange={handleChange}
                             placeholder={`Introduce ${fieldName}`}
-                            className={`w-full border p-2 rounded-lg ${errors[fieldName] ? 'border-red-500' : 'border-gray-300'
-                                }`}
+                            className={`w-full border p-2 rounded-lg ${
+                                errors[fieldName] ? 'border-red-500' : 'border-gray-300'
+                            }`}
                         />
-                        {errors[fieldName] && <p className="text-red-500 text-sm">{errors[fieldName]}</p>}
+                        {errors[fieldName] && (
+                            <p className="text-red-500 text-sm">{errors[fieldName]}</p>
+                        )}
                     </div>
                 ))}
 
                 <button
                     type="submit"
-                    className={`bg-custom-base text-white p-2 rounded-lg w-full ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
-                        }`}
+                    className={`bg-custom-base text-white p-2 rounded-lg w-full ${
+                        isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
                     disabled={isLoading}
                 >
                     {isLoading ? 'Procesando...' : 'Crear Convenio de Colaboración'}

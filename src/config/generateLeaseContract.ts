@@ -58,7 +58,7 @@ function generateLeaseContract({
   ## 2. Duración del Contrato y Renovación
   
   - **Duración Inicial:** El arrendamiento tendrá una duración de **${duracionContrato}**, comenzando el **${fechaInicio}** y finalizando automáticamente salvo previo aviso.
-  - **Renovación Automática:** ${renovacionAutomatica ? "El contrato se renovará automáticamente por un período similar si ninguna de las partes notifica su intención de no renovar con al menos 30 días de anticipación." : "Este contrato no contempla renovación automática; debe ser renegociado al finalizar el término actual."}
+  - **Renovación Automática:** ${renovacionAutomatica ? 'El contrato se renovará automáticamente por un período similar si ninguna de las partes notifica su intención de no renovar con al menos 30 días de anticipación.' : 'Este contrato no contempla renovación automática; debe ser renegociado al finalizar el término actual.'}
   
   ## 3. Renta y Depósito de Garantía
   
@@ -85,7 +85,7 @@ function generateLeaseContract({
   ## 6. Reglas de la Propiedad
   
   El Arrendatario acepta las siguientes reglas y restricciones mientras ocupa la propiedad:
-  - **Mascotas:** ${reglasPropiedad.includes('mascotas') ? "Se permite la tenencia de mascotas bajo ciertas condiciones previamente acordadas." : "No se permite la tenencia de mascotas en la propiedad."}
+  - **Mascotas:** ${reglasPropiedad.includes('mascotas') ? 'Se permite la tenencia de mascotas bajo ciertas condiciones previamente acordadas.' : 'No se permite la tenencia de mascotas en la propiedad.'}
   - **Modificaciones:** No se permiten modificaciones o cambios en la estructura de la propiedad sin el consentimiento escrito del Arrendador.
   - **Uso del Espacio Común:** Se espera que el Arrendatario respete las normas y regulaciones establecidas para las áreas comunes, si las hubiera.
   
@@ -123,6 +123,5 @@ function generateLeaseContract({
   Firma: ___________________________
   `;
 }
-
 
 export default generateLeaseContract;

@@ -1,4 +1,4 @@
-import { HARVEY_REST_API_URL } from "@src/config/env";
+import { HARVEY_REST_API_URL } from '@src/config/env';
 
 class MessageService {
     private idToken: string | null;
@@ -14,7 +14,7 @@ class MessageService {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.idToken}`
+                    Authorization: `Bearer ${this.idToken}`,
                 },
                 body: JSON.stringify({
                     userId,
@@ -29,25 +29,25 @@ class MessageService {
             console.error('Error creating conversation:', error);
             throw error;
         }
-    }    
+    }
 
     async sendMessage(
-        message: string, 
-        userId: string, 
-        conversationId: string, 
+        message: string,
+        userId: string,
+        conversationId: string,
         chatThread: string,
-        knowledgeBaseId: string
+        knowledgeBaseId: string,
     ): Promise<any> {
         try {
             if (!this.idToken) {
-                throw new Error("Missing idToken. Authentication may be required.");
+                throw new Error('Missing idToken. Authentication may be required.');
             }
-    
+
             const response = await fetch(`${HARVEY_REST_API_URL}/api-chat-inference`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.idToken}`
+                    Authorization: `Bearer ${this.idToken}`,
                 },
                 body: JSON.stringify({
                     userId: userId,
@@ -56,16 +56,16 @@ class MessageService {
                     instruction: 'ADD_MESSAGE',
                     prompt: message,
                     timestamp: new Date().toISOString(),
-                    knowledgeBaseId: knowledgeBaseId
+                    knowledgeBaseId: knowledgeBaseId,
                 }),
             });
-    
-            const data = await response.json(); 
+
+            const data = await response.json();
             const output = JSON.parse(data.body);
 
             return output;
         } catch (error) {
-            console.error("Error in sendMessage:", error);
+            console.error('Error in sendMessage:', error);
             throw error;
         }
     }

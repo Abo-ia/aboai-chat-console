@@ -122,5 +122,4 @@ function generateFinancingAgreement({
   `;
 }
 
-
 export default generateFinancingAgreement;

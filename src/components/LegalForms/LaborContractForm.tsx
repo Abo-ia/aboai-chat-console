@@ -41,7 +41,9 @@ const LaborContractForm: React.FC = () => {
         return Object.keys(newErrors).length === 0; // Retorna true si no hay errores
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    ) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
@@ -68,7 +70,7 @@ const LaborContractForm: React.FC = () => {
     return (
         <div className="px-6 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Crear un Contrato Laboral</h2>
-            <form onSubmit={handleSubmit} className='h-[80vh] overflow-y-scroll'>
+            <form onSubmit={handleSubmit} className="h-[80vh] overflow-y-scroll">
                 {Object.keys(formData).map((fieldName) => (
                     <div className="mb-4" key={fieldName}>
                         <label className="block text-gray-700 capitalize">
@@ -110,7 +112,9 @@ const LaborContractForm: React.FC = () => {
                                 }`}
                             />
                         )}
-                        {errors[fieldName] && <p className="text-red-500 text-sm">{errors[fieldName]}</p>}
+                        {errors[fieldName] && (
+                            <p className="text-red-500 text-sm">{errors[fieldName]}</p>
+                        )}
                     </div>
                 ))}
 

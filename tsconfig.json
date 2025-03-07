@@ -2,11 +2,7 @@
     "compilerOptions": {
         "target": "ES2020",
         "useDefineForClassFields": true,
-        "lib": [
-            "ES2020",
-            "DOM",
-            "DOM.Iterable"
-        ],
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "module": "ESNext",
         "skipLibCheck": true,
         /* Bundler mode */
@@ -20,44 +16,22 @@
         "strict": true,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
-        
+
         "noFallthroughCasesInSwitch": true,
         "paths": {
-            "@src/*": [
-                "./src/*"
-            ],
-            "@components/*": [
-                "./src/components/*"
-            ],
-            "@views/*": [
-                "./src/views/*"
-            ],
-            "@utils/*": [
-                "./src/utils/*"
-            ],
-            "@types/*": [
-                "./src/types/*"
-            ],
-            "@assets/*": [
-                "./src/assets/*"
-            ],
-            "@context/*": [
-                "./src/context/*"
-            ],
-            "@hooks/*": [
-                "./src/hooks/*"
-            ],
-            "@router/*": [
-                "./src/router/*"
-            ],
-            "@mocks/*": [
-                "./src/mocks/*"
-            ],
-        },
+            "@src/*": ["./src/*"],
+            "@components/*": ["./src/components/*"],
+            "@views/*": ["./src/views/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@types/*": ["./src/types/*"],
+            "@assets/*": ["./src/assets/*"],
+            "@context/*": ["./src/context/*"],
+            "@hooks/*": ["./src/hooks/*"],
+            "@router/*": ["./src/router/*"],
+            "@mocks/*": ["./src/mocks/*"]
+        }
     },
-    "include": [
-        "src"
-    ],
+    "include": ["src"],
     "references": [
         {
             "path": "./tsconfig.node.json"

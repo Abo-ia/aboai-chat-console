@@ -8,12 +8,12 @@ export interface Member {
         can_invite_users: boolean;
         can_manage_cases: boolean;
         can_view_reports: boolean;
-    }
+    };
 }
 
 export interface Organization {
     organization_id: string;
-    knowledge_base_id: string
+    knowledge_base_id: string;
     data_source_id: string;
     name: string;
     owner_id: string;

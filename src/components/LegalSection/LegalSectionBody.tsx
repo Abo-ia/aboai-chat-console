@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import Formulario from '@src/components/LegalSection/LegalForm';
 import { FaFileContract, FaHandshake, FaFileAlt } from 'react-icons/fa';
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle } from 'react-icons/fa';
 
 interface SidebarProps {
     activeView: string;
 }
 
 const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
-
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
     const [documentType, setDocumentType] = useState<string | null>(null);
@@ -34,9 +33,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
             'Convenio de Distribución',
             'Convenio de Subcontratación',
         ],
-        denuncias: [
-            'Creación de Denuncia',
-        ]
+        denuncias: ['Creación de Denuncia'],
     };
 
     const alternarMenu = (menu: string) => {
@@ -50,20 +47,22 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
 
     return (
         <div className="flex flex-col lg:flex-row">
-            {window.innerWidth < 768 &&
+            {window.innerWidth < 768 && (
                 <div
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className='flex items-center bg-gray-100 shadow-lg mx-4 my-1 rounded-lg'>
-                    <FaPlusCircle
-                        className='my-2 mr-2 right-4 bottom-4 text-2xl text-custom-base cursor-pointer'
-                    />
+                    className="flex items-center bg-gray-100 shadow-lg mx-4 my-1 rounded-lg"
+                >
+                    <FaPlusCircle className="my-2 mr-2 right-4 bottom-4 text-2xl text-custom-base cursor-pointer" />
                     Crear nuevo documento
-                </div>}
+                </div>
+            )}
 
-            <div className='flex w-full'>
-                {isSidebarOpen &&
+            <div className="flex w-full">
+                {isSidebarOpen && (
                     <div className="w-[40%] bg-custom-bg-sidebar p-4 shadow-lg">
-                        <div className="text-2xl font-bold text-custom-font-main mb-6">Documentos</div>
+                        <div className="text-2xl font-bold text-custom-font-main mb-6">
+                            Documentos
+                        </div>
 
                         <div className="mb-4">
                             <button
@@ -85,7 +84,9 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                                     <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
                                                 <button
-                                                    onClick={() => seleccionarDocumento('contratos', contrato)}
+                                                    onClick={() =>
+                                                        seleccionarDocumento('contratos', contrato)
+                                                    }
                                                     className="text-left text-custom-font-main hover:bg-custom-bg-hover py-1 px-2 transition-colors duration-300 flex-grow"
                                                 >
                                                     {contrato}
@@ -117,7 +118,9 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                                     <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
                                                 <button
-                                                    onClick={() => seleccionarDocumento('convenios', convenio)}
+                                                    onClick={() =>
+                                                        seleccionarDocumento('convenios', convenio)
+                                                    }
                                                     className="text-left text-custom-font-main hover:bg-custom-bg-hover py-1 px-2 transition-colors duration-300 flex-grow"
                                                 >
                                                     {convenio}
@@ -149,7 +152,9 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                                     <span className="w-2 h-2 bg-custom-primary rounded-full mr-2"></span>
                                                 )}
                                                 <button
-                                                    onClick={() => seleccionarDocumento('denuncia', denuncia)}
+                                                    onClick={() =>
+                                                        seleccionarDocumento('denuncia', denuncia)
+                                                    }
                                                     className="text-left text-custom-font-main hover:bg-custom-bg-hover py-1 px-2 transition-colors duration-300 flex-grow"
                                                 >
                                                     {denuncia}
@@ -160,9 +165,8 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 </div>
                             )}
                         </div>
-                    </div>}
-
-
+                    </div>
+                )}
 
                 <div className="w-full h-screen p-8 bg-gray-50">
                     {documentType && documentName ? (

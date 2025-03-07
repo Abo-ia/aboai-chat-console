@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 
 import { AppContext } from '@src/context/AppContext';
-import { BsChatSquareDotsFill } from "react-icons/bs";
+import { BsChatSquareDotsFill } from 'react-icons/bs';
 
 interface SidebarIconsProps {
     openChatHistory: () => void;
 }
 
-const SidebarIcons: React.FC <SidebarIconsProps> = (props) => {
+const SidebarIcons: React.FC<SidebarIconsProps> = (props) => {
     const appContext = React.useContext(AppContext);
     const { openChatHistory } = props;
 
     return (
-        <div className='flex shadow justify-between gap-7 py-2 bg-custom-bg-main items-center cursor-pointer px-5 transition-all border-y'>
-            <BsChatSquareDotsFill 
+        <div className="flex shadow justify-between gap-7 py-2 bg-custom-bg-main items-center cursor-pointer px-5 transition-all border-y">
+            {/* <BsChatSquareDotsFill 
                 onClick={openChatHistory}
                 className='text-2xl text-gray-500 hover:text-gray-700'
             />
@@ -27,9 +27,9 @@ const SidebarIcons: React.FC <SidebarIconsProps> = (props) => {
                         alt="Google Drive"
                     />
                 </div>
-            </div>
+            </div> */}
         </div>
-    )
-}
+    );
+};
 
-export default SidebarIcons
+export default SidebarIcons;

@@ -41,14 +41,16 @@ const LeaseContractForm: React.FC = () => {
             }
         });
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0; 
+        return Object.keys(newErrors).length === 0;
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    ) => {
         const { name, value, type } = e.target;
-    
+
         const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
-    
+
         setFormData({
             ...formData,
             [name]: newValue,
@@ -58,7 +60,6 @@ const LeaseContractForm: React.FC = () => {
             [name]: '',
         });
     };
-    
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,7 +77,7 @@ const LeaseContractForm: React.FC = () => {
     return (
         <div className="px-6 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Crear un Contrato de Arrendamiento</h2>
-            <form onSubmit={handleSubmit} className=' h-[80vh] overflow-y-scroll'>
+            <form onSubmit={handleSubmit} className=" h-[80vh] overflow-y-scroll">
                 {Object.keys(formData).map((fieldName) => (
                     <div className="mb-4" key={fieldName}>
                         <label className="block text-gray-700 capitalize">
@@ -114,7 +115,9 @@ const LeaseContractForm: React.FC = () => {
                                 }`}
                             />
                         )}
-                        {errors[fieldName] && <p className="text-red-500 text-sm">{errors[fieldName]}</p>}
+                        {errors[fieldName] && (
+                            <p className="text-red-500 text-sm">{errors[fieldName]}</p>
+                        )}
                     </div>
                 ))}
 

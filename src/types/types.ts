@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 interface AppContextType {
     // Show modal
     setShowModal: (showModal: boolean) => void;
-    showModal: boolean; 
+    showModal: boolean;
 
     // Upload file modal
     setUploadFileShowModal: (uploadFileShowModal: boolean) => void;
@@ -12,7 +12,6 @@ interface AppContextType {
     // Sync history modal
     setSyncHistoryShowModal: (syncHistoryShowModal: boolean) => void;
     syncHistoryShowModal: boolean;
-
 
     // Sidebar
     setIsSidebarOpen: (isSidebarOpen: boolean) => void;
@@ -36,9 +35,4 @@ interface FileItem {
     size?: string;
 }
 
-export type {
-    AuthProviderProps,
-    AppContextType,
-    AppProviderProps,
-    FileItem
-}
+export type { AuthProviderProps, AppContextType, AppProviderProps, FileItem };

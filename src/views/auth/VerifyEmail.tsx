@@ -16,12 +16,12 @@ const VerifyEmail = () => {
             await confirmSignUp({
                 username: username,
                 confirmationCode: code,
-            })
-            toast.success("Usuario confirmado correctamente. Por favor inicia sesión.")
+            });
+            toast.success('Usuario confirmado correctamente. Por favor inicia sesión.');
             navigate('/auth/signin/', { state: username });
         } catch (error) {
             console.error('Error confirming user:', error);
-            toast.error("Error al confirmar usuario. Por favor intenta de nuevo.")
+            toast.error('Error al confirmar usuario. Por favor intenta de nuevo.');
         }
     };
 
@@ -29,12 +29,8 @@ const VerifyEmail = () => {
         <div className="min-h-screen bg-slate-200 text-gray-900 flex items-center justify-center">
             <div className="bg-white shadow sm:rounded-lg p-6 sm:p-12 w-full max-w-md">
                 <div className="flex flex-col items-center">
-                    <h1 className="text-2xl xl:text-3xl">
-                        Verifica tu correo
-                    </h1>
-                    <form
-                        onSubmit={handleConfirmSignUp}
-                        className="w-full mt-8">
+                    <h1 className="text-2xl xl:text-3xl">Verifica tu correo</h1>
+                    <form onSubmit={handleConfirmSignUp} className="w-full mt-8">
                         <input
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
@@ -46,14 +42,21 @@ const VerifyEmail = () => {
                             className="mt-5 tracking-wide font-semibold bg-slate-500 text-gray-100 w-full py-4 rounded-lg hover:bg-slate-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                             type="submit"
                         >
-                            <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                    d="M9 5l7 7-7 7"></path>
+                            <svg
+                                className="w-6 h-6 -ml-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 5l7 7-7 7"
+                                ></path>
                             </svg>
-                            <span className="ml-3">
-                                Verificar código
-                            </span>
+                            <span className="ml-3">Verificar código</span>
                         </button>
                     </form>
                 </div>
@@ -61,6 +64,6 @@ const VerifyEmail = () => {
             <ToastContainer />
         </div>
     );
-}
+};
 
 export default VerifyEmail;

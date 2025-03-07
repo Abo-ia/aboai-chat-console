@@ -2,25 +2,38 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { AppContext } from '@src/context/AppContext';
 
-import { S3Client, ListObjectsV2Command, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import {
+    S3Client,
+    ListObjectsV2Command,
+    PutObjectCommand,
+    DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
 import Sidebar from '@src/components/Storage/Sidebar';
 import Header from '@src/components/Storage/Header';
-import { FiFolder, FiFile, FiMoreVertical } from 'react-icons/fi';
-import { FaFolder, FaFile, FaSyncAlt } from "react-icons/fa";
+import { FiMoreVertical } from 'react-icons/fi';
+import { FaFolder, FaFile, FaSyncAlt } from 'react-icons/fa';
 import Alert from '@src/components/Alert/Alert';
-import { FaFolderPlus } from "react-icons/fa";
-import { BiSend } from "react-icons/bi";
-import { RxReload } from "react-icons/rx";
-import { fetchAuthSession } from "aws-amplify/auth";
-import SyncKnowledgeBase from "@src/services/syncKnowledgeBase.service"
+import { FaFolderPlus } from 'react-icons/fa';
+import { BiSend } from 'react-icons/bi';
+import { RxReload } from 'react-icons/rx';
+import { fetchAuthSession } from 'aws-amplify/auth';
+import SyncKnowledgeBase from '@src/services/syncKnowledgeBase.service';
 
 import LegalSectionBody from '@src/components/LegalSection/LegalSectionBody';
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_BUCKET_NAME } from '@src/config/env';
+import {
+    AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY,
+    AWS_BUCKET_NAME,
+    AWS_REGION,
+} from '@src/config/env';
 
 import ChatView from '@src/components/Chat/ChatView';
 
 const organizeFilesByFolders = (items: any[]) => {
-    const folderStructure: { folder_path: string; files: { file_name: string; file_size: number, key: string }[] }[] = [];
+    const folderStructure: {
+        folder_path: string;
+        files: { file_name: string; file_size: number; key: string }[];
+    }[] = [];
 
     items.forEach((item) => {
         const isFolder = item.Key.endsWith('/');
@@ -28,7 +41,7 @@ const organizeFilesByFolders = (items: any[]) => {
 
         const folderPath = pathParts.slice(0, pathParts.length - 1).join('/');
 
-        if (isFolder && !folderStructure.some(f => f.folder_path === folderPath)) {
+        if (isFolder && !folderStructure.some((f) => f.folder_path === folderPath)) {
             folderStructure.push({
                 folder_path: folderPath || '',
                 files: [],
@@ -73,10 +86,10 @@ const CloudStorage: React.FC = () => {
     const appContext = useContext(AppContext);
 
     const s3Client = new S3Client({
-        region: 'us-west-2',
+        region: AWS_REGION,
         credentials: {
             accessKeyId: AWS_ACCESS_KEY_ID,
-            secretAccessKey: AWS_SECRET_ACCESS_KEY
+            secretAccessKey: AWS_SECRET_ACCESS_KEY,
         },
     });
 
@@ -101,7 +114,7 @@ const CloudStorage: React.FC = () => {
         setOpenFolders((prevOpenFolders) =>
             prevOpenFolders.includes(folderPath)
                 ? prevOpenFolders.filter((path) => path !== folderPath)
-                : [...prevOpenFolders, folderPath]
+                : [...prevOpenFolders, folderPath],
         );
     };
 
@@ -137,18 +150,13 @@ const CloudStorage: React.FC = () => {
         const session = await fetchAuthSession();
         const idToken = session?.tokens?.idToken?.toString() as string;
 
-
         const syncKnowledgeBaseInstance = new SyncKnowledgeBase(idToken);
-        await syncKnowledgeBaseInstance.syncKnowledgeBase(
-            '...', '...'
-        );
+        await syncKnowledgeBaseInstance.syncKnowledgeBase('...', '...');
     };
-
-
 
     const handleCreateFolder = async () => {
         if (!newFolderName) {
-            setAlertMessage("El nombre de la carpeta no puede estar vacío.");
+            setAlertMessage('El nombre de la carpeta no puede estar vacío.');
             setTimeout(() => setAlertMessage(null), 3000);
             return;
         }
@@ -167,7 +175,7 @@ const CloudStorage: React.FC = () => {
             fetchFilesFromS3();
             setNewFolderName('');
         } catch (error) {
-            setAlertMessage("Error creando la carpeta.");
+            setAlertMessage('Error creando la carpeta.');
         } finally {
             setTimeout(() => setAlertMessage(null), 3000);
         }
@@ -182,29 +190,21 @@ const CloudStorage: React.FC = () => {
     if (activeView === 'Chat') {
         return (
             <div className="flex">
-                {appContext?.isSidebarOpen || window.innerWidth > 768 ?
-                    (
-                        <Sidebar
-                            activeView={activeView}
-                            setActiveView={setActiveView}
-                        />
-                    ) : null}
+                {appContext?.isSidebarOpen || window.innerWidth > 768 ? (
+                    <Sidebar activeView={activeView} setActiveView={setActiveView} />
+                ) : null}
                 <div className="flex-1 flex flex-col">
                     <Header />
-                    <ChatView conversation={""} />
+                    <ChatView conversation={''} />
                 </div>
             </div>
-        )
+        );
     } else if (activeView === 'Legal') {
         return (
             <div className="flex">
-                {appContext?.isSidebarOpen || window.innerWidth > 768 ?
-                    (
-                        <Sidebar
-                            activeView={activeView}
-                            setActiveView={setActiveView}
-                        />
-                    ) : null}
+                {appContext?.isSidebarOpen || window.innerWidth > 768 ? (
+                    <Sidebar activeView={activeView} setActiveView={setActiveView} />
+                ) : null}
                 <div className="flex-1 flex flex-col">
                     <Header />
                     <LegalSectionBody activeView={activeView} />
@@ -214,13 +214,9 @@ const CloudStorage: React.FC = () => {
     }
     return (
         <div className="flex">
-            {appContext?.isSidebarOpen || window.innerWidth > 768 ?
-                (
-                    <Sidebar
-                        activeView={activeView}
-                        setActiveView={setActiveView}
-                    />
-                ) : null}
+            {appContext?.isSidebarOpen || window.innerWidth > 768 ? (
+                <Sidebar activeView={activeView} setActiveView={setActiveView} />
+            ) : null}
             <div className="flex-1 flex flex-col">
                 <Header />
                 <div className="px-8 m-6 rounded-lg relative">
@@ -230,16 +226,22 @@ const CloudStorage: React.FC = () => {
                         </div>
                     )}
 
-                    {alertMessage && (<Alert type="info" message={alertMessage} />)}
-                    {showSyncAlert && (<Alert type="info" message="Sincronización en progreso..." />)}
+                    {alertMessage && <Alert type="info" message={alertMessage} />}
+                    {showSyncAlert && <Alert type="info" message="Sincronización en progreso..." />}
 
                     <div className="overflow-y-auto max-h-[80vh]">
                         <table className="shadow-md rounded-lg min-w-full">
                             <thead className="sticky top-0">
                                 <tr className="border-b-[1px] border-gray-200">
-                                    <th className="p-4 text-left text-custom-dark font-semibold">Nombre</th>
-                                    <th className="p-4 text-left text-custom-dark font-semibold">Propietario</th>
-                                    <th className="p-4 text-left text-custom-dark font-semibold">Tamaño</th>
+                                    <th className="p-4 text-left text-custom-dark font-semibold">
+                                        Nombre
+                                    </th>
+                                    <th className="p-4 text-left text-custom-dark font-semibold">
+                                        Propietario
+                                    </th>
+                                    <th className="p-4 text-left text-custom-dark font-semibold">
+                                        Tamaño
+                                    </th>
                                     <th className="p-4 text-right text-custom-dark font-semibold">
                                         <FiMoreVertical />
                                     </th>
@@ -247,9 +249,7 @@ const CloudStorage: React.FC = () => {
                                 <tr>
                                     <td colSpan={4} className="p- flex items-center mt-4">
                                         <div className="flex items-center bg-gray-50 rounded-lg p-2 w-full max-w-lg">
-                                            <FaFolderPlus
-                                                className="text-gray-300"
-                                            />
+                                            <FaFolderPlus className="text-gray-300" />
                                             <input
                                                 type="text"
                                                 value={newFolderName}
@@ -288,7 +288,9 @@ const CloudStorage: React.FC = () => {
                                                             className="flex items-center bg-gray-100 p-1 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-200 gap-2"
                                                         >
                                                             <FaSyncAlt className="text-custom-darkest" />
-                                                            <p className="text-xs text-custom-darkest">Sincronizar</p>
+                                                            <p className="text-xs text-custom-darkest">
+                                                                Sincronizar
+                                                            </p>
                                                         </div>
                                                     )}
                                                 </div>
@@ -308,11 +310,13 @@ const CloudStorage: React.FC = () => {
                                                         </td>
                                                         <td className="p-4">
                                                             <img
-                                                                className='w-5 h-5 rounded-full'
-                                                                src='https://cdn-icons-png.flaticon.com/512/1077/1077114.png'
+                                                                className="w-5 h-5 rounded-full"
+                                                                src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
                                                             />
                                                         </td>
-                                                        <td className="p-4">{formatSizeInMB(file.file_size)} MB</td>
+                                                        <td className="p-4">
+                                                            {formatSizeInMB(file.file_size)} MB
+                                                        </td>
                                                         <td className="p-4 relative">
                                                             <FiMoreVertical
                                                                 className="cursor-pointer text-custom-base"
@@ -323,13 +327,21 @@ const CloudStorage: React.FC = () => {
                                                                     <ul>
                                                                         <li
                                                                             className="py-2 pl-4 cursor-pointer hover:bg-gray-100"
-                                                                            onClick={() => handleOpenFile(file.key)}
+                                                                            onClick={() =>
+                                                                                handleOpenFile(
+                                                                                    file.key,
+                                                                                )
+                                                                            }
                                                                         >
                                                                             Abrir archivo
                                                                         </li>
                                                                         <li
                                                                             className="py-2 pl-4 cursor-pointer hover:bg-gray-100"
-                                                                            onClick={() => handleDeleteFile(file.key)}
+                                                                            onClick={() =>
+                                                                                handleDeleteFile(
+                                                                                    file.key,
+                                                                                )
+                                                                            }
                                                                         >
                                                                             Eliminar archivo
                                                                         </li>
@@ -338,7 +350,7 @@ const CloudStorage: React.FC = () => {
                                                             )}
                                                         </td>
                                                     </tr>
-                                                )
+                                                );
                                             })}
                                     </React.Fragment>
                                 ))}

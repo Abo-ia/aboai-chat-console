@@ -13,7 +13,7 @@ function generateNDAContract({
     resolucionDisputas,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaContrato: string;
     nombreParteDivulgante: string;
     direccionParteDivulgante: string;
@@ -28,7 +28,7 @@ function generateNDAContract({
     resolucionDisputas: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Contrato de Confidencialidad (NDA) Detallado
   
@@ -106,7 +106,6 @@ function generateNDAContract({
   Fecha: ${fechaContrato}  
   Firma: ___________________________
   `;
-  }
-  
+}
 
 export default generateNDAContract;

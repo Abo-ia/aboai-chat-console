@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { FaUsers, FaCogs, FaProjectDiagram, FaPlus, FaSpinner, FaTimes, FaCheck } from 'react-icons/fa';
-import { RiOrganizationChart } from "react-icons/ri";
+import {
+    FaUsers,
+    FaCogs,
+    FaProjectDiagram,
+    FaPlus,
+    FaSpinner,
+    FaTimes,
+    FaCheck,
+} from 'react-icons/fa';
+import { RiOrganizationChart } from 'react-icons/ri';
 import { useOrganization } from '@src/context/OrganizationContext';
 import OrganizationsDetails from './OrganizationsDetails';
 import OrganizationMember from './OrganizationsMembers';
@@ -11,9 +19,16 @@ import OrganizationsService from '@src/services/organization.service';
 import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const tailwindColors = [
-    'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
-    'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-orange-500',
-    'bg-teal-500', 'bg-cyan-500'
+    'bg-red-500',
+    'bg-blue-500',
+    'bg-green-500',
+    'bg-yellow-500',
+    'bg-purple-500',
+    'bg-pink-500',
+    'bg-indigo-500',
+    'bg-orange-500',
+    'bg-teal-500',
+    'bg-cyan-500',
 ];
 
 type Tab = 'details' | 'people' | 'syncs' | 'settings';
@@ -31,7 +46,6 @@ const OrganizationWrapped: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [authEmail, setAuthEmail] = useState<string>('');
     const [authUserId, setAuthUserId] = useState<string>('');
-
 
     useEffect(() => {
         const fetchAttributes = async () => {
@@ -53,14 +67,14 @@ const OrganizationWrapped: React.FC = () => {
             setLoading(true);
 
             try {
-                const organizationsService = new OrganizationsService("");
+                const organizationsService = new OrganizationsService('');
                 const organizations = await organizationsService.getUserOrganizations(authEmail);
                 setOrganizations(organizations);
                 if (organizations.length > 0) {
                     handleSelectOrganization(organizations[0].organization_id);
                 }
             } catch (error) {
-                console.error("Error fetching organizations:", error);
+                console.error('Error fetching organizations:', error);
             } finally {
                 setLoading(false);
             }
@@ -75,7 +89,9 @@ const OrganizationWrapped: React.FC = () => {
     const handleCloseModal = () => setIsModalOpen(false);
 
     const handleSelectOrganization = (organizationId: string) => {
-        const selectedOrganization = organizations.find(org => org.organization_id === organizationId);
+        const selectedOrganization = organizations.find(
+            (org) => org.organization_id === organizationId,
+        );
         if (selectedOrganization) {
             setActiveOrganization(selectedOrganization);
             const randomColor = tailwindColors[Math.floor(Math.random() * tailwindColors.length)];
@@ -103,9 +119,12 @@ const OrganizationWrapped: React.FC = () => {
                             alt="No organizations"
                             className="w-24 h-24 mb-4 opacity-90"
                         />
-                        <h2 className="text-2xl font-bold text-gray-800">Aún no tienes organizaciones</h2>
+                        <h2 className="text-2xl font-bold text-gray-800">
+                            Aún no tienes organizaciones
+                        </h2>
                         <p className="text-gray-600 mt-2 text-center px-6">
-                            Para comenzar, necesitas registrar una organización y administrar su información.
+                            Para comenzar, necesitas registrar una organización y administrar su
+                            información.
                         </p>
                         <button
                             onClick={handleOpenModal}
@@ -117,14 +136,21 @@ const OrganizationWrapped: React.FC = () => {
                 ) : (
                     <>
                         <div className="flex items-center space-x-4 mt-4 justify-between">
-                            <div className='flex items-center space-x-4'>
-                                <p className={`flex items-center justify-center w-14 h-14 bg-custom-secondary text-white text-2xl font-semibold rounded-lg`}>
+                            <div className="flex items-center space-x-4">
+                                <p
+                                    className={`flex items-center justify-center w-14 h-14 bg-custom-secondary text-white text-2xl font-semibold rounded-lg`}
+                                >
                                     {activeOrganization?.name?.charAt(0).toUpperCase() || ''}
                                 </p>
                                 <div>
-                                    <h2 className="text-lg font-bold">{activeOrganization?.name}</h2>
+                                    <h2 className="text-lg font-bold">
+                                        {activeOrganization?.name}
+                                    </h2>
                                     <p className="text-sm text-gray-600">
-                                        Organización creada el {new Date(activeOrganization?.created_at || "").toLocaleDateString()}
+                                        Organización creada el{' '}
+                                        {new Date(
+                                            activeOrganization?.created_at || '',
+                                        ).toLocaleDateString()}
                                     </p>
                                 </div>
                             </div>
@@ -152,17 +178,26 @@ const OrganizationWrapped: React.FC = () => {
                         <div className="border-b border-gray-200 mb-6 mt-6">
                             <nav className="flex space-x-8">
                                 {[
-                                    { label: 'Detalles', icon: RiOrganizationChart, value: 'details' },
+                                    {
+                                        label: 'Detalles',
+                                        icon: RiOrganizationChart,
+                                        value: 'details',
+                                    },
                                     { label: 'Personas', icon: FaUsers, value: 'people' },
-                                    { label: 'Sincronizaciones', icon: FaProjectDiagram, value: 'syncs' },
+                                    {
+                                        label: 'Sincronizaciones',
+                                        icon: FaProjectDiagram,
+                                        value: 'syncs',
+                                    },
                                     { label: 'Configuración', icon: FaCogs, value: 'settings' },
                                 ].map((tab) => (
                                     <button
                                         key={tab.value}
-                                        className={`flex items-center py-3 px-4 border-b-2 ${activeTab === tab.value
-                                            ? 'border-teal-500 text-teal-500 font-semibold'
-                                            : 'border-transparent text-gray-600 hover:text-gray-800'
-                                            }`}
+                                        className={`flex items-center py-3 px-4 border-b-2 ${
+                                            activeTab === tab.value
+                                                ? 'border-teal-500 text-teal-500 font-semibold'
+                                                : 'border-transparent text-gray-600 hover:text-gray-800'
+                                        }`}
                                         onClick={() => handleTabChange(tab.value as Tab)}
                                     >
                                         <tab.icon className="mr-2" /> {tab.label}
@@ -186,32 +221,30 @@ const OrganizationWrapped: React.FC = () => {
 
 export default OrganizationWrapped;
 
-
 const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     const { createOrganization } = useOrganization();
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
-        name: "Bufete Jurídico López & Asociados",
-        practice_areas: ["Derecho Penal", "Derecho Civil", "Propiedad Intelectual"],
-        bar_association: "Colegio de Abogados de México",
-        registration_number: "LAW-987654",
-        legal_structure: "Sociedad Civil",
-        operating_countries: "México, España, Argentina",
-        contact_email: "info@bufetejuridico.com",
-        contact_phone: "+52 55 9876 5432",
-        clients_served: "250",
-        active_cases: "30",
-        legal_documents: ["Contratos", "Demandas", "Testamentos", "Reglamentos Corporativos"],
+        name: 'Bufete Jurídico López & Asociados',
+        practice_areas: ['Derecho Penal', 'Derecho Civil', 'Propiedad Intelectual'],
+        bar_association: 'Colegio de Abogados de México',
+        registration_number: 'LAW-987654',
+        legal_structure: 'Sociedad Civil',
+        operating_countries: 'México, España, Argentina',
+        contact_email: 'info@bufetejuridico.com',
+        contact_phone: '+52 55 9876 5432',
+        clients_served: '250',
+        active_cases: '30',
+        legal_documents: ['Contratos', 'Demandas', 'Testamentos', 'Reglamentos Corporativos'],
     });
-
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleAddItem = (field: "practice_areas" | "legal_documents", value: string) => {
+    const handleAddItem = (field: 'practice_areas' | 'legal_documents', value: string) => {
         if (value.trim()) {
             setFormData((prev) => ({
                 ...prev,
@@ -220,7 +253,7 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
         }
     };
 
-    const handleRemoveItem = (field: "practice_areas" | "legal_documents", index: number) => {
+    const handleRemoveItem = (field: 'practice_areas' | 'legal_documents', index: number) => {
         setFormData((prev) => ({
             ...prev,
             [field]: prev[field].filter((_, i) => i !== index),
@@ -238,16 +271,16 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                 formData.bar_association,
                 formData.registration_number,
                 formData.legal_structure,
-                formData.operating_countries.split(",").map((item) => item.trim()),
+                formData.operating_countries.split(',').map((item) => item.trim()),
                 formData.contact_email,
                 formData.contact_phone,
                 parseInt(formData.clients_served) || 0,
                 parseInt(formData.active_cases) || 0,
-                formData.legal_documents
+                formData.legal_documents,
             );
             onClose();
         } catch (error) {
-            console.error("Error creando organización:", error);
+            console.error('Error creando organización:', error);
         } finally {
             setLoading(false);
         }
@@ -256,14 +289,18 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
     return (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div className="bg-white rounded-lg p-8 shadow-xl w-3/4">
-                <h2 className="text-2xl font-semibold mb-4 text-gray-800">Crear Nueva Organización</h2>
+                <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+                    Crear Nueva Organización
+                </h2>
                 <p className="text-sm text-gray-600 mb-6">
                     Ingresa los datos de la organización para añadirla al sistema.
                 </p>
 
                 <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700">Nombre de la Organización</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Nombre de la Organización
+                        </label>
                         <input
                             type="text"
                             name="name"
@@ -275,27 +312,35 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700">Áreas de Práctica</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Áreas de Práctica
+                        </label>
                         <div className="flex items-center gap-2">
                             <input
                                 type="text"
                                 placeholder="Ej. Derecho Penal"
                                 className="mt-1 flex-1 p-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500"
                                 onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        handleAddItem("practice_areas", (e.target as HTMLInputElement).value);
-                                        (e.target as HTMLInputElement).value = "";
+                                    if (e.key === 'Enter') {
+                                        handleAddItem(
+                                            'practice_areas',
+                                            (e.target as HTMLInputElement).value,
+                                        );
+                                        (e.target as HTMLInputElement).value = '';
                                     }
                                 }}
                             />
                         </div>
                         <div className="flex flex-wrap gap-2 mt-2">
                             {formData.practice_areas.map((area, index) => (
-                                <span key={index} className="flex items-center bg-teal-100 text-teal-700 px-3 py-1 rounded-lg text-sm">
+                                <span
+                                    key={index}
+                                    className="flex items-center bg-teal-100 text-teal-700 px-3 py-1 rounded-lg text-sm"
+                                >
                                     {area}
                                     <button
                                         className="ml-2 text-teal-500 hover:text-teal-700"
-                                        onClick={() => handleRemoveItem("practice_areas", index)}
+                                        onClick={() => handleRemoveItem('practice_areas', index)}
                                     >
                                         <FaTimes />
                                     </button>
@@ -308,7 +353,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Asociación de Abogados</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Asociación de Abogados
+                        </label>
                         <input
                             type="text"
                             name="bar_association"
@@ -320,7 +367,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Número de Registro</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Número de Registro
+                        </label>
                         <input
                             type="text"
                             name="registration_number"
@@ -332,7 +381,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Estructura Legal</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Estructura Legal
+                        </label>
                         <input
                             type="text"
                             name="legal_structure"
@@ -344,7 +395,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Países de Operación</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Países de Operación
+                        </label>
                         <input
                             type="text"
                             name="operating_countries"
@@ -356,7 +409,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Email de Contacto</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Email de Contacto
+                        </label>
                         <input
                             type="email"
                             name="contact_email"
@@ -368,7 +423,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Teléfono de Contacto</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Teléfono de Contacto
+                        </label>
                         <input
                             type="tel"
                             name="contact_phone"
@@ -380,7 +437,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Clientes Atendidos</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Clientes Atendidos
+                        </label>
                         <input
                             type="number"
                             name="clients_served"
@@ -392,7 +451,9 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Casos Activos</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Casos Activos
+                        </label>
                         <input
                             type="number"
                             name="active_cases"
@@ -404,27 +465,35 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                     </div>
 
                     <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700">Documentos Legales</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Documentos Legales
+                        </label>
                         <div className="flex items-center gap-2">
                             <input
                                 type="text"
                                 placeholder="Ej. Contratos"
                                 className="mt-1 flex-1 p-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500"
                                 onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        handleAddItem("legal_documents", (e.target as HTMLInputElement).value);
-                                        (e.target as HTMLInputElement).value = "";
+                                    if (e.key === 'Enter') {
+                                        handleAddItem(
+                                            'legal_documents',
+                                            (e.target as HTMLInputElement).value,
+                                        );
+                                        (e.target as HTMLInputElement).value = '';
                                     }
                                 }}
                             />
                         </div>
                         <div className="flex flex-wrap gap-2 mt-2">
                             {formData.legal_documents.map((doc, index) => (
-                                <span key={index} className="flex items-center bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-sm">
+                                <span
+                                    key={index}
+                                    className="flex items-center bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-sm"
+                                >
                                     {doc}
                                     <button
                                         className="ml-2 text-blue-500 hover:text-blue-700"
-                                        onClick={() => handleRemoveItem("legal_documents", index)}
+                                        onClick={() => handleRemoveItem('legal_documents', index)}
                                     >
                                         <FaTimes />
                                     </button>
@@ -438,11 +507,15 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                 </div>
 
                 <div className="flex justify-end mt-6">
-                    <button className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg mr-3" onClick={onClose} disabled={loading}>
+                    <button
+                        className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg mr-3"
+                        onClick={onClose}
+                        disabled={loading}
+                    >
                         Cancelar
                     </button>
                     <button
-                        className={`px-4 py-2 rounded-lg bg-custom-bg-main text-white flex items-center justify-center transition-all ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-custom-bg-hover"}`}
+                        className={`px-4 py-2 rounded-lg bg-custom-bg-main text-white flex items-center justify-center transition-all ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-custom-bg-hover'}`}
                         onClick={handleSubmit}
                         disabled={!formData.name.trim() || loading}
                     >
@@ -459,13 +532,18 @@ const CreateOrganizationModal: React.FC<{ onClose: () => void }> = ({ onClose })
                 </div>
 
                 {loading && (
-                    <div role="alert" className="mt-3 relative flex flex-col w-full p-3 text-sm border-2 rounded-md">
+                    <div
+                        role="alert"
+                        className="mt-3 relative flex flex-col w-full p-3 text-sm border-2 rounded-md"
+                    >
                         <p className="flex text-base">
                             <FaSpinner className="w-5 h-5 text-teal-500 animate-spin mr-2" />
                             Organización en proceso de creación
                         </p>
                         <p className="ml-4 px-3">
-                            La organización está siendo creada, por favor espera unos minutos. Una vez creada, podrás comenzar a administrarla. Puedes cerrar esta ventana en cualquier momento.
+                            La organización está siendo creada, por favor espera unos minutos. Una
+                            vez creada, podrás comenzar a administrarla. Puedes cerrar esta ventana
+                            en cualquier momento.
                         </p>
                     </div>
                 )}

@@ -12,19 +12,15 @@ const AIChat: React.FC = () => {
 
     return (
         <div className="flex h-screen">
-            {appContext?.isSidebarOpen || window.innerWidth > 768 ?
-                (
-                    <Sidebar
-                        activeView={activeView}
-                        setActiveView={setActiveView}
-                    />
-                ) : null}
+            {appContext?.isSidebarOpen || window.innerWidth > 768 ? (
+                <Sidebar activeView={activeView} setActiveView={setActiveView} />
+            ) : null}
             <div className="flex-1 flex flex-col">
                 <Header />
-                <ChatView conversation={""} />
+                <ChatView conversation={''} />
             </div>
         </div>
-    )
+    );
 };
 
 export default AIChat;

@@ -2,10 +2,16 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '@src/context/AppContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SyncKnowledgeBase from "@src/services/syncKnowledgeBase.service";
-import { fetchAuthSession } from "aws-amplify/auth";
+import SyncKnowledgeBase from '@src/services/syncKnowledgeBase.service';
+import { fetchAuthSession } from 'aws-amplify/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCheckCircle, faExclamationCircle, faHourglassHalf, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {
+    faTimes,
+    faCheckCircle,
+    faExclamationCircle,
+    faHourglassHalf,
+    faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { useOrganization } from '@src/context/OrganizationContext';
 
@@ -26,22 +32,19 @@ const SyncHistoryModal = () => {
 
                 const syncKnowledgeBaseInstance = new SyncKnowledgeBase(idToken);
                 const response = await syncKnowledgeBaseInstance.getSyncKnowledgeBaseStatus(
-                    activeOrganization?.knowledge_base_id || "",
-                    activeOrganization?.data_source_id || ""
+                    activeOrganization?.knowledge_base_id || '',
+                    activeOrganization?.data_source_id || '',
                 );
                 setSyncHistory(response);
             } catch (error) {
-                toast.error("Error al obtener el historial de sincronización");
+                toast.error('Error al obtener el historial de sincronización');
             } finally {
                 setLoading(false);
             }
         };
 
         fetchSyncHistory();
-    }, [
-        activeOrganization?.knowledge_base_id,
-        activeOrganization?.data_source_id,
-    ]);
+    }, [activeOrganization?.knowledge_base_id, activeOrganization?.data_source_id]);
 
     if (!appContext?.syncHistoryShowModal) {
         return null;
@@ -65,14 +68,14 @@ const SyncHistoryModal = () => {
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-full max-w-5xl my-6 mx-auto">
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        <div className='flex flex-row justify-between px-4 py-5 border-b items-center bg-gray-100'>
-                            <div className='flex items-center space-x-2'>
+                        <div className="flex flex-row justify-between px-4 py-5 border-b items-center bg-gray-100">
+                            <div className="flex items-center space-x-2">
                                 <img
                                     src="https://cdn-icons-png.flaticon.com/512/5582/5582334.png"
                                     alt="Google Drive"
                                     className="w-10 h-10"
                                 />
-                                <h3 className='text-lg font-semibold'>
+                                <h3 className="text-lg font-semibold">
                                     Historial de sincronización
                                 </h3>
                             </div>
@@ -87,7 +90,10 @@ const SyncHistoryModal = () => {
                         <div className="relative flex-auto p-6 overflow-y-auto max-h-96">
                             {loading ? (
                                 <div className="flex justify-center items-center h-full">
-                                    <FontAwesomeIcon icon={faSpinner} className="text-blue-500 animate-spin text-3xl" />
+                                    <FontAwesomeIcon
+                                        icon={faSpinner}
+                                        className="text-blue-500 animate-spin text-3xl"
+                                    />
                                 </div>
                             ) : syncHistory.length > 0 ? (
                                 <table className="min-w-full bg-white table-auto border-collapse">
@@ -108,20 +114,38 @@ const SyncHistoryModal = () => {
                                         {syncHistory.map((history, index) => (
                                             <tr key={index} className="hover:bg-gray-100">
                                                 {/* <td className="px-4 py-2 border text-center">{history.jobId}</td> */}
-                                                <td className="px-4 py-2 border text-center text-sm">{new Date(history.startTime).toLocaleString()}</td>
-                                                <td className="px-4 py-2 border text-center text-sm">{new Date(history.endTime).toLocaleString()}</td>
-                                                <td className="px-4 py-2 border text-center">{getStatusIcon(history.status)}</td>
-                                                <td className="px-4 py-2 border text-center">{history.sourceFiles}</td>
-                                                <td className="px-4 py-2 border text-center">{history.failedFiles}</td>
-                                                <td className="px-4 py-2 border text-center">{history.added}</td>
-                                                <td className="px-4 py-2 border text-center">{history.deleted}</td>
-                                                <td className="px-4 py-2 border text-center">{history.modified}</td>
+                                                <td className="px-4 py-2 border text-center text-sm">
+                                                    {new Date(history.startTime).toLocaleString()}
+                                                </td>
+                                                <td className="px-4 py-2 border text-center text-sm">
+                                                    {new Date(history.endTime).toLocaleString()}
+                                                </td>
+                                                <td className="px-4 py-2 border text-center">
+                                                    {getStatusIcon(history.status)}
+                                                </td>
+                                                <td className="px-4 py-2 border text-center">
+                                                    {history.sourceFiles}
+                                                </td>
+                                                <td className="px-4 py-2 border text-center">
+                                                    {history.failedFiles}
+                                                </td>
+                                                <td className="px-4 py-2 border text-center">
+                                                    {history.added}
+                                                </td>
+                                                <td className="px-4 py-2 border text-center">
+                                                    {history.deleted}
+                                                </td>
+                                                <td className="px-4 py-2 border text-center">
+                                                    {history.modified}
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             ) : (
-                                <p className="text-center">No hay historial de sincronización disponible</p>
+                                <p className="text-center">
+                                    No hay historial de sincronización disponible
+                                </p>
                             )}
                         </div>
                         <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -140,6 +164,6 @@ const SyncHistoryModal = () => {
             <ToastContainer />
         </>
     );
-}
+};
 
 export default SyncHistoryModal;

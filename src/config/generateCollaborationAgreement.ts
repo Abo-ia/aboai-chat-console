@@ -17,7 +17,7 @@ function generateCollaborationAgreement({
     resolucionDisputas,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaConvenio: string;
     nombreParteA: string;
     direccionParteA: string;
@@ -36,7 +36,7 @@ function generateCollaborationAgreement({
     resolucionDisputas: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Convenio de Colaboración Detallado
   
@@ -129,6 +129,6 @@ function generateCollaborationAgreement({
   Fecha: ${fechaConvenio}  
   Firma: ___________________________
   `;
-  }
-  
+}
+
 export default generateCollaborationAgreement;

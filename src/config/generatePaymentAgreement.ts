@@ -119,5 +119,4 @@ function generatePaymentAgreement({
   `;
 }
 
-
 export default generatePaymentAgreement;

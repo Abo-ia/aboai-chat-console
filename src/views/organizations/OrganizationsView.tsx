@@ -9,16 +9,13 @@ const OrganizationsView: React.FC = () => {
 
     return (
         <div className="flex">
-            <Sidebar
-                activeView={activeView}
-                setActiveView={setActiveView}
-            />
+            <Sidebar activeView={activeView} setActiveView={setActiveView} />
             <div className="flex-1 flex flex-col">
                 <Header />
-                <OrganizationWrapped/>
+                <OrganizationWrapped />
             </div>
         </div>
-    )
+    );
 };
 
 export default OrganizationsView;

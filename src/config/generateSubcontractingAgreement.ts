@@ -19,7 +19,7 @@ function generateSubcontractingAgreement({
     terminacionConvenio,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaConvenio: string;
     nombreContratista: string;
     direccionContratista: string;
@@ -40,7 +40,7 @@ function generateSubcontractingAgreement({
     terminacionConvenio: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Convenio de Subcontratación Detallado
   
@@ -134,6 +134,6 @@ function generateSubcontractingAgreement({
   Fecha: ${fechaConvenio}  
   Firma: ___________________________
   `;
-  }
-  
+}
+
 export default generateSubcontractingAgreement;

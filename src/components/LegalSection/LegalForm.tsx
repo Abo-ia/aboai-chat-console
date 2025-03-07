@@ -42,7 +42,17 @@ const LegalForm: React.FC<FormularioProps> = ({ documentType, documentName }) =>
         'Creación de Denuncia': <ComplaintsForm />,
     };
 
-    return <div>{documentName ? formComponents[documentName] || <p>No se ha seleccionado ningún tipo de documento</p> : <p>No se ha seleccionado ningún tipo de documento</p>}</div>;
+    return (
+        <div>
+            {documentName ? (
+                formComponents[documentName] || (
+                    <p>No se ha seleccionado ningún tipo de documento</p>
+                )
+            ) : (
+                <p>No se ha seleccionado ningún tipo de documento</p>
+            )}
+        </div>
+    );
 };
 
 export default LegalForm;

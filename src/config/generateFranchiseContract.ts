@@ -20,7 +20,7 @@ function generateFranchiseContract({
     resolucionDisputas,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaContrato: string;
     nombreFranquiciante: string;
     direccionFranquiciante: string;
@@ -42,7 +42,7 @@ function generateFranchiseContract({
     resolucionDisputas: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Contrato de Franquicia Detallado
   
@@ -128,6 +128,6 @@ function generateFranchiseContract({
   Fecha: ${fechaContrato}  
   Firma: ___________________________
   `;
-  }
-  
+}
+
 export default generateFranchiseContract;

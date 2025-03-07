@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
@@ -31,17 +30,13 @@ const ReferenceItem: React.FC<{ content: any }> = ({ content }) => {
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {isOpen ? <FaChevronUp /> : <FaChevronDown />}
-                <span
-                    className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold"
-                >
+                <span className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold">
                     {fileName}
                 </span>
-
             </p>
             {isOpen && <p className="mt-2">{content.content.text}</p>}
         </div>
     );
 };
-
 
 export default Modal;

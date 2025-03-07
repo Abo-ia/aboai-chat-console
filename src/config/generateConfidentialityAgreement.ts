@@ -13,7 +13,7 @@ function generateConfidentialityAgreement({
     resolucionDisputas,
     jurisdiccion,
     ciudadFirma,
-  }: {
+}: {
     fechaConvenio: string;
     nombreParteDivulgante: string;
     direccionParteDivulgante: string;
@@ -28,7 +28,7 @@ function generateConfidentialityAgreement({
     resolucionDisputas: string;
     jurisdiccion: string;
     ciudadFirma: string;
-  }): string {
+}): string {
     return `
   # Convenio de Confidencialidad Detallado
   
@@ -108,7 +108,6 @@ function generateConfidentialityAgreement({
   Fecha: ${fechaConvenio}  
   Firma: ___________________________
   `;
-  }
-  
+}
 
 export default generateConfidentialityAgreement;

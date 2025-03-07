@@ -18,23 +18,26 @@ const initialState: OrganizationState = {
     activeOrganization: null,
 };
 
-const organizationReducer = (state: OrganizationState, action: OrganizationAction): OrganizationState => {
+const organizationReducer = (
+    state: OrganizationState,
+    action: OrganizationAction,
+): OrganizationState => {
     switch (action.type) {
         case 'CONSULT_ORGANIZATIONS_BY_USER':
             return {
                 ...state,
-                organizations: action.payload
+                organizations: action.payload,
             };
         case 'SET_ACTIVE_ORGANIZATION':
             return {
                 ...state,
-                activeOrganization: action.payload
+                activeOrganization: action.payload,
             };
         case 'CREATE_ORGANIZATION':
             return {
                 ...state,
                 organizations: [...state.organizations, action.payload],
-                activeOrganization: action.payload
+                activeOrganization: action.payload,
             };
         default:
             return state;
@@ -56,15 +59,19 @@ const OrganizationContext = createContext<{
         contact_phone: string,
         clients_served: number,
         active_cases: number,
-        legal_documents: string[]
+        legal_documents: string[],
     ) => Promise<void>;
-    inviteUserToOrganization: (organization_id: string, user_email: string, role?: string) => Promise<void>;
+    inviteUserToOrganization: (
+        organization_id: string,
+        user_email: string,
+        role?: string,
+    ) => Promise<void>;
 }>({
     state: initialState,
     dispatch: () => null,
-    setActiveOrganization: () => { },
-    createOrganization: async () => { },
-    inviteUserToOrganization: async () => { },
+    setActiveOrganization: () => {},
+    createOrganization: async () => {},
+    inviteUserToOrganization: async () => {},
 });
 
 export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -81,7 +88,9 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
             dispatch({ type: 'CONSULT_ORGANIZATIONS_BY_USER', payload: organizations });
 
             const savedOrganizationId = localStorage.getItem('activeOrganizationId');
-            const foundOrganization = organizations.find((org: any) => org.organization_id === savedOrganizationId);
+            const foundOrganization = organizations.find(
+                (org: any) => org.organization_id === savedOrganizationId,
+            );
 
             if (foundOrganization) {
                 dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: foundOrganization });
@@ -89,7 +98,6 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
                 dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: organizations[0] });
                 localStorage.setItem('activeOrganization', organizations[0]);
             }
-
         } catch (error) {
             console.error('Error fetching organizations:', error);
         }
@@ -111,10 +119,12 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         contact_phone: string,
         clients_served: number,
         active_cases: number,
-        legal_documents: string[]
+        legal_documents: string[],
     ) => {
         if (!authUserId || !authEmail) {
-            console.error("No se puede crear la organización porque falta información del usuario autenticado.");
+            console.error(
+                'No se puede crear la organización porque falta información del usuario autenticado.',
+            );
             return;
         }
 
@@ -137,7 +147,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
                 contact_phone,
                 clients_served,
                 active_cases,
-                legal_documents
+                legal_documents,
             );
 
             dispatch({ type: 'CREATE_ORGANIZATION', payload: newOrganization });
@@ -150,7 +160,11 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         }
     };
 
-    const inviteUserToOrganization = async (organization_id: string, user_email: string, role: string = "member") => {
+    const inviteUserToOrganization = async (
+        organization_id: string,
+        user_email: string,
+        role: string = 'member',
+    ) => {
         const idToken = localStorage.getItem('idToken') || '';
         const service = new OrganizationsService(idToken);
 
@@ -158,7 +172,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
             await service.inviteUserToOrganization(organization_id, user_email, role);
             window.location.reload();
         } catch (error) {
-            console.error("Error invitando usuario a la organización:", error);
+            console.error('Error invitando usuario a la organización:', error);
         }
     };
 
@@ -186,13 +200,15 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }, [authEmail]);
 
     return (
-        <OrganizationContext.Provider value={{
-            state,
-            dispatch,
-            setActiveOrganization,
-            createOrganization,
-            inviteUserToOrganization
-        }}>
+        <OrganizationContext.Provider
+            value={{
+                state,
+                dispatch,
+                setActiveOrganization,
+                createOrganization,
+                inviteUserToOrganization,
+            }}
+        >
             {children}
         </OrganizationContext.Provider>
     );

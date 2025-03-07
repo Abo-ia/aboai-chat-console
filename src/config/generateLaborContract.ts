@@ -150,5 +150,4 @@ function generateLaborContract({
   `;
 }
 
-
 export default generateLaborContract;
