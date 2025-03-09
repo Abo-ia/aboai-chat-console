@@ -183,27 +183,26 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                 </div>
             </div>
 
-            {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-                    <div className="bg-white p-6 rounded-md shadow-md max-w-lg w-full">
-                        <h2 className="text-lg font-semibold mb-4">Nueva Categoría</h2>
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-500/30 backdrop-blur-sm z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+                        <h2 className="text-lg font-semibold mb-4 text-gray-800">Nueva Categoría</h2>
 
-                        {/* Input de Categoría */}
-                        <label className="block mb-2 text-sm">
+                        {/* Nombre de la categoría */}
+                        <label className="block mb-4 text-sm font-medium text-gray-700">
                             Nombre de la Categoría:
                             <input
                                 type="text"
                                 name="category"
                                 value={newCategory.category}
                                 onChange={handleNewCategoryChange}
-                                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2"
+                                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                         </label>
 
                         {/* Lista de Prompts */}
                         <div className="mb-4">
-                            <h3 className="font-semibold mb-2 text-sm">Prompts</h3>
+                            <h3 className="font-semibold mb-2 text-sm text-gray-700">Prompts</h3>
                             {newCategory.prompts.map((prompt, index) => (
                                 <div key={prompt.id} className="flex space-x-2 mb-2 items-center">
                                     <input
@@ -212,31 +211,35 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                                         value={prompt.title}
                                         placeholder="Título"
                                         onChange={(e) => handleNewCategoryChange(e, index)}
-                                        className="p-2 border rounded-md w-3/4 focus:outline-none focus:ring-2"
+                                        className="p-2 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     />
                                     <button
                                         onClick={() => removePrompt(index)}
-                                        className="text-gray-400 hover:text-gray-600"
+                                        className="text-gray-400 hover:text-red-500 transition"
                                     >
                                         <FaTrash />
                                     </button>
                                 </div>
                             ))}
-                            <button onClick={addPrompt} className="text-sm">
+                            <button
+                                onClick={addPrompt}
+                                className="text-sm text-custom-secondary hover:text-indigo-800 transition"
+                            >
                                 + Añadir Prompt
                             </button>
                         </div>
 
-                        <div className="flex justify-end gap-2">
+                        {/* Botones de acción */}
+                        <div className="flex justify-end gap-3 mt-4">
                             <button
                                 onClick={closeModal}
-                                className="px-4 py-2 border rounded-md hover:bg-gray-100 transition"
+                                className="px-4 py-2 border rounded-md text-gray-600 hover:bg-gray-100 transition"
                             >
                                 Cancelar
                             </button>
                             <button
                                 onClick={createCategory}
-                                className="px-4 py-2 border rounded-md bg-gray-800 text-white hover:bg-gray-700 transition"
+                                className="px-4 py-2 rounded-md bg-custom-primary text-white hover:bg-indigo-500 transition"
                             >
                                 Guardar
                             </button>
@@ -244,6 +247,7 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                     </div>
                 </div>
             )}
+
         </div>
     );
 };

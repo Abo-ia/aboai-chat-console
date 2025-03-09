@@ -1,87 +1,83 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link
-            rel="icon"
-            type="image/svg+xml"
-            href="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Abo.AI</title>
 
-        <!-- Descripción del sitio -->
-        <meta
-            name="description"
-            content="Abo.AI - Potencia tus flujos de trabajo con IA avanzada. Optimiza, organiza y mejora tu productividad."
-        />
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml"
+        href="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AboAI</title>
 
-        <!-- Palabras clave -->
-        <meta
-            name="keywords"
-            content="Abo.AI, inteligencia artificial, productividad, organización, IA, flujo de trabajo, herramientas de IA, soluciones empresariales"
-        />
+    <!-- Descripción del sitio -->
+    <meta name="description"
+        content="AboAI - Potencia tus flujos de trabajo con IA avanzada. Optimiza, organiza y mejora tu productividad." />
 
-        <!-- Autor -->
-        <meta name="author" content="Equipo de Abo.AI AI" />
+    <!-- Palabras clave -->
+    <meta name="keywords"
+        content="AboAI, inteligencia artificial, productividad, organización, IA, flujo de trabajo, herramientas de IA, soluciones empresariales" />
 
-        <!-- Open Graph / Redes sociales -->
-        <meta
-            property="og:title"
-            content="Abo.AI - Potencia tus flujos de trabajo con IA avanzada"
-        />
-        <meta
-            property="og:description"
-            content="Abo.AI utiliza inteligencia artificial avanzada para optimizar tus procesos, mejorar tu productividad y ayudarte a alcanzar tus objetivos."
-        />
-        <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png" />
-        <meta property="og:url" content="https://www.Abo.AI.com" />
-        <meta property="og:type" content="website" />
+    <!-- Autor -->
+    <meta name="author" content="Equipo de AboAI AI" />
 
-        <!-- Twitter Cards -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-            name="twitter:title"
-            content="Abo.AI - Potencia tus flujos de trabajo con IA avanzada"
-        />
-        <meta
-            name="twitter:description"
-            content="Abo.AI utiliza inteligencia artificial avanzada para optimizar tus procesos, mejorar tu productividad y ayudarte a alcanzar tus objetivos."
-        />
-        <meta
-            name="twitter:image"
-            content="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png"
-        />
-        <meta name="twitter:site" content="@Abo.AIai" />
+    <!-- Open Graph / Redes sociales -->
+    <meta property="og:title" content="AboAI - Potencia tus flujos de trabajo con IA avanzada" />
+    <meta property="og:description"
+        content="AboAI utiliza inteligencia artificial avanzada para optimizar tus procesos, mejorar tu productividad y ayudarte a alcanzar tus objetivos." />
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png" />
+    <meta property="og:url" content="https://www.AboAI.com" />
+    <meta property="og:type" content="website" />
 
-        <!-- Robots -->
-        <meta name="robots" content="index, follow" />
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AboAI - Potencia tus flujos de trabajo con IA avanzada" />
+    <meta name="twitter:description"
+        content="AboAI utiliza inteligencia artificial avanzada para optimizar tus procesos, mejorar tu productividad y ayudarte a alcanzar tus objetivos." />
+    <meta name="twitter:image"
+        content="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png" />
+    <meta name="twitter:site" content="@AboAIai" />
 
-        <!-- Canonical URL -->
-        <link rel="canonical" href="https://www.Abo.AI.com" />
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
 
-        <!-- Tema del navegador (para Chrome en Android) -->
-        <meta name="theme-color" content="#006d5b" />
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.AboAI.com" />
 
-        <!-- Compatibilidad con motores de búsqueda antiguos -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tema del navegador (para Chrome en Android) -->
+    <meta name="theme-color" content="#006d5b" />
 
-        <!-- Lenguaje -->
-        <meta name="language" content="English" />
-        <meta name="geo.region" content="US" />
-        <meta name="geo.placename" content="San Francisco" />
-        <meta name="geo.position" content="37.7749;-122.4194" />
-        <meta name="ICBM" content="37.7749, -122.4194" />
-    </head>
-    <body>
-        <div id="root"></div>
-        <style>
-            html,
-            body {
-                overscroll-behavior: none;
-                overflow: hidden;
-            }
-        </style>
-        <script type="module" src="/src/main.tsx"></script>
-    </body>
+    <!-- Compatibilidad con motores de búsqueda antiguos -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Lenguaje -->
+    <meta name="language" content="English" />
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="San Francisco" />
+    <meta name="geo.position" content="37.7749;-122.4194" />
+    <meta name="ICBM" content="37.7749, -122.4194" />
+</head>
+
+<body>
+    <div id="root"></div>
+    <style>
+        html,
+        body {
+            overscroll-behavior: none;
+
+        }
+
+        /* Oculta las barras de scroll en todos los navegadores */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            /* IE y Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+    </style>
+    <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

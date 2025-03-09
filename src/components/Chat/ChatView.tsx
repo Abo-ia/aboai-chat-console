@@ -256,7 +256,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                 alt="Assistant Avatar"
                                             />
                                             <span className="text-sm font-semibold text-custom-font-user">
-                                                Abo.AI
+                                                AboAI
                                             </span>
                                             <span className="text-sm font-normal text-gray-500">
                                                 {date}
@@ -351,6 +351,8 @@ const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> =
     content,
     onClose,
 }) => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+
     const uniqueReferences = useMemo(() => {
         const seen = new Set();
         return content.filter((ref) => {
@@ -364,12 +366,17 @@ const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> =
     }, [content]);
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-white/30 backdrop-blur-sm z-50">
             <div className="opacity-50 absolute inset-0" onClick={onClose}></div>
-            <div className="rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4">
+            <div className="rounded-lg p-8 shadow-lg z-10 max-w-2xl w-3/4 bg-white">
                 <h2 className="text-2xl font-bold mb-4">Referencias</h2>
-                {uniqueReferences.map((ref: any, index: any) => (
-                    <ReferenceItem key={index} content={ref} />
+                {uniqueReferences.map((ref, index) => (
+                    <ReferenceItem
+                        key={index}
+                        content={ref}
+                        isOpen={openIndex === index}
+                        onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                    />
                 ))}
                 <button
                     onClick={onClose}
@@ -382,27 +389,38 @@ const ReferencesModal: React.FC<{ content: Reference[]; onClose: () => void }> =
     );
 };
 
-const ReferenceItem: React.FC<{ content: Reference }> = ({ content }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const fileName = content.location.s3Location.uri.split('s3://iabogado-bucket/')[1];
-
+const ReferenceItem: React.FC<{ content: Reference; isOpen: boolean; onClick: () => void }> = ({
+    content,
+    isOpen,
+    onClick,
+}) => {
     return (
         <div className="mb-1">
             <p
-                className="flex items-center text-neutral-500 gap-2 cursor-pointer"
-                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center justify-between text-neutral-600 cursor-pointer hover:text-neutral-800 transition-colors duration-300 bg-neutral-100 px-4 py-2 rounded-lg mt-2 hover:bg-indigo-100 transition-all duration-300 text-sm font-semibold shadow-sm border border-indigo-300"
+                onClick={onClick}
             >
-                <span className="bg-neutral-100 text-neutral-800 px-3 py-2 rounded mt-2 hover:bg-neutral-200 transition-colors duration-300 text-sm font-semibold border-b border-indigo-200">
-                    {fileName.length > 30 ? `${fileName.slice(0, 30)}...` : fileName}
-                </span>
+                Referencia Encontrada
+                <svg
+                    className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"></path>
+                </svg>
             </p>
+
             {isOpen && (
                 <div className="mt-2 h-96 overflow-y-auto">
-                    <p>{content.content.text}</p>
+                    <p>{content?.content?.text}</p>
                 </div>
             )}
         </div>
     );
 };
+
 
 export default ChatView;

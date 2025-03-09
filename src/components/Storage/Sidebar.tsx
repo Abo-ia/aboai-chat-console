@@ -98,9 +98,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                             'https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png'
                         }
                         alt="Harvey"
-                        className="rounded-full shadow-lg object-cover"
+                        className="rounded-full shadow-lg object-cover w-12"
                     />
-                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">Abo.AI</h1>}
+                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">AboAI</h1>}
                 </div>
 
                 <button
@@ -129,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         <li
                             onClick={() => navigate(item.path)}
                             key={index}
-                            className={`cursor-pointer text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
+                            className={`cursor-pointer hover:bg-custom-accent hover:text-gray-400 text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
                                 }`}
                         >
                             <div className="flex items-center justify-center w-full">

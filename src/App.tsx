@@ -13,7 +13,7 @@ import {
 import '@aws-amplify/ui-react/styles.css';
 
 import CloudStorage from './views/cloud-storage/CloudStorage';
-import PaymentForm from './views/payment/PaymentForm';
+import StepperPayment from './views/payment/StepperPayment';
 import ContractsBuilder from './views/contracts-builder/ContractsBuilder';
 import AIChat from './views/ai-chat/AIChat';
 import OrganizationsView from './views/organizations/OrganizationsView';
@@ -272,7 +272,7 @@ const App: React.FC = () => {
                     <Route path='/conectividad' element={<CloudConnectivity />} />
                     <Route path="/almacenamiento" element={<CloudStorage />} />
                     <Route path="/contratos-y-acuerdos" element={<ContractsBuilder />} />
-                    <Route path="/suscripcion" element={<PaymentForm />} />
+                    <Route path="/suscripcion" element={<StepperPayment />} />
                     <Route path="/organizaciones" element={<OrganizationsView />} />
                 </Routes>
             </Router>
