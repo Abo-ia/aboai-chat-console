@@ -60,9 +60,7 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
             <div className="flex w-full">
                 {isSidebarOpen && (
                     <div className="w-[40%] bg-custom-bg-sidebar p-4 shadow-lg">
-                        <div className="text-2xl font-bold ml-3 mb-6">
-                            Legal
-                        </div>
+                        <div className="text-2xl font-bold ml-3 mb-6">Legal</div>
 
                         <div className="mb-4">
                             <button
@@ -79,7 +77,10 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 <div className="pl-6 pt-2">
                                     <ul className="space-y-2">
                                         {optionsDocuments.contratos.map((contrato, index) => (
-                                            <li key={index} className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300">
+                                            <li
+                                                key={index}
+                                                className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300"
+                                            >
                                                 {documentName === contrato && (
                                                     <span className="w-2 h-2 bg-custom-accent rounded-full mr-2"></span>
                                                 )}
@@ -113,7 +114,10 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 <div className="pl-6 pt-2">
                                     <ul className="space-y-2">
                                         {optionsDocuments.convenios.map((convenio, index) => (
-                                            <li key={index} className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300">
+                                            <li
+                                                key={index}
+                                                className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300"
+                                            >
                                                 {documentName === convenio && (
                                                     <span className="w-2 h-2 bg-custom-accent rounded-full mr-2"></span>
                                                 )}
@@ -147,7 +151,10 @@ const LegalSectionBody: React.FC<SidebarProps> = ({ activeView }) => {
                                 <div className="pl-6 pt-2">
                                     <ul className="space-y-2">
                                         {optionsDocuments.denuncias.map((denuncia, index) => (
-                                            <li key={index} className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300">
+                                            <li
+                                                key={index}
+                                                className="flex items-center hover:bg-custom-light rounded-lg transition-colors duration-300"
+                                            >
                                                 {documentName === denuncia && (
                                                     <span className="w-2 h-2 bg-custom-accent rounded-full mr-2"></span>
                                                 )}

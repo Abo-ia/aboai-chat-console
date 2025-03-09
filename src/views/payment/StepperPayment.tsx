@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import { useState } from 'react';
+import { FaCheck } from 'react-icons/fa';
 
-import AvailablePlans from "./AvailablePlans";
-import PaymentForm from "./PaymentForm";
+import AvailablePlans from './AvailablePlans';
+import PaymentForm from './PaymentForm';
 
 const StepperPayment = () => {
     const [currentStep, setCurrentStep] = useState(0);
 
     const steps = [
-        { name: "Planes disponibles", component: <AvailablePlans /> },
-        { name: "Confirma tu pago", component: <PaymentForm /> },
+        { name: 'Planes disponibles', component: <AvailablePlans /> },
+        { name: 'Confirma tu pago', component: <PaymentForm /> },
     ];
 
     const goNext = () => {
@@ -44,12 +44,15 @@ const StepperPayment = () => {
                     {steps.map((step, index) => (
                         <div key={index} className="flex items-center">
                             <div
-                                className={`w-8 h-8 flex items-center justify-center rounded-full font-semibold text-white transition-all ${currentStep >= index ? "bg-custom-primary" : "bg-gray-300"
-                                    }`}
+                                className={`w-8 h-8 flex items-center justify-center rounded-full font-semibold text-white transition-all ${
+                                    currentStep >= index ? 'bg-custom-primary' : 'bg-gray-300'
+                                }`}
                             >
                                 {currentStep > index ? <FaCheck size={16} /> : index + 1}
                             </div>
-                            {index < steps.length - 1 && <div className="w-12 h-1 bg-gray-300 mx-2"></div>}
+                            {index < steps.length - 1 && (
+                                <div className="w-12 h-1 bg-gray-300 mx-2"></div>
+                            )}
                         </div>
                     ))}
                 </div>
@@ -58,7 +61,6 @@ const StepperPayment = () => {
                     {steps[currentStep].name}
                 </p>
             </div>
-
 
             <div className="flex-1 overflow-y-auto px-2">
                 <div>{steps[currentStep].component}</div>
@@ -81,7 +83,6 @@ const StepperPayment = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import {
-    FiHardDrive,
-    FiTrash,
-} from 'react-icons/fi';
+import { FiHardDrive, FiTrash } from 'react-icons/fi';
 import { IoChatboxOutline, IoCloudOutline } from 'react-icons/io5';
 import { GoLaw } from 'react-icons/go';
 import { RiOrganizationChart } from 'react-icons/ri';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import Logo from '@src/assets/logo.svg'
+import Logo from '@src/assets/logo.svg';
 import {
     AWS_ACCESS_KEY_ID,
     AWS_BUCKET_NAME,
@@ -128,8 +125,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         <li
                             onClick={() => navigate(item.path)}
                             key={index}
-                            className={`cursor-pointer hover:bg-custom-accent hover:text-gray-400 text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
-                                }`}
+                            className={`cursor-pointer hover:bg-custom-accent hover:text-gray-400 text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${
+                                props.activeView === item.label ? 'bg-[#e9eaee]' : ''
+                            }`}
                         >
                             <div className="flex items-center justify-center w-full">
                                 <span className="text-xl flex items-center justify-center w-8 h-8">

@@ -268,7 +268,7 @@ const App: React.FC = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<AIChat />} />
-                    <Route path='/conectividad' element={<CloudConnectivity />} />
+                    <Route path="/conectividad" element={<CloudConnectivity />} />
                     <Route path="/almacenamiento" element={<CloudStorage />} />
                     <Route path="/contratos-y-acuerdos" element={<ContractsBuilder />} />
                     <Route path="/suscripcion" element={<StepperPayment />} />

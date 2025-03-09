@@ -422,5 +422,4 @@ const ReferenceItem: React.FC<{ content: Reference; isOpen: boolean; onClick: ()
     );
 };
 
-
 export default ChatView;

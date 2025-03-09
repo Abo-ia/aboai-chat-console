@@ -36,7 +36,6 @@ interface GoogleDriveFile {
     webViewLink?: string;
 }
 
-
 const CloudConnectivity: React.FC = () => {
     const [activeView, setActiveView] = useState<string>('Inicio');
     const appContext = useContext(AppContext);
@@ -255,7 +254,7 @@ const CloudConnectivity: React.FC = () => {
             <div className="flex-1 flex flex-col">
                 <Header />
 
-                <div className='flex flex-col w-2/3 mx-auto h-full'>
+                <div className="flex flex-col w-2/3 mx-auto h-full">
                     <div className="flex flex-row justify-between px-4 py-5 border-b items-center bg-white shadow">
                         <div className="flex items-center space-x-2">
                             <img
@@ -272,10 +271,7 @@ const CloudConnectivity: React.FC = () => {
                                 onClick={handleSignOutClick}
                                 className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 flex items-center justify-center"
                             >
-                                <FontAwesomeIcon
-                                    icon={faArrowRightFromBracket}
-                                    className="mr-2"
-                                />
+                                <FontAwesomeIcon icon={faArrowRightFromBracket} className="mr-2" />
                                 Cerrar sesión
                             </button>
                         ) : (
@@ -317,11 +313,11 @@ const CloudConnectivity: React.FC = () => {
                                                                     <span>{file.name}</span>
                                                                     {file.mimeType ===
                                                                         'application/vnd.google-apps.folder' && (
-                                                                            <FontAwesomeIcon
-                                                                                icon={faFolderOpen}
-                                                                                className="text-blue-500"
-                                                                            />
-                                                                        )}
+                                                                        <FontAwesomeIcon
+                                                                            icon={faFolderOpen}
+                                                                            className="text-blue-500"
+                                                                        />
+                                                                    )}
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -332,8 +328,8 @@ const CloudConnectivity: React.FC = () => {
                                 ) : (
                                     <div className="text-center text-gray-500">
                                         <p>
-                                            Debes iniciar sesión en Google Drive para acceder a
-                                            tus archivos.
+                                            Debes iniciar sesión en Google Drive para acceder a tus
+                                            archivos.
                                         </p>
                                     </div>
                                 )}
@@ -359,7 +355,6 @@ const CloudConnectivity: React.FC = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '@src/context/AppContext';
 import { useOrganization } from '@src/context/OrganizationContext';
-import UserIcon from '@src/assets/user-icon.png'
+import UserIcon from '@src/assets/user-icon.png';
 import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const Header: React.FC = () => {
@@ -61,9 +61,7 @@ const Header: React.FC = () => {
             </button>
 
             <div className="relative inline-block text-left justify-e">
-                <div
-                    className='flex items-center gap-2 cursor-pointer'
-                >
+                <div className="flex items-center gap-2 cursor-pointer">
                     <img
                         onClick={handleOptionsState}
                         id="menu-button"

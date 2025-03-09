@@ -173,9 +173,10 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-500/30 backdrop-blur-sm z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-                        <h2 className="text-lg font-semibold mb-4 text-gray-800">Nueva Categoría</h2>
+                        <h2 className="text-lg font-semibold mb-4 text-gray-800">
+                            Nueva Categoría
+                        </h2>
 
-                        {/* Nombre de la categoría */}
                         <label className="block mb-4 text-sm font-medium text-gray-700">
                             Nombre de la Categoría:
                             <input
@@ -234,7 +235,6 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                     </div>
                 </div>
             )}
-
         </div>
     );
 };

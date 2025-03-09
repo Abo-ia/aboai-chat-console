@@ -1,29 +1,29 @@
-import React from "react";
+import React from 'react';
 
 const PaymentMethods = () => {
     const methods = [
         {
             id: 1,
-            type: "Visa",
-            lastDigits: "7658",
-            expiry: "10/2024",
-            logo: "https://1000marcas.net/wp-content/uploads/2019/12/VISA-Logo-2014.png",
+            type: 'Visa',
+            lastDigits: '7658',
+            expiry: '10/2024',
+            logo: 'https://1000marcas.net/wp-content/uploads/2019/12/VISA-Logo-2014.png',
             selected: true,
         },
         {
             id: 2,
-            type: "Mastercard",
-            lastDigits: "8429",
-            expiry: "04/2026",
-            logo: "https://1000marcas.net/wp-content/uploads/2019/12/logo-Mastercard.png",
+            type: 'Mastercard',
+            lastDigits: '8429',
+            expiry: '04/2026',
+            logo: 'https://1000marcas.net/wp-content/uploads/2019/12/logo-Mastercard.png',
             selected: false,
         },
         {
             id: 3,
-            type: "Paypal",
-            lastDigits: "",
-            expiry: "",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png",
+            type: 'Paypal',
+            lastDigits: '',
+            expiry: '',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png',
             selected: false,
         },
     ];
@@ -53,11 +53,7 @@ const PaymentMethods = () => {
                             </div>
                         </div>
                     </div>
-                    <img
-                        src={method.logo}
-                        alt={method.type}
-                        className="h-8"
-                    />
+                    <img src={method.logo} alt={method.type} className="h-8" />
                 </div>
             ))}
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const OrderSummary = () => {
     const orderDetails = {
@@ -10,10 +10,10 @@ const OrderSummary = () => {
     };
 
     const summaryItems = [
-        { label: "Precio original", value: orderDetails.originalPrice },
-        { label: "Ahorro", value: orderDetails.savings, className: "text-green-600" },
-        { label: "Recogida en tienda", value: orderDetails.storePickup },
-        { label: "Impuestos", value: orderDetails.tax },
+        { label: 'Precio original', value: orderDetails.originalPrice },
+        { label: 'Ahorro', value: orderDetails.savings, className: 'text-green-600' },
+        { label: 'Recogida en tienda', value: orderDetails.storePickup },
+        { label: 'Impuestos', value: orderDetails.tax },
     ];
 
     return (
@@ -23,8 +23,10 @@ const OrderSummary = () => {
                 {summaryItems.map((item, index) => (
                     <div key={index} className="flex justify-between text-sm text-gray-700">
                         <span>{item.label}</span>
-                        <span className={`font-semibold ${item.className || ""}`}>
-                            {item.value < 0 ? `-$${Math.abs(item.value).toFixed(2)}` : `$${item.value.toFixed(2)}`}
+                        <span className={`font-semibold ${item.className || ''}`}>
+                            {item.value < 0
+                                ? `-$${Math.abs(item.value).toFixed(2)}`
+                                : `$${item.value.toFixed(2)}`}
                         </span>
                     </div>
                 ))}
