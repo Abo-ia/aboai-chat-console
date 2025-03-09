@@ -130,24 +130,11 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                     {promptCategories.length > 0 &&
                         promptCategories.map((category) => (
                             <div key={category.id}>
-                                {/* Categoría */}
                                 <div
                                     className="flex justify-between items-center p-2 border rounded-md cursor-pointer hover:bg-custom-secondary hover:text-white transition-all "
                                     onClick={() => toggleCategory(category.id)}
                                 >
                                     <span className="font-medium">{category.category}</span>
-                                    <svg
-                                        className={`w-5 h-5 transform transition-transform ${category.isOpen ? 'rotate-180' : 'rotate-0'}`}
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M19 9l-7 7-7-7"
-                                        />
-                                    </svg>
                                 </div>
 
                                 {/* Lista de Prompts */}

@@ -10,6 +10,7 @@ import { RiOrganizationChart } from 'react-icons/ri';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import Logo from '@src/assets/logo.svg'
 import {
     AWS_ACCESS_KEY_ID,
     AWS_BUCKET_NAME,
@@ -94,13 +95,11 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     className={`flex items-center justify-center p-4 ${isSidebarOpen ? 'space-x-2' : ''}`}
                 >
                     <img
-                        src={
-                            'https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png'
-                        }
+                        src={Logo}
                         alt="Harvey"
                         className="rounded-full shadow-lg object-cover w-12"
                     />
-                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">AboAI</h1>}
+                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">Abo.AI</h1>}
                 </div>
 
                 <button

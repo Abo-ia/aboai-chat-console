@@ -1,6 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '@src/context/AppContext';
 import { useOrganization } from '@src/context/OrganizationContext';
+import UserIcon from '@src/assets/user-icon.png'
+import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const Header: React.FC = () => {
     const { state } = useOrganization();
@@ -10,9 +12,26 @@ const Header: React.FC = () => {
     const [optionsState, setOptionsState] = useState(false);
     const [hamburgerMenuState, setHamburgerMenuState] = useState(false);
 
+    const [authEmail, setAuthEmail] = useState('');
+
     const handleOptionsState = () => {
         setOptionsState(!optionsState);
     };
+
+    useEffect(() => {
+        const fetchAttributes = async () => {
+            try {
+                const attributes = await fetchUserAttributes();
+                if (attributes.email && attributes.sub) {
+                    const authEmail = attributes.email.split('@')[0];
+                    setAuthEmail(authEmail);
+                }
+            } catch (err) {
+                console.error('Error al obtener atributos del usuario:', err);
+            }
+        };
+        fetchAttributes();
+    }, []);
 
     return (
         <div className="bg-custom-bg-header p-4 flex justify-between lg:justify-end items-center">
@@ -42,15 +61,42 @@ const Header: React.FC = () => {
             </button>
 
             <div className="relative inline-block text-left justify-e">
-                <img
-                    onClick={handleOptionsState}
-                    id="menu-button"
-                    aria-expanded={optionsState}
-                    aria-haspopup="true"
-                    className="w-7 h-7 rounded-full"
-                    src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
-                    alt="User Avatar"
-                />
+                <div
+                    className='flex items-center gap-2 cursor-pointer'
+                >
+                    <img
+                        onClick={handleOptionsState}
+                        id="menu-button"
+                        aria-expanded={optionsState}
+                        aria-haspopup="true"
+                        className="w-7 h-7 rounded-full"
+                        src={UserIcon}
+                        alt="User Avatar"
+                    />
+
+                    <div>
+                        <h3 className="text-sm font-semibold text-gray-600">{authEmail}</h3>
+                        <p className="text-xs text-gray-600">Administrador</p>
+                    </div>
+
+                    <p>
+                        <svg
+                            className="w-3 h-3"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 9l-7 7-7-7"
+                            />
+                        </svg>
+                    </p>
+                </div>
 
                 {optionsState && (
                     <div

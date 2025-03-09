@@ -4,6 +4,8 @@ import { Member } from '@src/types/organization.interface';
 import { FaUserPlus, FaTimes, FaEnvelope, FaUser } from 'react-icons/fa';
 import { FaSpinner } from 'react-icons/fa';
 
+import UserIcon from '@src/assets/user-icon.png';
+
 const OrganizationMembers = () => {
     const { state, inviteUserToOrganization } = useOrganization();
     const { activeOrganization } = state;
@@ -72,7 +74,7 @@ const OrganizationMembers = () => {
                         <div key={index} className="text-center text-gray-500 dark:text-gray-400">
                             <img
                                 className="mx-auto mb-4 w-36 h-36 rounded-full"
-                                src="https://icons.veryicon.com/png/o/miscellaneous/two-color-webpage-small-icon/user-244.png"
+                                src={UserIcon}
                                 alt="Neil Avatar"
                             />
                             <p className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:">

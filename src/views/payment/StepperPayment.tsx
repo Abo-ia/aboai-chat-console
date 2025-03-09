@@ -34,7 +34,7 @@ const StepperPayment = () => {
                             alt="Logo"
                             className="h-10 w-auto"
                         />
-                        <span className="text-xl font-semibold text-gray-800">AboAI</span>
+                        <span className="text-xl font-semibold text-gray-800">Abo.AI</span>
                     </div>
                 </div>
             </header>

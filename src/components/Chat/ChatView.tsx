@@ -5,7 +5,7 @@ import ConversationsHistoryService from '@src/services/conversationsHistory.serv
 import { useOrganization } from '@src/context/OrganizationContext';
 
 import useWindowSize from '@src/hooks/useWindowSize';
-
+import UserIcon from '@src/assets/user-icon.png';
 import Sidebar from '@src/components/Sidebar/Sidebar';
 import LoadingComponent from '@src/components/LoadingComponent/LoadingComponent';
 import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
@@ -230,7 +230,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                         <div className="flex items-center space-x-2">
                                             <img
                                                 className="w-8 h-8 rounded-full"
-                                                src="https://cdn-icons-png.flaticon.com/512/2496/2496951.png"
+                                                src={UserIcon}
                                                 alt="User Avatar"
                                             />
                                             <span className="text-sm font-semibold text-custom-font-user">
@@ -256,7 +256,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                 alt="Assistant Avatar"
                                             />
                                             <span className="text-sm font-semibold text-custom-font-user">
-                                                AboAI
+                                                Abo.AI
                                             </span>
                                             <span className="text-sm font-normal text-gray-500">
                                                 {date}
