@@ -14,6 +14,8 @@ import SyncHistoryModal from '@src/components/Modals/SyncHistoryModal';
 import PromptSidebar from '@src/components/Prompts/PromptsSidebar';
 import SidebarIcons from '@src/components/Sidebar/SidebarIcons';
 
+import Logo from '@src/assets/logo.svg'
+
 type Message = {
     prompt: string;
     chat_response?: string;
@@ -227,32 +229,33 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                 <div key={index} className="flex flex-col text-sm">
                                     <div className="bg-custom-chat-bg p-4 rounded-lg space-y-3">
                                         {/* Mensaje del usuario */}
-                                        <div className="flex items-center space-x-2">
+                                        <div className="flex items-center space-x-2 justify-end">
+                                            <span className="text-sm font-normal text-gray-500">
+                                                {date}
+                                            </span>
+                                            <span className="text-sm font-semibold text-custom-font-user">
+                                                Tú
+                                            </span>
                                             <img
                                                 className="w-8 h-8 rounded-full"
                                                 src={UserIcon}
                                                 alt="User Avatar"
                                             />
-                                            <span className="text-sm font-semibold text-custom-font-user">
-                                                Tú
-                                            </span>
-                                            <span className="text-sm font-normal text-gray-500">
-                                                {date}
-                                            </span>
                                         </div>
-                                        <div className="bg-custom-light p-4 rounded-lg shadow-sm border border-gray-300">
-                                            <p className="text-gray-900 leading-relaxed">
+                                        <div className="text-right">
+                                            <p className="inline-block text-gray-900 leading-relaxed bg-custom-light border border-gray-300 p-4 rounded-lg shadow-sm">
                                                 {msg.query}
                                             </p>
+                                            <br />
+                                            <span className="text-sm text-gray-500 text-right">Enviado</span>
                                         </div>
 
-                                        <span className="text-sm text-gray-500">Enviado</span>
 
-                                        {/* Respuesta del asistente */}
+
                                         <div className="flex items-center space-x-2">
                                             <img
-                                                className="w-8 h-8 rounded-full"
-                                                src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png"
+                                                className="w-8 h-8"
+                                                src={Logo}
                                                 alt="Assistant Avatar"
                                             />
                                             <span className="text-sm font-semibold text-custom-font-user">
@@ -263,7 +266,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                             </span>
                                         </div>
                                         <div
-                                            className="bg-custom-light p-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 leading-relaxed prose prose-sm prose-a:text-blue-500 hover:prose-a:underline"
+                                            className="bg-custom-light p-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 leading-relaxed prose prose-sm prose-a:text-custom-accent hover:prose-a:underline"
                                             dangerouslySetInnerHTML={{ __html: msg.response }}
                                         />
 
@@ -308,7 +311,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                 sendMessage(textInput);
                                 setTextInput('');
                             }}
-                            className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300"
+                            className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-primary focus:outline-none focus:ring-2 focus:ring-custom-accent focus:ring-opacity-50 transition duration-300"
                         >
                             <span className="mr-2">Enviar</span>
                             <span className="transform rotate-45">
@@ -397,7 +400,7 @@ const ReferenceItem: React.FC<{ content: Reference; isOpen: boolean; onClick: ()
     return (
         <div className="mb-1">
             <p
-                className="flex items-center justify-between text-neutral-600 cursor-pointer hover:text-neutral-800 transition-colors duration-300 bg-neutral-100 px-4 py-2 rounded-lg mt-2 hover:bg-indigo-100 transition-all duration-300 text-sm font-semibold shadow-sm border border-indigo-300"
+                className="flex items-center justify-between text-neutral-600 cursor-pointer hover:text-neutral-800 transition-colors duration-300 bg-neutral-100 px-4 py-2 rounded-lg mt-2 hover:bg-custom-accent transition-all duration-300 text-sm font-semibold shadow-sm border hover:text-neutral-700"
                 onClick={onClick}
             >
                 Referencia Encontrada

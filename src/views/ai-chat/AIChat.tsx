@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '@src/context/AppContext';
 
 import useWindowSize from '@src/hooks/useWindowSize';
@@ -9,6 +9,10 @@ import ChatView from '@src/components/Chat/ChatView';
 const AIChat: React.FC = () => {
     const [activeView, setActiveView] = useState<string>('Inicio');
     const appContext = useContext(AppContext);
+
+    useEffect(() => {
+        document.title = 'Abo.AI - Chat';
+    }, [])
 
     return (
         <div className="flex h-screen">

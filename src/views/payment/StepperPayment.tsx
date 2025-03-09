@@ -1,16 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
 
 import AvailablePlans from './AvailablePlans';
 import PaymentForm from './PaymentForm';
 
+import Logo from '@src/assets/logo.svg'
+
 const StepperPayment = () => {
     const [currentStep, setCurrentStep] = useState(0);
+
+    const navigate = useNavigate();
 
     const steps = [
         { name: 'Planes disponibles', component: <AvailablePlans /> },
         { name: 'Confirma tu pago', component: <PaymentForm /> },
     ];
+
+    useEffect(() => {
+        document.title = 'Abo.AI - Suscripción';
+    }, [])
 
     const goNext = () => {
         if (currentStep < steps.length - 1) {
@@ -28,9 +37,11 @@ const StepperPayment = () => {
         <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg h-screen flex flex-col">
             <header className="sticky top-0 bg-white z-10 border-b pb-4 mb-6">
                 <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
+                    <div
+                        onClick={() => navigate('/')}
+                        className="flex items-center gap-2 cursor-pointer">
                         <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Assessment_brain_icon.png"
+                            src={Logo}
                             alt="Logo"
                             className="h-10 w-auto"
                         />
@@ -44,9 +55,8 @@ const StepperPayment = () => {
                     {steps.map((step, index) => (
                         <div key={index} className="flex items-center">
                             <div
-                                className={`w-8 h-8 flex items-center justify-center rounded-full font-semibold text-white transition-all ${
-                                    currentStep >= index ? 'bg-custom-primary' : 'bg-gray-300'
-                                }`}
+                                className={`w-8 h-8 flex items-center justify-center rounded-full font-semibold text-white transition-all ${currentStep >= index ? 'bg-custom-primary' : 'bg-gray-300'
+                                    }`}
                             >
                                 {currentStep > index ? <FaCheck size={16} /> : index + 1}
                             </div>

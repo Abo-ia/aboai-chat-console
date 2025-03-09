@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '@src/components/Storage/Sidebar';
 import Header from '@src/components/Storage/Header';
 import ChatView from '@src/components/Chat/ChatView';
@@ -6,6 +6,10 @@ import OrganizationWrapped from '@src/components/Organizations/OrganizationWrapp
 
 const OrganizationsView: React.FC = () => {
     const [activeView, setActiveView] = useState<string>('Inicio');
+
+    useEffect(() => {
+        document.title = 'Abo.AI - Organizaciones';
+    }, [])
 
     return (
         <div className="flex">

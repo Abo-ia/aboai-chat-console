@@ -51,12 +51,12 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     };
 
     return (
-        <div className="relative group block mb-1 text-custom-font-main hover:bg-custom-secondary hover:rounded hover:text-white transition-all">
+        <div className="relative group block mb-1 text-custom-font-main  hover:rounded transition-all">
             <div
-                className={`flex justify-between items-center cursor-pointer px-2 border-custom-base rounded-lg transition-all ${selected && 'bg-custom-primary text-white'}`}
+                className={`flex justify-between items-center cursor-pointer px-2 border-custom-base rounded-lg hover:bg-custom-secondary hover:text-white transition-all ${selected && 'bg-custom-primary text-white'}`}
                 onClick={handleClick}
             >
-                <div className="flex items-center gap-2 flex-grow overflow-hidden">
+                <div className="flex items-center  gap-2 flex-grow overflow-hidden">
                     {isFavorite && (
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                     <p className={`truncate pl-2`}>{conversationName}</p>
                 </div>
                 <span
-                    className={`text-3xl mb-2 flex-shrink-0 ${selected ? 'text-green-300' : 'text-gray-800 group-hover:text-green-300'}`}
+                    className={`text-3xl mb-2  ${selected ? 'text-green-300' : 'text-gray-800 group-hover:text-green-300'}`}
                     onClick={handleMenuToggle}
                 >
                     ...
@@ -78,10 +78,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             </div>
 
             {isMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 p-1.5">
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
                     <button
                         onClick={handleDeleteConversation}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm font-medium rounded-md transition-colors hover:bg-gray-100 focus:outline-none focus:bg-gray-100 active:bg-gray-200"
+                        className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm font-medium rounded-md hover:bg-custom-light transition-colors focus:outline-none focus:bg-gray-100 "
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +101,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                     </button>
                     <button
                         onClick={handleMarkFavoriteToggle}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm font-medium rounded-md transition-colors hover:bg-gray-100 focus:outline-none focus:bg-gray-100 active:bg-gray-200"
+                        className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm font-medium rounded-md hover:bg-custom-light transition-colors focus:outline-none focus:bg-gray-100 active:bg-gray-200"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

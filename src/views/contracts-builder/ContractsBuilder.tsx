@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { AppContext } from '@src/context/AppContext';
 import Sidebar from '@src/components/Storage/Sidebar';
@@ -8,6 +8,10 @@ import LegalSectionBody from '@src/components/LegalSection/LegalSectionBody';
 const ContractsBuilder: React.FC = () => {
     const [activeView, setActiveView] = useState<string>('Inicio');
     const appContext = useContext(AppContext);
+
+    useEffect(() => {
+        document.title = 'Abo.AI - Contratos';
+    }, [])
 
     return (
         <div className="flex">

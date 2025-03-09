@@ -15,6 +15,9 @@ import {
     AWS_SECRET_ACCESS_KEY,
 } from '@src/config/env';
 
+import { MdOutlinePayment } from "react-icons/md";
+
+
 const menuItems = [
     { icon: <IoChatboxOutline />, label: 'Chat', path: '/' },
     { icon: <FiHardDrive />, label: 'Mi Unidad', path: '/almacenamiento' },
@@ -22,6 +25,7 @@ const menuItems = [
     { icon: <RiOrganizationChart />, label: 'Organizaciones', path: '/organizaciones' },
     { icon: <IoCloudOutline />, label: 'Conectividad', path: '/conectividad' },
     { icon: <FiTrash />, label: 'Papelera', path: '/almacenamiento' },
+    { icon: <MdOutlinePayment />, label: 'Pagos', path: '/pagos' },
 ];
 
 interface SidebarProps {
@@ -94,7 +98,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     <img
                         src={Logo}
                         alt="Harvey"
-                        className="rounded-full shadow-lg object-cover w-12"
+                        className="object-cover w-12"
                     />
                     {isSidebarOpen && <h1 className="font-semibold text-sm text-center">Abo.AI</h1>}
                 </div>

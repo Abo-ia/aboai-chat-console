@@ -47,6 +47,10 @@ const CloudConnectivity: React.FC = () => {
     const [isConnected, setIsConnected] = useState<boolean>(false);
 
     useEffect(() => {
+        document.title = 'Abo.AI - Conectividad en la nube';
+    }, [])
+
+    useEffect(() => {
         const initClient = () => {
             gapi.client
                 .init({
@@ -313,11 +317,11 @@ const CloudConnectivity: React.FC = () => {
                                                                     <span>{file.name}</span>
                                                                     {file.mimeType ===
                                                                         'application/vnd.google-apps.folder' && (
-                                                                        <FontAwesomeIcon
-                                                                            icon={faFolderOpen}
-                                                                            className="text-blue-500"
-                                                                        />
-                                                                    )}
+                                                                            <FontAwesomeIcon
+                                                                                icon={faFolderOpen}
+                                                                                className="text-blue-500"
+                                                                            />
+                                                                        )}
                                                                 </li>
                                                             ))}
                                                         </ul>

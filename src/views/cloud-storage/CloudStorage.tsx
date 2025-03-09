@@ -186,6 +186,10 @@ const CloudStorage: React.FC = () => {
         fetchFilesFromS3();
     }, []);
 
+    useEffect(() => {
+        document.title = 'Abo.AI - Almacenamiento';
+    }, [])
+
     const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2);
 
     if (activeView === 'Chat') {
