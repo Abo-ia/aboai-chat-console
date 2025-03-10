@@ -138,7 +138,7 @@ const OrganizationWrapped: React.FC = () => {
                         <div className="flex items-center space-x-4 mt-4 justify-between">
                             <div className="flex items-center space-x-4">
                                 <p
-                                    className={`flex items-center justify-center w-14 h-14 bg-custom-secondary text-white text-2xl font-semibold rounded-lg border-2 border-custom-primary`}
+                                    className={`flex items-center justify-center w-14 h-14 bg-custom-secondary text-white text-2xl font-semibold rounded-lg `}
                                 >
                                     {activeOrganization?.name?.charAt(0).toUpperCase() || ''}
                                 </p>

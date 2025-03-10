@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { FiHardDrive, FiTrash } from 'react-icons/fi';
 import { IoChatboxOutline, IoCloudOutline } from 'react-icons/io5';
 import { GoLaw } from 'react-icons/go';
 import { RiOrganizationChart } from 'react-icons/ri';
@@ -20,11 +19,9 @@ import { MdOutlinePayment } from "react-icons/md";
 
 const menuItems = [
     { icon: <IoChatboxOutline />, label: 'Chat', path: '/' },
-    { icon: <FiHardDrive />, label: 'Mi Unidad', path: '/almacenamiento' },
     { icon: <GoLaw />, label: 'Legal', path: '/contratos-y-acuerdos' },
     { icon: <RiOrganizationChart />, label: 'Organizaciones', path: '/organizaciones' },
     { icon: <IoCloudOutline />, label: 'Conectividad', path: '/conectividad' },
-    { icon: <FiTrash />, label: 'Papelera', path: '/almacenamiento' },
     { icon: <MdOutlinePayment />, label: 'Pagos', path: '/pagos' },
 ];
 
@@ -106,20 +103,15 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 <button
                     className="flex items-center justify-center gap-3 p-4 mb-3 bg-custom-primary text-white rounded-lg shadow-lg transition-transform duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     onClick={() => {
-                        if (pathname !== '/') {
-                            setShowModal(true);
-                        } else {
-                            window.location.reload();
-                        }
+                        window.location.href = '/';
                     }}
-                    aria-label={pathname === '/' ? 'Nuevo chat' : 'Nuevo archivo'}
                 >
                     <span className="flex items-center justify-center w-8 h-8 bg-white text-custom-primary rounded-full">
                         +
                     </span>
                     {isSidebarOpen && (
                         <span className="font-medium text-sm tracking-wide flex items-center justify-center">
-                            {pathname === '/' ? 'Nuevo chat' : 'Nuevo archivo'}
+                            Nuevo chat
                         </span>
                     )}
                 </button>
@@ -129,9 +121,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         <li
                             onClick={() => navigate(item.path)}
                             key={index}
-                            className={`cursor-pointer hover:bg-custom-accent hover:text-gray-400 text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${
-                                props.activeView === item.label ? 'bg-[#e9eaee]' : ''
-                            }`}
+                            className={`cursor-pointer hover:bg-custom-accent hover:text-gray-400 text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
+                                }`}
                         >
                             <div className="flex items-center justify-center w-full">
                                 <span className="text-xl flex items-center justify-center w-8 h-8">
@@ -176,6 +167,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };

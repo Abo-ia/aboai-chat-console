@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { components, formFields } from '@src/config/authConfig';
-import CloudStorage from './views/cloud-storage/CloudStorage';
 import StepperPayment from './views/payment/StepperPayment';
 import ContractsBuilder from './views/contracts-builder/ContractsBuilder';
 import AIChat from './views/ai-chat/AIChat';
@@ -33,7 +32,6 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
                     <Route path="/conectividad" element={<ProtectedRoute><CloudConnectivity /></ProtectedRoute>} />
-                    <Route path="/almacenamiento" element={<ProtectedRoute><CloudStorage /></ProtectedRoute>} />
                     <Route path="/contratos-y-acuerdos" element={<ProtectedRoute><ContractsBuilder /></ProtectedRoute>} />
                     <Route path="/pagos" element={<ProtectedRoute><StepperPayment /></ProtectedRoute>} />
                     <Route path="/organizaciones" element={<OrganizationsView />} />
