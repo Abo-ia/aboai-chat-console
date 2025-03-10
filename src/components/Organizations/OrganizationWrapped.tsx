@@ -128,7 +128,7 @@ const OrganizationWrapped: React.FC = () => {
                         </p>
                         <button
                             onClick={handleOpenModal}
-                            className="mt-6 flex items-center gap-2  text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-105"
+                            className="mt-6 bg-custom-primary flex items-center gap-2  text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-105"
                         >
                             <FaPlus /> Crear Organización
                         </button>

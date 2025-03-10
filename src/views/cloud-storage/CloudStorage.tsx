@@ -29,6 +29,9 @@ import {
 
 import ChatView from '@src/components/Chat/ChatView';
 
+
+import { useOrganization } from '@src/context/OrganizationContext';
+
 const organizeFilesByFolders = (items: any[]) => {
     const folderStructure: {
         folder_path: string;
@@ -85,6 +88,9 @@ const CloudStorage: React.FC = () => {
 
     const appContext = useContext(AppContext);
 
+    const { state }  = useOrganization();
+    const { activeOrganization } = state;
+
     const s3Client = new S3Client({
         region: AWS_REGION,
         credentials: {
@@ -97,7 +103,7 @@ const CloudStorage: React.FC = () => {
         setIsLoading(true);
         const command = new ListObjectsV2Command({
             Bucket: AWS_BUCKET_NAME,
-            Prefix: 'fe6a5c45-69d8-4470-8603-b7b6340132e8',
+            Prefix: activeOrganization?.organization_id
         });
 
         try {
