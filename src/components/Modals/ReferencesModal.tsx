@@ -21,7 +21,7 @@ const Modal: React.FC<{ content: any[]; onClose: () => void }> = ({ content, onC
 
 const ReferenceItem: React.FC<{ content: any }> = ({ content }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const fileName = content.location.s3Location.uri.split('s3://iabogado-bucket/')[1];
+    const fileName = content.location.s3Location.uri.split('s3://dev-aboaiv1-bucket/')[1];
 
     return (
         <div className="mb-1">
