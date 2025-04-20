@@ -113,19 +113,18 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
     };
 
     return (
-        <div className="px-4 py-2 mb-4">
-            <div className="flex justify-between items-center gap-10 ml-5 mb-4">
+        <div className="bg-white shadow-lg rounded-lg px-4">
+            <div className="flex justify-between items-center gap-10 mb-4">
                 <h1 className="text-lg font-semibold">Preguntas Frecuentes</h1>
                 <button
                     onClick={openModal}
-                    className="px-3 py-1.5 border rounded-md transition hover:bg-gray-100"
+                    className="py-1.5 px-3 rounded-md transition hover:bg-gray-100"
                 >
                     + Nuevo
                 </button>
             </div>
 
-            {/* Contenedor de Categorías */}
-            <div className="border-l border-gray-200 py-6">
+            <div className="py-6">
                 <div className="px-4 mb-2 h-[65vh] overflow-y-auto space-y-4">
                     {promptCategories.length > 0 &&
                         promptCategories.map((category) => (
@@ -137,7 +136,6 @@ const PromptSidebar: React.FC<ChatSidebarProps> = (props) => {
                                     <span className="font-medium">{category.category}</span>
                                 </div>
 
-                                {/* Lista de Prompts */}
                                 {category.isOpen && (
                                     <div className="pl-4 space-y-2 mt-2">
                                         {category.prompts.map((prompt) => (

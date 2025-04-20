@@ -12,14 +12,22 @@ import { useOrganization } from './context/OrganizationContext';
 import AuthWrapper from './components/Auth/AuthWrapper';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { state } = useOrganization();
+    const { state, isLoading } = useOrganization();
 
-    if (state.organizations.length === 0) {
+    console.log(isLoading)
+
+    if (isLoading) {
+        return <div>Cargando organizaciones...</div>;
+    }
+
+    if (!isLoading && state.organizations.length === 0) {
+        console.log('No organizations found, redirecting to organizations page');
         return <Navigate to="/organizaciones" replace />;
     }
 
     return <>{children}</>;
 };
+
 
 const App: React.FC = () => {
     return (

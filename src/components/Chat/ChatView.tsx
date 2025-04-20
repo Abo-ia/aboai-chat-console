@@ -8,40 +8,18 @@ import useWindowSize from '@src/hooks/useWindowSize';
 import UserIcon from '@src/assets/user-icon.png';
 import Sidebar from '@src/components/Sidebar/Sidebar';
 import LoadingComponent from '@src/components/LoadingComponent/LoadingComponent';
-import GoogleDriveModal from '@src/components/Modals/GoogleDriveModal';
-import UploadFileModal from '@src/components/Modals/UploadFilesModal';
-import SyncHistoryModal from '@src/components/Modals/SyncHistoryModal';
 import PromptSidebar from '@src/components/Prompts/PromptsSidebar';
-import SidebarIcons from '@src/components/Sidebar/SidebarIcons';
 
 import Logo from '@src/assets/logo.svg'
-
-type Message = {
-    prompt: string;
-    chat_response?: string;
-    timestamp: string;
-};
-
-interface Reference {
-    content: {
-        text: string;
-    };
-    location: {
-        s3Location: {
-            uri: string;
-        };
-        type: string;
-    };
-    metadata: {
-        [key: string]: string;
-    };
-}
 
 type ChatDashboardProps = {
     conversation: any;
 };
 
 const ChatView: React.FC<ChatDashboardProps> = () => {
+    const sidebarRef = useRef<SidebarHandle>(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
     const { width } = useWindowSize();
     const [isSidebarOpen, setIsSidebarOpen] = useState(width > 768);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -153,10 +131,15 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         }
     };
 
+    const handleProcessPrompt = (prompt: string) => {
+        setTextInput(prompt);
+    }
+
     const sendMessage = async (message: string) => {
         setIsLoading(true);
         setActiveQuestion(textInput);
         setDocumentReferences([]);
+
         try {
             const session = await fetchAuthSession();
             const idToken = session?.tokens?.idToken?.toString() as string;
@@ -170,6 +153,11 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 const createBody = JSON.parse(createResponse.body);
                 currentConversationId = createBody.conversationId;
                 setConversationId(currentConversationId);
+
+                if (sidebarRef.current) {
+                    sidebarRef.current.refreshHistory(userId);
+                }
+
                 if (!currentConversationId) {
                     throw new Error('Failed to create conversation.');
                 }
@@ -213,139 +201,131 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
         setIsModalOpen(false);
     };
 
-    const handleChangeChatHistory = () => setIsChatHistoryOpen(!isChatHistoryOpen);
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight + 10}px`;
+        }
+    }, [textInput]);
 
     return (
-        <div>
-            <SidebarIcons openChatHistory={handleChangeChatHistory} />
-            <div className="font-sans flex">
-                <Sidebar loadConversation={loadConversation} isSidebarOpen={isSidebarOpen} />
-
-                <div className="lg:w-1/2 mx-5 h-[88.8vh] flex flex-col">
-                    <div className="flex-auto h-full overflow-y-auto space-y-4">
-                        {messages.map((msg, index) => {
-                            const date = new Date(msg.timestamp).toLocaleTimeString();
-                            return (
-                                <div key={index} className="flex flex-col text-sm">
-                                    <div className="bg-custom-chat-bg p-4 rounded-lg space-y-3">
-                                        {/* Mensaje del usuario */}
-                                        <div className="flex items-center space-x-2 justify-end">
-                                            <span className="text-sm font-normal text-gray-500">
-                                                {date}
-                                            </span>
-                                            <span className="text-sm font-semibold text-custom-font-user">
-                                                Tú
-                                            </span>
-                                            <img
-                                                className="w-8 h-8 rounded-full"
-                                                src={UserIcon}
-                                                alt="User Avatar"
-                                            />
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="inline-block text-gray-900 leading-relaxed bg-custom-light border border-gray-300 p-4 rounded-lg shadow-sm">
-                                                {msg.query}
-                                            </p>
-                                            <br />
-                                            <span className="text-sm text-gray-500 text-right">Enviado</span>
-                                        </div>
+        <div className="font-sans grid grid-cols-4 h-screen border-t border-bg-custom-secondary pt-4 shadow-sm">
+            <div className="col-span-1">
+                <Sidebar
+                    ref={sidebarRef}
+                    loadConversation={loadConversation}
+                    isSidebarOpen={isSidebarOpen}
+                />
+            </div>
 
 
-
-                                        <div className="flex items-center space-x-2">
-                                            <img
-                                                className="w-8 h-8"
-                                                src={Logo}
-                                                alt="Assistant Avatar"
-                                            />
-                                            <span className="text-sm font-semibold text-custom-font-user">
-                                                [TBD]
-                                            </span>
-                                            <span className="text-sm font-normal text-gray-500">
-                                                {date}
-                                            </span>
-                                        </div>
-                                        <div
-                                            className="bg-custom-light p-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 leading-relaxed prose prose-sm prose-a:text-custom-accent hover:prose-a:underline"
-                                            dangerouslySetInnerHTML={{ __html: msg.response }}
-                                        />
-
-                                        <span className="text-sm text-gray-500">Entregado</span>
-                                        <br />
-
-                                        {msg.references?.length > 0 && (
-                                            <button
-                                                className="px-3 py-2 rounded bg-custom-primary text-white text-sm font-semibold transition-colors duration-300"
-                                                onClick={() =>
-                                                    showReferences(msg.references, msg.query)
-                                                }
-                                            >
-                                                Mostrar referencias.
-                                            </button>
-                                        )}
+            <div id="chat-console" className="col-span-2 flex flex-col h-[90vh] overflow-hidden">
+                <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4 space-y-4">
+                    {messages.map((msg, index) => {
+                        const date = new Date(msg.timestamp).toLocaleTimeString();
+                        return (
+                            <div key={index} className="flex flex-col text-sm">
+                                <div className="bg-custom-chat-bg p-4 rounded-lg space-y-3">
+                                    {/* Usuario */}
+                                    <div className="flex items-center space-x-2 justify-end">
+                                        <span className="text-sm font-normal text-gray-500">{date}</span>
+                                        <span className="text-sm font-semibold text-custom-font-user">Tú</span>
+                                        <img className="w-8 h-8 rounded-full" src={UserIcon} alt="User Avatar" />
                                     </div>
-                                </div>
-                            );
-                        })}
-                        <div ref={messagesEndRef}></div>
-                        {isLoading && <LoadingComponent />}
-                    </div>
+                                    <div className="text-right">
+                                        <p className="inline-block text-gray-900 leading-relaxed bg-custom-light border border-gray-300 p-4 rounded-lg shadow-sm">
+                                            {msg.query}
+                                        </p>
+                                        <br />
+                                        <span className="text-sm text-gray-500 text-right">Enviado</span>
+                                    </div>
 
-                    {/* Input y botón de enviar */}
-                    <div className="flex items-center p-4 gap-4">
-                        <textarea
-                            placeholder="Escribe un mensaje..."
-                            value={textInput}
-                            onChange={(e) => setTextInput(e.target.value)}
-                            onKeyPress={(e) => {
-                                if (e.key === 'Enter' && !e.shiftKey) {
-                                    e.preventDefault();
-                                    sendMessage(textInput);
-                                    setTextInput('');
-                                }
-                            }}
-                            className="px-4 py-2 w-full h-20 rounded-lg border border-bg-custom-secondary focus:outline-none focus:ring-2 focus:ring-[#3e4b56] focus:ring-opacity-50 transition duration-300"
-                        />
-                        <button
-                            onClick={() => {
-                                sendMessage(textInput);
-                                setTextInput('');
-                            }}
-                            className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-primary focus:outline-none focus:ring-2 focus:ring-custom-accent focus:ring-opacity-50 transition duration-300"
-                        >
-                            <span className="mr-2">Enviar</span>
-                            <span className="transform rotate-45">
-                                <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                    ></path>
-                                </svg>
-                            </span>
-                        </button>
-                    </div>
+                                    {/* Asistente */}
+                                    <div className="flex items-center space-x-2">
+                                        <img className="w-8 h-8" src={Logo} alt="Assistant Avatar" />
+                                        <span className="text-sm font-semibold text-custom-font-user">[TBD]</span>
+                                        <span className="text-sm font-normal text-gray-500">{date}</span>
+                                    </div>
+                                    <div
+                                        className="bg-custom-light p-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 leading-relaxed prose prose-sm prose-a:text-custom-accent hover:prose-a:underline"
+                                        dangerouslySetInnerHTML={{ __html: msg.response }}
+                                    />
+                                    <span className="text-sm text-gray-500">Entregado</span>
+                                    <br />
+                                    {msg.references?.length > 0 && (
+                                        <button
+                                            className="px-3 py-2 rounded bg-custom-primary text-white text-sm font-semibold transition-colors duration-300"
+                                            onClick={() => showReferences(msg.references, msg.query)}
+                                        >
+                                            Mostrar referencias.
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
+                    <div ref={messagesEndRef}></div>
+                    {isLoading && <LoadingComponent />}
                 </div>
 
-                {isModalOpen && (
-                    <ReferencesModal content={documentReferences} onClose={closeModal} />
-                )}
-
-                {!isChatHistoryOpen && width > 541 ? (
-                    <PromptSidebar
-                        loadConversation={loadConversation}
-                        isSidebarOpen={isSidebarOpen}
-                        handleQueyChange={sendMessage}
+                {/* Input fijo al fondo */}
+                <div
+                    id="input-container"
+                    className="bg-white border-t border-bg-custom-secondary p-4 flex gap-4"
+                >
+                    <textarea
+                        ref={textareaRef}
+                        placeholder="Escribe un mensaje..."
+                        value={textInput}
+                        onChange={(e) => setTextInput(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                sendMessage(textInput);
+                                setTextInput('');
+                            }
+                        }}
+                        className="px-4 py-2 w-full max-h-40 rounded-lg border border-bg-custom-secondary focus:outline-none focus:ring-2 focus:ring-[#3e4b56] focus:ring-opacity-50 transition duration-300 resize-none overflow-hidden"
                     />
-                ) : null}
+
+                    <button
+                        onClick={() => {
+                            sendMessage(textInput);
+                            setTextInput('');
+                        }}
+                        className="flex items-center justify-center text-white h-10 px-4 rounded-lg bg-custom-primary focus:outline-none focus:ring-2 focus:ring-custom-accent focus:ring-opacity-50 transition duration-300"
+                    >
+                        <span className="mr-2">Enviar</span>
+                        <span className="transform rotate-45">
+                            <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                ></path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
             </div>
+
+            <PromptSidebar
+                loadConversation={loadConversation}
+                isSidebarOpen={isSidebarOpen}
+                handleQueyChange={handleProcessPrompt}
+            />
+
+            {isModalOpen && (
+                <ReferencesModal content={documentReferences} onClose={closeModal} />
+            )}
         </div>
     );
 };

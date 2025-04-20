@@ -1,20 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import SidebarIcons from '@src/components/Sidebar/SidebarIcons';
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import ConversationsHistoryService from '@src/services/conversationsHistory.service';
 import { fetchAuthSession } from 'aws-amplify/auth';
-
-import logo from '@src/assets/Harvey_logo.png';
-
-interface SidebarItemProps {
-    conversationId: string;
-    conversationName: string;
-    getConversation: (id: string) => void;
-    selected: boolean;
-    setSelected: (id: string) => void;
-    onDeleteConversation: (id: string) => void;
-    onMarkFavorite: (id: string, isFavorite: boolean) => void;
-    isFavorite: boolean;
-}
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
     conversationId,
@@ -120,173 +106,169 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     );
 };
 
-type ChatSidebarProps = {
-    loadConversation: (conversationId: string) => void;
-    isSidebarOpen: boolean;
-};
 
-interface MenuItem {
-    conversationId: string;
-    conversation_name: string;
-    isFavorite: boolean;
-}
+const Sidebar = forwardRef<SidebarHandle, ChatSidebarProps>(
+    ({ loadConversation }, ref) => {
+        const [selectedId, setSelectedId] = useState<string>('');
+        const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+        const [favoriteItems, setFavoriteItems] = useState<MenuItem[]>([]);
+        const [, setUserId] = useState('');
 
-const Sidebar: React.FC<ChatSidebarProps> = ({ loadConversation }) => {
-    const [selectedId, setSelectedId] = useState<string>('');
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-    const [favoriteItems, setFavoriteItems] = useState<MenuItem[]>([]);
-    const [, setUserId] = useState('');
-
-    useEffect(() => {
-        const getUserId = () => {
-            for (const key in localStorage) {
-                if (
-                    key.startsWith('CognitoIdentityServiceProvider') &&
-                    key.endsWith('LastAuthUser')
-                ) {
-                    return localStorage.getItem(key);
+        useEffect(() => {
+            const getUserId = () => {
+                for (const key in localStorage) {
+                    if (
+                        key.startsWith('CognitoIdentityServiceProvider') &&
+                        key.endsWith('LastAuthUser')
+                    ) {
+                        return localStorage.getItem(key);
+                    }
                 }
+                return null;
+            };
+
+            const storedUserId = getUserId();
+            if (storedUserId) {
+                setUserId(storedUserId);
+                getConversationsHistory(storedUserId);
+            } else {
+                console.error('User ID not found in local storage.');
             }
-            return null;
+        }, []);
+
+        // ✅ Exponer la función refreshHistory
+        useImperativeHandle(ref, () => ({
+            refreshHistory: (customUserId?: string) => {
+                const uid =
+                    customUserId ||
+                    (() => {
+                        for (const key in localStorage) {
+                            if (
+                                key.startsWith('CognitoIdentityServiceProvider') &&
+                                key.endsWith('LastAuthUser')
+                            ) {
+                                return localStorage.getItem(key);
+                            }
+                        }
+                        return null;
+                    })();
+
+                if (uid) {
+                    getConversationsHistory(uid);
+                }
+            },
+        }));
+
+        const getConversation = async (conversationId: string) => {
+            loadConversation(conversationId);
         };
 
-        const storedUserId = getUserId();
-        if (storedUserId) {
-            setUserId(storedUserId);
-            getConversationsHistory(storedUserId);
-        } else {
-            console.error('User ID not found in local storage.');
-        }
-    }, []);
+        const getConversationsHistory = async (userId: string) => {
+            try {
+                const session = await fetchAuthSession();
+                const idToken = session?.tokens?.idToken?.toString() as string;
 
-    const getConversation = async (conversationId: string) => {
-        loadConversation(conversationId);
-    };
+                const messageService = new ConversationsHistoryService(idToken);
+                const response = await messageService.getConversationsHistory(userId);
 
-    const getConversationsHistory = async (userId: string) => {
-        try {
-            const session = await fetchAuthSession();
-            const idToken = session?.tokens?.idToken?.toString() as string;
-
-            const messageService = new ConversationsHistoryService(idToken);
-            const response = await messageService.getConversationsHistory(userId);
-
-            let conversations = [];
-            if (response && response.body) {
-                const responseBody = JSON.parse(response.body);
-                conversations = responseBody;
-            }
-
-            const sortedData = conversations.sort(
-                (
-                    a: { timestamp: string | number | Date },
-                    b: { timestamp: string | number | Date },
-                ) => {
-                    const timestampA = new Date(a.timestamp).getTime();
-                    const timestampB = new Date(b.timestamp).getTime();
-                    return timestampB - timestampA;
-                },
-            );
-
-            const favorites = sortedData.filter((item: { isFavorite: boolean }) => item.isFavorite);
-            const nonFavorites = sortedData.filter(
-                (item: { isFavorite: boolean }) => !item.isFavorite,
-            );
-
-            setFavoriteItems(
-                favorites.map((item: { conversationId: string; conversation_name: string }) => ({
-                    conversationId: item.conversationId,
-                    conversation_name: item.conversation_name,
-                    isFavorite: true,
-                })),
-            );
-
-            setMenuItems(
-                nonFavorites.map((item: { conversationId: string; conversation_name: string }) => ({
-                    conversationId: item.conversationId,
-                    conversation_name: item.conversation_name,
-                    isFavorite: false,
-                })),
-            );
-        } catch (error) {
-            console.error('Sidebar: Error getting conversations history:', error);
-        }
-    };
-
-    const handleDeleteConversation = (conversationId: string) => {
-        setMenuItems(menuItems.filter((item) => item.conversationId !== conversationId));
-        setFavoriteItems(favoriteItems.filter((item) => item.conversationId !== conversationId));
-    };
-
-    const handleMarkFavorite = (conversationId: string, isFavorite: boolean) => {
-        if (isFavorite) {
-            setFavoriteItems(
-                favoriteItems.filter((item) => item.conversationId !== conversationId),
-            );
-            setMenuItems((prevItems) => [
-                ...prevItems,
-                {
-                    conversationId,
-                    conversation_name:
-                        favoriteItems.find((item) => item.conversationId === conversationId)
-                            ?.conversation_name || '',
-                    isFavorite: false,
-                },
-            ]);
-        } else {
-            setMenuItems((prevItems) => {
-                const item = prevItems.find((item) => item.conversationId === conversationId);
-                if (item) {
-                    item.isFavorite = true;
-                    setFavoriteItems((prevFavorites) => [...prevFavorites, item]);
-                    return prevItems.filter((item) => item.conversationId !== conversationId);
+                let conversations = [];
+                if (response && response.body) {
+                    const responseBody = JSON.parse(response.body);
+                    conversations = responseBody;
                 }
-                return prevItems;
-            });
-        }
-    };
 
-    return (
-        <React.Fragment>
-            <div
-                className={`max-w-[20%] pt-6 transform border-r transition-transform duration-300`}
-            >
-                <div className="px-4 mb-2 text-gray-700 flex justify-between items-center">
-                    <div className="text-custom-font-main">Apps</div>
-                    <div>
-                        <svg
-                            className="fill-current h-4 w-4 opacity-50"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                        >
-                            <path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
-                        </svg>
-                    </div>
-                </div>
+                const sortedData = conversations.sort(
+                    (a: { timestamp: string | number | Date }, b: { timestamp: string | number | Date }) => {
+                        return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+                    }
+                );
 
-                <div className="px-4">
-                    <div className="text-custom-font-main mb-5 mt-3 font-semibold">
-                        Historial de Chats
+                const favorites = sortedData.filter((item: { isFavorite: boolean }) => item.isFavorite);
+                const nonFavorites = sortedData.filter((item: { isFavorite: boolean }) => !item.isFavorite);
+
+                setFavoriteItems(
+                    favorites.map((item: { conversationId: string; conversation_name: string }) => ({
+                        conversationId: item.conversationId,
+                        conversation_name: item.conversation_name,
+                        isFavorite: true,
+                    }))
+                );
+
+                setMenuItems(
+                    nonFavorites.map((item: { conversationId: string; conversation_name: string }) => ({
+                        conversationId: item.conversationId,
+                        conversation_name: item.conversation_name,
+                        isFavorite: false,
+                    }))
+                );
+            } catch (error) {
+                console.error('Sidebar: Error getting conversations history:', error);
+            }
+        };
+
+        const handleDeleteConversation = (conversationId: string) => {
+            setMenuItems((prev) => prev.filter((item) => item.conversationId !== conversationId));
+            setFavoriteItems((prev) => prev.filter((item) => item.conversationId !== conversationId));
+        };
+
+        const handleMarkFavorite = (conversationId: string, isFavorite: boolean) => {
+            if (isFavorite) {
+                setFavoriteItems((prev) => prev.filter((item) => item.conversationId !== conversationId));
+                setMenuItems((prev) => [
+                    ...prev,
+                    {
+                        conversationId,
+                        conversation_name:
+                            favoriteItems.find((item) => item.conversationId === conversationId)
+                                ?.conversation_name || '',
+                        isFavorite: false,
+                    },
+                ]);
+            } else {
+                setMenuItems((prevItems) => {
+                    const item = prevItems.find((item) => item.conversationId === conversationId);
+                    if (item) {
+                        item.isFavorite = true;
+                        setFavoriteItems((prevFavorites) => [...prevFavorites, item]);
+                        return prevItems.filter((item) => item.conversationId !== conversationId);
+                    }
+                    return prevItems;
+                });
+            }
+        };
+
+        return (
+            <div className='shadow-lg bg-white rounded-lg w-full h-full'>
+                <div className="h-full flex flex-col overflow-y-auto w-[90%] mx-auto">
+                    <div className="text-gray-700 flex justify-between items-center">
+                        <div className="text-custom-font-main">Apps</div>
                     </div>
-                    <div className="overflow-y-auto h-[55vh]">
-                        {menuItems.map((item) => (
-                            <SidebarItem
-                                key={item.conversationId}
-                                conversationId={item.conversationId}
-                                conversationName={item.conversation_name}
-                                getConversation={getConversation}
-                                selected={selectedId === item.conversationId}
-                                setSelected={setSelectedId}
-                                onDeleteConversation={handleDeleteConversation}
-                                onMarkFavorite={handleMarkFavorite}
-                                isFavorite={item.isFavorite}
-                            />
-                        ))}
+
+                    <div className="">
+                        <div className="text-custom-font-main my-5 font-semibold">
+                            Historial de Chats
+                        </div>
+                        <div>
+                            {menuItems.map((item) => (
+                                <SidebarItem
+                                    key={item.conversationId}
+                                    conversationId={item.conversationId}
+                                    conversationName={item.conversation_name}
+                                    getConversation={getConversation}
+                                    selected={selectedId === item.conversationId}
+                                    setSelected={setSelectedId}
+                                    onDeleteConversation={handleDeleteConversation}
+                                    onMarkFavorite={handleMarkFavorite}
+                                    isFavorite={item.isFavorite}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
-        </React.Fragment>
-    );
-};
+
+        );
+    }
+);
 
 export default Sidebar;

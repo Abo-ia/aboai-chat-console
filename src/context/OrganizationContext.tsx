@@ -47,6 +47,7 @@ const organizationReducer = (
 const OrganizationContext = createContext<{
     state: OrganizationState;
     dispatch: React.Dispatch<OrganizationAction>;
+    isLoading: boolean;
     setActiveOrganization: (organization: Organization) => void;
     createOrganization: (
         organization_name: string,
@@ -69,6 +70,7 @@ const OrganizationContext = createContext<{
 }>({
     state: initialState,
     dispatch: () => null,
+    isLoading: true,
     setActiveOrganization: () => {},
     createOrganization: async () => {},
     inviteUserToOrganization: async () => {},
@@ -96,10 +98,12 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
                 dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: foundOrganization });
             } else if (organizations.length > 0) {
                 dispatch({ type: 'SET_ACTIVE_ORGANIZATION', payload: organizations[0] });
-                localStorage.setItem('activeOrganization', organizations[0]);
+                localStorage.setItem('activeOrganization', JSON.stringify(organizations[0]));
             }
         } catch (error) {
             console.error('Error fetching organizations:', error);
+        } finally {
+            setIsLoading(false); // 👈 Ahora se desactiva solo después de consultar las organizaciones
         }
     };
 
@@ -131,8 +135,6 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         const idToken = localStorage.getItem('idToken') || '';
         const service = new OrganizationsService(idToken);
 
-        console.log(authEmail, authUserId);
-
         try {
             const newOrganization = await service.createOrganization(
                 organization_name,
@@ -151,8 +153,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
             );
 
             dispatch({ type: 'CREATE_ORGANIZATION', payload: newOrganization });
-
-            localStorage.setItem('activeOrganization', newOrganization);
+            localStorage.setItem('activeOrganization', JSON.stringify(newOrganization));
 
             window.location.reload();
         } catch (error) {
@@ -186,8 +187,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
                 }
             } catch (err) {
                 console.error('Error al obtener atributos del usuario:', err);
-            } finally {
-                setIsLoading(false);
+                setIsLoading(false); // En caso de fallo también terminamos la carga
             }
         };
         fetchAttributes();
@@ -204,6 +204,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
             value={{
                 state,
                 dispatch,
+                isLoading,
                 setActiveOrganization,
                 createOrganization,
                 inviteUserToOrganization,
