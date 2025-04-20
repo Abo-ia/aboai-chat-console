@@ -39,7 +39,7 @@ const GoogleDriveComponent: React.FC = () => {
     const [isConnected, setIsConnected] = useState<boolean>(false);
 
     useEffect(() => {
-        document.title = 'Abo.AI - Conectividad en la nube';
+        document.title = '[TBD] - Conectividad en la nube';
     }, [])
 
     useEffect(() => {

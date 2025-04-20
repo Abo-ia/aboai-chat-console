@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Authenticator } from '@aws-amplify/ui-react';
-import { components, formFields } from '@src/config/authConfig';
 import StepperPayment from './views/payment/StepperPayment';
 import ContractsBuilder from './views/contracts-builder/ContractsBuilder';
 import AIChat from './views/ai-chat/AIChat';
@@ -10,6 +9,7 @@ import CloudConnectivity from './views/connectivity/CloudConnectivity';
 
 import '@aws-amplify/ui-react/styles.css';
 import { useOrganization } from './context/OrganizationContext';
+import AuthWrapper from './components/Auth/AuthWrapper';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { state } = useOrganization();
@@ -23,11 +23,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 const App: React.FC = () => {
     return (
-        <Authenticator
-            components={components}
-            formFields={formFields}
-            className="flex justify-center items-center h-screen"
-        >
+        <AuthWrapper>
             <Router>
                 <Routes>
                     <Route path="/" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
@@ -37,7 +33,7 @@ const App: React.FC = () => {
                     <Route path="/organizaciones" element={<OrganizationsView />} />
                 </Routes>
             </Router>
-        </Authenticator>
+        </AuthWrapper>
     );
 };
 

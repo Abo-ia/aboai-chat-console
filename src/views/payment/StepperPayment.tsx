@@ -62,7 +62,7 @@ const StepperPayment = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = 'Abo.AI - Suscripción';
+        document.title = '[TBD] - Suscripción';
     }, []);
 
     return (
@@ -74,7 +74,7 @@ const StepperPayment = () => {
                         className="flex items-center gap-2 cursor-pointer"
                     >
                         <img src={Logo} alt="Logo" className="h-10 w-auto" />
-                        <span className="text-xl font-semibold text-gray-800">Abo.AI</span>
+                        <span className="text-xl font-semibold text-gray-800">[TBD]</span>
                     </div>
                 </div>
             </header>

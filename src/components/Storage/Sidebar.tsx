@@ -97,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         alt="Harvey"
                         className="object-cover w-12"
                     />
-                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">Abo.AI</h1>}
+                    {isSidebarOpen && <h1 className="font-semibold text-sm text-center">[TBD]</h1>}
                 </div>
 
                 <button

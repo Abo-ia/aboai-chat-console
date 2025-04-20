@@ -1,0 +1,83 @@
+/* Estilo principal del Authenticator */
+[data-amplify-authenticator] {
+    background-color: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    padding: 2rem;
+
+    /* Control de altura máxima + scroll interno */
+    max-height: 90vh; /* no más del 90% de la pantalla */
+    overflow-y: auto; /* scroll solo si es necesario */
+    scrollbar-width: thin; /* para navegadores Firefox */
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+/* Estética del scroll (solo para navegadores WebKit) */
+[data-amplify-authenticator]::-webkit-scrollbar {
+    width: 6px;
+}
+
+[data-amplify-authenticator]::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+/* Contenedores internos */
+[data-amplify-authenticator] [data-amplify-container],
+[data-amplify-authenticator] [data-amplify-router] {
+    background-color: transparent;
+    border-radius: inherit;
+}
+
+/* Estilo del formulario */
+[data-amplify-authenticator] [data-amplify-form] {
+    padding: 1.5rem !important;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Campos de entrada */
+[data-amplify-authenticator] input {
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+[data-amplify-authenticator] input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    outline: none;
+}
+
+/* Botón primario */
+[data-amplify-authenticator] .amplify-button--primary {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+[data-amplify-authenticator] .amplify-button--primary:hover {
+    background-color: #1e40af;
+}
+
+/* Botones secundarios / links */
+[data-amplify-authenticator] .amplify-button--link {
+    color: #4b5563;
+    font-size: 0.875rem;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+[data-amplify-authenticator] .amplify-button--link:hover {
+    color: #111827;
+}

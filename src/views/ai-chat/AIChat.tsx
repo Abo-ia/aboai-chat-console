@@ -11,7 +11,7 @@ const AIChat: React.FC = () => {
     const appContext = useContext(AppContext);
 
     useEffect(() => {
-        document.title = 'Abo.AI - Chat';
+        document.title = '[TBD] - Chat';
     }, [])
 
     return (

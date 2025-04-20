@@ -8,7 +8,7 @@ const OrganizationsView: React.FC = () => {
     const [activeView, setActiveView] = useState<string>('Inicio');
 
     useEffect(() => {
-        document.title = 'Abo.AI - Organizaciones';
+        document.title = '[TBD] - Organizaciones';
     }, [])
 
     return (

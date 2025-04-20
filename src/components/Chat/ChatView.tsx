@@ -259,7 +259,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                                 alt="Assistant Avatar"
                                             />
                                             <span className="text-sm font-semibold text-custom-font-user">
-                                                Abo.AI
+                                                [TBD]
                                             </span>
                                             <span className="text-sm font-normal text-gray-500">
                                                 {date}

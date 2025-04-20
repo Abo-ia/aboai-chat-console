@@ -1,5 +1,5 @@
 {
-    "name": "abo.ai-frontend",
+    "name": "tbd-frontend",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -11,6 +11,7 @@
         "format": "prettier --write ."
     },
     "dependencies": {
+        "zustand": "^5.0.3",
         "@aws-amplify/ui-react": "^6.1.12",
         "@aws-sdk/client-s3": "^3.609.0",
         "@aws-sdk/credential-provider-env": "^3.609.0",

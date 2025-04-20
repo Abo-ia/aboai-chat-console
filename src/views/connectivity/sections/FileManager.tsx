@@ -188,7 +188,7 @@ const FileManager: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        document.title = 'Abo.AI - Almacenamiento';
+        document.title = '[TBD] - Almacenamiento';
     }, [])
 
     const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2);

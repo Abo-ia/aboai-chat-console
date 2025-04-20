@@ -10,7 +10,7 @@ const ContractsBuilder: React.FC = () => {
     const appContext = useContext(AppContext);
 
     useEffect(() => {
-        document.title = 'Abo.AI - Contratos';
+        document.title = '[TBD] - Contratos';
     }, [])
 
     return (
