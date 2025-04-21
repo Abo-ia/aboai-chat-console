@@ -53,7 +53,7 @@ const GoogleDriveModal = () => {
                     apiKey: GOOGLE_API_KEY,
                     clientId: GOOGLE_CLIENT_ID,
                     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-                    scope: GOOGLE_SCOPES,
+                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/drive.readonly',
                 })
                 .then(() => {
                     const accessToken = localStorage.getItem('googleAccessToken');

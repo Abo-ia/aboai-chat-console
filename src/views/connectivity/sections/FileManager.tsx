@@ -190,7 +190,7 @@ const FileManager: React.FC = () => {
     const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2);
 
     return (
-        <div className="px-8 m-6 rounded-lg relative">
+        <div className="px-4 md:px-8 m-6 rounded-lg relative">
             {isDeleting && (
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-2 rounded-lg shadow-lg z-50">
                     Eliminando archivo...
@@ -200,29 +200,27 @@ const FileManager: React.FC = () => {
             {alertMessage && <Alert type="info" message={alertMessage} />}
             {showSyncAlert && <Alert type="info" message="Sincronización en progreso..." />}
 
-            <div className="overflow-y-auto max-h-[80vh]">
-                <table className="shadow-md rounded-lg min-w-full">
-                    <thead className="sticky top-0">
-                        <tr className="border-b-[1px] border-gray-200">
+            <div className="overflow-x-auto rounded-lg shadow-sm border h-[70vh] overflow-y-scroll">
+                <table className="w-full table-auto">
+                    <thead className="bg-white sticky top-0 z-10 border-b">
+                        <tr>
                             <th className="p-4 text-left text-custom-dark font-semibold">Nombre</th>
-                            <th className="p-4 text-left text-custom-dark font-semibold">
-                                Propietario
-                            </th>
+                            <th className="p-4 text-left text-custom-dark font-semibold">Propietario</th>
                             <th className="p-4 text-left text-custom-dark font-semibold">Tamaño</th>
                             <th className="p-4 text-right text-custom-dark font-semibold">
                                 <FiMoreVertical />
                             </th>
                         </tr>
-                        <tr>
-                            <td colSpan={4} className="p- flex items-center mt-4">
-                                <div className="flex items-center bg-gray-50 rounded-lg p-2 w-full max-w-lg">
+                        <tr className="">
+                            <td colSpan={4} className="px-4 py-2 flex items-center gap-2">
+                                <div className="flex items-center bg-white rounded-md border px-2 py-1 w-full max-w-md">
                                     <FaFolderPlus className="text-gray-300" />
                                     <input
                                         type="text"
                                         value={newFolderName}
                                         onChange={(e) => setNewFolderName(e.target.value)}
                                         placeholder="Nombre de la nueva carpeta"
-                                        className="bg-transparent w-full focus:outline-none px-2"
+                                        className="bg-transparent w-full focus:outline-none px-2 text-sm"
                                     />
                                     <BiSend
                                         className="text-gray-600 cursor-pointer"
@@ -230,34 +228,37 @@ const FileManager: React.FC = () => {
                                     />
                                 </div>
                                 <RxReload
-                                    className="ml-3 text-gray-600 cursor-pointer"
-                                    onClick={() => window.location.reload()}
+                                    className="text-gray-600 cursor-pointer"
+                                    onClick={fetchFilesFromS3}
                                 />
                             </td>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody
+                        className=''
+                    >
                         {organizedData.map((folder, folderIndex) => (
                             <React.Fragment key={folderIndex}>
                                 <tr
-                                    className="border-b-[1px] border-gray-200 cursor-pointer"
+                                    className="border-b cursor-pointer transition "
                                     onClick={() => toggleFolder(folder.folder_path)}
                                 >
                                     <td colSpan={3} className="p-4">
                                         <div className="flex items-center justify-between">
-                                            <div className="flex items-center">
-                                                <FaFolder className="mr-2 text-custom-darkest" />
-                                                {folder.folder_path || ''}
+                                            <div className="flex items-center gap-2">
+                                                <FaFolder className="text-custom-darkest" />
+                                                <span className="font-medium">{folder.folder_path || activeOrganization?.name}</span>
                                             </div>
                                             {folder.folder_path === 'sync' && (
                                                 <div
-                                                    onClick={handleSync}
-                                                    className="flex items-center bg-gray-100 p-1 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-200 gap-2"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleSync();
+                                                    }}
+                                                    className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded hover:bg-gray-200 text-xs text-custom-darkest cursor-pointer"
                                                 >
-                                                    <FaSyncAlt className="text-custom-darkest" />
-                                                    <p className="text-xs text-custom-darkest">
-                                                        Sincronizar
-                                                    </p>
+                                                    <FaSyncAlt />
+                                                    Sincronizar
                                                 </div>
                                             )}
                                         </div>
@@ -265,63 +266,59 @@ const FileManager: React.FC = () => {
                                 </tr>
 
                                 {openFolders.includes(folder.folder_path) &&
-                                    folder.files.map((file: any, fileIndex: any) => {
-                                        return (
-                                            <tr
-                                                key={`${folder.folder_path}-${fileIndex}`}
-                                                className="border-b-[1px] border-gray-200"
-                                            >
-                                                <td className="p-4 pl-12 flex items-center">
-                                                    <FaFile className="mr-2 text-custom-base" />
-                                                    {file.file_name}
-                                                </td>
-                                                <td className="p-4">
-                                                    <img
-                                                        className="w-5 h-5 rounded-full"
-                                                        src={UserIcon}
-                                                    />
-                                                </td>
-                                                <td className="p-4">
-                                                    {formatSizeInMB(file.file_size)} MB
-                                                </td>
-                                                <td className="p-4 relative">
-                                                    <FiMoreVertical
-                                                        className="cursor-pointer text-custom-base"
-                                                        onClick={() => toggleMenu(file.key)}
-                                                    />
-                                                    {openMenu === file.key && (
-                                                        <div className="absolumt-2 w-48 bg-white rounded-lg shadow-lg">
-                                                            <ul>
-                                                                <li
-                                                                    className="py-2 pl-4 cursor-pointer hover:bg-gray-100"
-                                                                    onClick={() =>
-                                                                        handleOpenFile(file.key)
-                                                                    }
-                                                                >
-                                                                    Abrir archivo
-                                                                </li>
-                                                                <li
-                                                                    className="py-2 pl-4 cursor-pointer hover:bg-gray-100"
-                                                                    onClick={() =>
-                                                                        handleDeleteFile(file.key)
-                                                                    }
-                                                                >
-                                                                    Eliminar archivo
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                    folder.files.map((file: any, fileIndex: any) => (
+                                        <tr
+                                            key={`${folder.folder_path}-${fileIndex}`}
+                                            className="border-b hover:bg-gray-50"
+                                        >
+                                            <td className="p-4 pl-10 flex items-center gap-2">
+                                                <FaFile className="text-custom-base" />
+                                                <span title={file.file_name}>
+                                                    {file.file_name.length > 40
+                                                        ? file.file_name.substring(0, 24) + '...'
+                                                        : file.file_name}
+                                                </span>
+                                            </td>
+
+                                            <td className="p-4">
+                                                <img className="w-5 h-5 rounded-full" src={UserIcon} />
+                                            </td>
+                                            <td className="p-4">{formatSizeInMB(file.file_size)} MB</td>
+                                            <td className="p-4 relative text-right">
+                                                <FiMoreVertical
+                                                    className="cursor-pointer text-custom-base"
+                                                    onClick={() => toggleMenu(file.key)}
+                                                />
+                                                {openMenu === file.key && (
+                                                    <div className="absolute right-0 mt-2 bg-white border rounded shadow-md z-50">
+                                                        <ul>
+                                                            <li
+                                                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                                onClick={() => handleOpenFile(file.key)}
+                                                            >
+                                                                Abrir archivo
+                                                            </li>
+                                                            <li
+                                                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                                onClick={() => handleDeleteFile(file.key)}
+                                                            >
+                                                                Eliminar archivo
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
                             </React.Fragment>
                         ))}
                     </tbody>
                 </table>
             </div>
+
             {isLoading && <p className="text-center mt-4">Cargando...</p>}
         </div>
+
     );
 };
 

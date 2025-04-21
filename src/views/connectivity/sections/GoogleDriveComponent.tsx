@@ -22,6 +22,7 @@ import SyncKnowledgeBase from '@src/services/syncKnowledgeBase.service';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { useOrganization } from '@src/context/OrganizationContext';
 
 interface GoogleDriveFile {
     id: string;
@@ -32,11 +33,14 @@ interface GoogleDriveFile {
 }
 
 const GoogleDriveComponent: React.FC = () => {
+    const { state } = useOrganization();
     const [folders, setFolders] = useState<any[]>([]);
     const [files, setFiles] = useState<{ [key: string]: any[] }>({});
     const [expandedFolderId, setExpandedFolderId] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [isConnected, setIsConnected] = useState<boolean>(false);
+
+    console.log('Google Drive Component',);
 
     useEffect(() => {
         document.title = '[TBD] - Conectividad en la nube';
@@ -49,7 +53,7 @@ const GoogleDriveComponent: React.FC = () => {
                     apiKey: GOOGLE_API_KEY,
                     clientId: GOOGLE_CLIENT_ID,
                     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-                    scope: GOOGLE_SCOPES,
+                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/drive.readonly',
                 })
                 .then(() => {
                     const accessToken = localStorage.getItem('googleAccessToken');
@@ -188,15 +192,19 @@ const GoogleDriveComponent: React.FC = () => {
             },
         });
 
+        const arrayBuffer = await file.arrayBuffer();
+
         const params = {
             Bucket: AWS_BUCKET_NAME,
-            Key: fileName,
-            Body: file,
+            Key: `${state.activeOrganization?.organization_id}/${fileName}`,
+            Body: arrayBuffer,
+            ContentType: file.type || 'application/octet-stream',
         };
 
         const command = new PutObjectCommand(params);
         return s3Client.send(command);
     };
+
 
     const downloadFolderRecursive = async (folderId: string) => {
         const subfolderFiles = await gapi.client.drive.files.list({
@@ -271,16 +279,16 @@ const GoogleDriveComponent: React.FC = () => {
                     </button>
                 )}
             </div>
-            <div className="relative p-6 flex-auto">
+            <div className="flex-auto">
                 <div className="flex flex-col">
                     <ToastContainer />
-                    <div className="bg-white rounded-lg p-6 w-full max-w-3xl">
+                    <div className="bg-white rounded-lg p-6 w-full">
                         {isConnected ? (
-                            <ul className="space-y-1">
+                            <ul className="space-y-1 h-96 overflow-y-auto ">
                                 {folders.map((folder) => (
                                     <li key={folder.id} className="px-4 rounded">
                                         <div
-                                            className="flex bg-slate-100 p-2 justify-between items-center cursor-pointer"
+                                            className="flex bg-slate-100 p-3 justify-between rounded-lg items-center cursor-pointer"
                                             onClick={() => handleFolderClick(folder.id)}
                                         >
                                             <span>{folder.name}</span>
@@ -294,16 +302,16 @@ const GoogleDriveComponent: React.FC = () => {
                                                 {files[folder.id].map((file) => (
                                                     <li
                                                         key={file.id}
-                                                        className="flex justify-between items-center p-2 bg-slate-50 rounded hover:bg-gray-300 transition duration-300"
+                                                        className="flex justify-between items-center p-3 bg-slate-50 rounded hover:bg-gray-300 transition duration-300"
                                                     >
                                                         <span>{file.name}</span>
                                                         {file.mimeType ===
                                                             'application/vnd.google-apps.folder' && (
-                                                            <FontAwesomeIcon
-                                                                icon={faFolderOpen}
-                                                                className="text-blue-500"
-                                                            />
-                                                        )}
+                                                                <FontAwesomeIcon
+                                                                    icon={faFolderOpen}
+                                                                    className="text-blue-500"
+                                                                />
+                                                            )}
                                                     </li>
                                                 ))}
                                             </ul>
@@ -321,8 +329,7 @@ const GoogleDriveComponent: React.FC = () => {
                         )}
                     </div>
                     {expandedFolderId && files[expandedFolderId] && (
-                        <div className="bg-white shadow rounded-lg p-6 w-full flex justify-between max-w-3xl mt-6">
-                            <div></div>
+                        <div className="bg-white rounded-lg p-6 w-full flex justify-between max-w-3xl mt-6">
                             <button
                                 onClick={handleDownloadFolder}
                                 className="bg-neutral-700 text-white px-4 py-2 rounded mb-4 hover:bg-neutral-900 transition duration-300 flex items-center"
