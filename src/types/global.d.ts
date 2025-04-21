@@ -19,7 +19,6 @@ interface Reference {
     };
 }
 
-
 interface MenuItem {
     conversationId: string;
     conversation_name: string;
@@ -44,4 +43,4 @@ type ChatSidebarProps = {
 
 type SidebarHandle = {
     refreshHistory: (userId?: string) => void;
-  };
+};

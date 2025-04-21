@@ -40,7 +40,7 @@ const GoogleDriveComponent: React.FC = () => {
 
     useEffect(() => {
         document.title = '[TBD] - Conectividad en la nube';
-    }, [])
+    }, []);
 
     useEffect(() => {
         const initClient = () => {
@@ -251,9 +251,7 @@ const GoogleDriveComponent: React.FC = () => {
                         alt="Google Drive"
                         className="w-10 h-10"
                     />
-                    <span className="text-2xl font-semibold text-gray-700">
-                        Google Drive
-                    </span>
+                    <span className="text-2xl font-semibold text-gray-700">Google Drive</span>
                 </div>
                 {localStorage.getItem('googleAccessToken') ? (
                     <button
@@ -291,26 +289,25 @@ const GoogleDriveComponent: React.FC = () => {
                                                 className="text-blue-500"
                                             />
                                         </div>
-                                        {expandedFolderId === folder.id &&
-                                            files[folder.id] && (
-                                                <ul className="pl-4 mt-2 space-y-2 max-h-60 overflow-y-auto">
-                                                    {files[folder.id].map((file) => (
-                                                        <li
-                                                            key={file.id}
-                                                            className="flex justify-between items-center p-2 bg-slate-50 rounded hover:bg-gray-300 transition duration-300"
-                                                        >
-                                                            <span>{file.name}</span>
-                                                            {file.mimeType ===
-                                                                'application/vnd.google-apps.folder' && (
-                                                                    <FontAwesomeIcon
-                                                                        icon={faFolderOpen}
-                                                                        className="text-blue-500"
-                                                                    />
-                                                                )}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
+                                        {expandedFolderId === folder.id && files[folder.id] && (
+                                            <ul className="pl-4 mt-2 space-y-2 max-h-60 overflow-y-auto">
+                                                {files[folder.id].map((file) => (
+                                                    <li
+                                                        key={file.id}
+                                                        className="flex justify-between items-center p-2 bg-slate-50 rounded hover:bg-gray-300 transition duration-300"
+                                                    >
+                                                        <span>{file.name}</span>
+                                                        {file.mimeType ===
+                                                            'application/vnd.google-apps.folder' && (
+                                                            <FontAwesomeIcon
+                                                                icon={faFolderOpen}
+                                                                className="text-blue-500"
+                                                            />
+                                                        )}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -331,10 +328,7 @@ const GoogleDriveComponent: React.FC = () => {
                                 className="bg-neutral-700 text-white px-4 py-2 rounded mb-4 hover:bg-neutral-900 transition duration-300 flex items-center"
                                 disabled={uploading}
                             >
-                                <FontAwesomeIcon
-                                    icon={faCloudDownloadAlt}
-                                    className="mr-2"
-                                />
+                                <FontAwesomeIcon icon={faCloudDownloadAlt} className="mr-2" />
                                 {uploading
                                     ? 'Sincronizando conocimiento...'
                                     : 'Sincronizar conocimiento'}
@@ -346,6 +340,5 @@ const GoogleDriveComponent: React.FC = () => {
         </div>
     );
 };
-
 
 export default GoogleDriveComponent;

@@ -5,15 +5,10 @@ const SignUpFormFields = () => {
 
     return (
         <>
-            <style>
-                {`.amplify-button { display: none; }`}
-            </style>
+            <style>{`.amplify-button { display: none; }`}</style>
 
             <div className="mb-4">
-                <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-custom-primary"
-                >
+                <label htmlFor="email" className="block text-sm font-medium text-custom-primary">
                     Correo electrónico
                 </label>
                 <input
@@ -30,10 +25,7 @@ const SignUpFormFields = () => {
             </div>
 
             <div className="mb-4">
-                <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-custom-primary"
-                >
+                <label htmlFor="password" className="block text-sm font-medium text-custom-primary">
                     Contraseña
                 </label>
                 <input

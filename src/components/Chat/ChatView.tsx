@@ -10,7 +10,7 @@ import Sidebar from '@src/components/Sidebar/Sidebar';
 import LoadingComponent from '@src/components/LoadingComponent/LoadingComponent';
 import PromptSidebar from '@src/components/Prompts/PromptsSidebar';
 
-import Logo from '@src/assets/logo.svg'
+import Logo from '@src/assets/logo.svg';
 
 type ChatDashboardProps = {
     conversation: any;
@@ -133,7 +133,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
 
     const handleProcessPrompt = (prompt: string) => {
         setTextInput(prompt);
-    }
+    };
 
     const sendMessage = async (message: string) => {
         setIsLoading(true);
@@ -219,7 +219,6 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 />
             </div>
 
-
             <div id="chat-console" className="col-span-2 flex flex-col h-[90vh] overflow-hidden">
                 <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4 space-y-4">
                     {messages.map((msg, index) => {
@@ -229,23 +228,41 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                 <div className="bg-custom-chat-bg p-4 rounded-lg space-y-3">
                                     {/* Usuario */}
                                     <div className="flex items-center space-x-2 justify-end">
-                                        <span className="text-sm font-normal text-gray-500">{date}</span>
-                                        <span className="text-sm font-semibold text-custom-font-user">Tú</span>
-                                        <img className="w-8 h-8 rounded-full" src={UserIcon} alt="User Avatar" />
+                                        <span className="text-sm font-normal text-gray-500">
+                                            {date}
+                                        </span>
+                                        <span className="text-sm font-semibold text-custom-font-user">
+                                            Tú
+                                        </span>
+                                        <img
+                                            className="w-8 h-8 rounded-full"
+                                            src={UserIcon}
+                                            alt="User Avatar"
+                                        />
                                     </div>
                                     <div className="text-right">
                                         <p className="inline-block text-gray-900 leading-relaxed bg-custom-light border border-gray-300 p-4 rounded-lg shadow-sm">
                                             {msg.query}
                                         </p>
                                         <br />
-                                        <span className="text-sm text-gray-500 text-right">Enviado</span>
+                                        <span className="text-sm text-gray-500 text-right">
+                                            Enviado
+                                        </span>
                                     </div>
 
                                     {/* Asistente */}
                                     <div className="flex items-center space-x-2">
-                                        <img className="w-8 h-8" src={Logo} alt="Assistant Avatar" />
-                                        <span className="text-sm font-semibold text-custom-font-user">[TBD]</span>
-                                        <span className="text-sm font-normal text-gray-500">{date}</span>
+                                        <img
+                                            className="w-8 h-8"
+                                            src={Logo}
+                                            alt="Assistant Avatar"
+                                        />
+                                        <span className="text-sm font-semibold text-custom-font-user">
+                                            [TBD]
+                                        </span>
+                                        <span className="text-sm font-normal text-gray-500">
+                                            {date}
+                                        </span>
                                     </div>
                                     <div
                                         className="bg-custom-light p-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 leading-relaxed prose prose-sm prose-a:text-custom-accent hover:prose-a:underline"
@@ -256,7 +273,9 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                                     {msg.references?.length > 0 && (
                                         <button
                                             className="px-3 py-2 rounded bg-custom-primary text-white text-sm font-semibold transition-colors duration-300"
-                                            onClick={() => showReferences(msg.references, msg.query)}
+                                            onClick={() =>
+                                                showReferences(msg.references, msg.query)
+                                            }
                                         >
                                             Mostrar referencias.
                                         </button>
@@ -323,9 +342,7 @@ const ChatView: React.FC<ChatDashboardProps> = () => {
                 handleQueyChange={handleProcessPrompt}
             />
 
-            {isModalOpen && (
-                <ReferencesModal content={documentReferences} onClose={closeModal} />
-            )}
+            {isModalOpen && <ReferencesModal content={documentReferences} onClose={closeModal} />}
         </div>
     );
 };

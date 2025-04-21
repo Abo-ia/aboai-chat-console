@@ -38,14 +38,15 @@ const CloudConnectivity: React.FC = () => {
             <div className="flex-1 flex flex-col">
                 <Header />
 
-
-
                 <div className="flex justify-center space-x-4 p-4 bg-white shadow-md">
                     {menuOptions.map((option) => (
                         <button
                             key={option.id}
-                            className={`px-6 py-3 rounded-lg flex items-center gap-2 ${activeView === option.id ? 'bg-custom-secondary text-white' : 'bg-gray-200'
-                                }`}
+                            className={`px-6 py-3 rounded-lg flex items-center gap-2 ${
+                                activeView === option.id
+                                    ? 'bg-custom-secondary text-white'
+                                    : 'bg-gray-200'
+                            }`}
                             onClick={() => setActiveView(option.id)}
                         >
                             <FontAwesomeIcon icon={option.icon} />

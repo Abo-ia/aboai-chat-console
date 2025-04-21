@@ -9,7 +9,7 @@ const OrganizationsView: React.FC = () => {
 
     useEffect(() => {
         document.title = '[TBD] - Organizaciones';
-    }, [])
+    }, []);
 
     return (
         <div className="flex">

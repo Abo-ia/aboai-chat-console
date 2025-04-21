@@ -11,7 +11,7 @@ const ContractsBuilder: React.FC = () => {
 
     useEffect(() => {
         document.title = '[TBD] - Contratos';
-    }, [])
+    }, []);
 
     return (
         <div className="flex">

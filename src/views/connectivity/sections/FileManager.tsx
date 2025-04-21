@@ -22,8 +22,7 @@ import {
     AWS_REGION,
 } from '@src/config/env';
 
-import UserIcon from '@src/assets/user-icon.png'
-
+import UserIcon from '@src/assets/user-icon.png';
 
 import { useOrganization } from '@src/context/OrganizationContext';
 
@@ -69,7 +68,6 @@ const organizeFilesByFolders = (items: any[], organizationId: string) => {
     return folderStructure;
 };
 
-
 const FileManager: React.FC = () => {
     const [organizedData, setOrganizedData] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -96,7 +94,7 @@ const FileManager: React.FC = () => {
         const organizationId = activeOrganization?.organization_id ?? '';
         const command = new ListObjectsV2Command({
             Bucket: AWS_BUCKET_NAME,
-            Prefix: `${organizationId}/`
+            Prefix: `${organizationId}/`,
         });
 
         try {
@@ -109,8 +107,6 @@ const FileManager: React.FC = () => {
             setIsLoading(false);
         }
     };
-
-
 
     const toggleFolder = (folderPath: string) => {
         setOpenFolders((prevOpenFolders) =>
@@ -189,7 +185,7 @@ const FileManager: React.FC = () => {
 
     useEffect(() => {
         document.title = '[TBD] - Almacenamiento';
-    }, [])
+    }, []);
 
     const formatSizeInMB = (sizeInBytes: number) => (sizeInBytes / (1024 * 1024)).toFixed(2);
 
@@ -208,15 +204,11 @@ const FileManager: React.FC = () => {
                 <table className="shadow-md rounded-lg min-w-full">
                     <thead className="sticky top-0">
                         <tr className="border-b-[1px] border-gray-200">
-                            <th className="p-4 text-left text-custom-dark font-semibold">
-                                Nombre
-                            </th>
+                            <th className="p-4 text-left text-custom-dark font-semibold">Nombre</th>
                             <th className="p-4 text-left text-custom-dark font-semibold">
                                 Propietario
                             </th>
-                            <th className="p-4 text-left text-custom-dark font-semibold">
-                                Tamaño
-                            </th>
+                            <th className="p-4 text-left text-custom-dark font-semibold">Tamaño</th>
                             <th className="p-4 text-right text-custom-dark font-semibold">
                                 <FiMoreVertical />
                             </th>
@@ -303,9 +295,7 @@ const FileManager: React.FC = () => {
                                                                 <li
                                                                     className="py-2 pl-4 cursor-pointer hover:bg-gray-100"
                                                                     onClick={() =>
-                                                                        handleOpenFile(
-                                                                            file.key,
-                                                                        )
+                                                                        handleOpenFile(file.key)
                                                                     }
                                                                 >
                                                                     Abrir archivo
@@ -313,9 +303,7 @@ const FileManager: React.FC = () => {
                                                                 <li
                                                                     className="py-2 pl-4 cursor-pointer hover:bg-gray-100"
                                                                     onClick={() =>
-                                                                        handleDeleteFile(
-                                                                            file.key,
-                                                                        )
+                                                                        handleDeleteFile(file.key)
                                                                     }
                                                                 >
                                                                     Eliminar archivo

@@ -12,7 +12,7 @@ const AIChat: React.FC = () => {
 
     useEffect(() => {
         document.title = '[TBD] - Chat';
-    }, [])
+    }, []);
 
     return (
         <div className="flex h-screen">

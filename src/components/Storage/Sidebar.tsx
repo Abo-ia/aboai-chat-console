@@ -14,8 +14,7 @@ import {
     AWS_SECRET_ACCESS_KEY,
 } from '@src/config/env';
 
-import { MdOutlinePayment } from "react-icons/md";
-
+import { MdOutlinePayment } from 'react-icons/md';
 
 const menuItems = [
     { icon: <IoChatboxOutline />, label: 'Chat', path: '/' },
@@ -92,11 +91,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 <div
                     className={`flex items-center justify-center p-4 ${isSidebarOpen ? 'space-x-2' : ''}`}
                 >
-                    <img
-                        src={Logo}
-                        alt="Harvey"
-                        className="object-cover w-12"
-                    />
+                    <img src={Logo} alt="Harvey" className="object-cover w-12" />
                     {isSidebarOpen && <h1 className="font-semibold text-sm text-center">[TBD]</h1>}
                 </div>
 
@@ -121,8 +116,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         <li
                             onClick={() => navigate(item.path)}
                             key={index}
-                            className={`cursor-pointer hover:bg-custom-accent hover:text-gray-400 text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${props.activeView === item.label ? 'bg-[#e9eaee]' : ''
-                                }`}
+                            className={`cursor-pointer hover:bg-custom-accent hover:text-gray-400 text-sm px-2 py-1 rounded hover:bg-custom-bg-hover flex items-center justify-center transition duration-200 ${
+                                props.activeView === item.label ? 'bg-[#e9eaee]' : ''
+                            }`}
                         >
                             <div className="flex items-center justify-center w-full">
                                 <span className="text-xl flex items-center justify-center w-8 h-8">
@@ -167,7 +163,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };

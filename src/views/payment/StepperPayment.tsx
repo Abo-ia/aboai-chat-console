@@ -15,7 +15,7 @@ const plans = [
             '5GB de Almacenamiento',
             'Soporte Comunitario',
         ],
-        redirectUrl: 'https://buy.stripe.com/test_8wM14g6jdaiJ5PObIJ'
+        redirectUrl: 'https://buy.stripe.com/test_8wM14g6jdaiJ5PObIJ',
     },
     {
         name: 'Básico',
@@ -28,7 +28,7 @@ const plans = [
             '50GB de Almacenamiento',
             'Soporte Comunitario',
         ],
-        redirectUrl: 'https://buy.stripe.com/test_7sIcMY0YTeyZa6428a'
+        redirectUrl: 'https://buy.stripe.com/test_7sIcMY0YTeyZa6428a',
     },
     {
         name: 'Pro',
@@ -41,7 +41,7 @@ const plans = [
             '500GB de Almacenamiento',
             'Soporte Prioritario',
         ],
-        redirectUrl: 'https://buy.stripe.com/test_8wMdR2dLF62tba83cf'
+        redirectUrl: 'https://buy.stripe.com/test_8wMdR2dLF62tba83cf',
     },
     {
         name: 'Enterprise',
@@ -54,7 +54,7 @@ const plans = [
             '2TB de Almacenamiento',
             'Soporte Dedicado',
         ],
-        redirectUrl: '/contact/enterprise'
+        redirectUrl: '/contact/enterprise',
     },
 ];
 
@@ -78,13 +78,18 @@ const StepperPayment = () => {
                     </div>
                 </div>
             </header>
-            <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">Planes Disponibles</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">
+                Planes Disponibles
+            </h2>
             <p className="text-gray-600 text-lg mb-6 text-center">
                 Elige el mejor plan que se adapte a tus necesidades.
             </p>
 
             <div className="flex- overflow-y-auto px-2">
-                <AvailablePlans plans={plans} onSelectPlan={(url) => window.location.href = url} />
+                <AvailablePlans
+                    plans={plans}
+                    onSelectPlan={(url) => (window.location.href = url)}
+                />
             </div>
         </div>
     );

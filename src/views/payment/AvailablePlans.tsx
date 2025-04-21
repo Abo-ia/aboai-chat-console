@@ -32,10 +32,7 @@ const AvailablePlans = ({ plans, onSelectPlan }: AvailablePlansProps) => {
     return (
         <div className="max-w-5xl mx-auto p-6 flex flex-col bg-white rounded-lg">
             <div className="max-w-6xl mx-auto text-center">
-                
-
                 <div className="relative flex items-center justify-center">
-
                     <div
                         ref={carouselRef}
                         className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory space-x-4 px-4 no-scrollbar"
@@ -69,7 +66,6 @@ const AvailablePlans = ({ plans, onSelectPlan }: AvailablePlansProps) => {
                             </div>
                         ))}
                     </div>
-
                 </div>
             </div>
         </div>

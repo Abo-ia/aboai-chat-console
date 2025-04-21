@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_BUCKET_NAME, AWS_REGION } from '@src/config/env';
+import {
+    AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY,
+    AWS_BUCKET_NAME,
+    AWS_REGION,
+} from '@src/config/env';
 import { useOrganization } from '@src/context/OrganizationContext';
 
 const LocalUploadComponent: React.FC = () => {
@@ -66,10 +71,9 @@ const LocalUploadComponent: React.FC = () => {
         }
     };
 
-
     return (
         <div className="flex flex-col items-center w-2/3 mx-auto">
-            <div className='text-center border-b border-gray-300'>
+            <div className="text-center border-b border-gray-300">
                 <h2 className="text-2xl font-semibold text-gray-700">Subir Archivos</h2>
                 <p className="text-gray-500 mb-6 text-sm text-center">
                     Selecciona archivos desde tu computadora o arrástralos aquí para subirlos.
@@ -100,7 +104,8 @@ const LocalUploadComponent: React.FC = () => {
                         <span className="font-semibold">Click para subir</span> o arrastra y suelta
                     </p>
                     <p className="text-xs text-gray-500">
-                        Archivos de texto (.txt), documentos (.docx, .pdf), hojas de cálculo (.xlsx), imágenes (.jpg, .png), etc.
+                        Archivos de texto (.txt), documentos (.docx, .pdf), hojas de cálculo
+                        (.xlsx), imágenes (.jpg, .png), etc.
                     </p>
                 </div>
                 <input
@@ -127,16 +132,17 @@ const LocalUploadComponent: React.FC = () => {
 
             <button
                 onClick={handleUploadFiles}
-                className={`mt-4 px-6 py-2 rounded-lg font-semibold text-white ${isUploading ? 'bg-gray-400 cursor-not-allowed' : 'bg-custom-primary hover:bg-custom-secondary transition-all'
-                    }`}
+                className={`mt-4 px-6 py-2 rounded-lg font-semibold text-white ${
+                    isUploading
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-custom-primary hover:bg-custom-secondary transition-all'
+                }`}
                 disabled={isUploading}
             >
                 {isUploading ? 'Subiendo...' : 'Subir Archivos'}
             </button>
 
-            {uploadMessage && (
-                <p className="mt-2 text-sm text-gray-700">{uploadMessage}</p>
-            )}
+            {uploadMessage && <p className="mt-2 text-sm text-gray-700">{uploadMessage}</p>}
         </div>
     );
 };

@@ -61,9 +61,11 @@ const Header: React.FC = () => {
             </button>
 
             <div className="relative inline-block text-left justify-e">
-                <div className="flex items-center gap-2 cursor-pointer">
+                <div
+                    onClick={handleOptionsState}
+                    className="flex items-center gap-2 cursor-pointer"
+                >
                     <img
-                        onClick={handleOptionsState}
                         id="menu-button"
                         aria-expanded={optionsState}
                         aria-haspopup="true"

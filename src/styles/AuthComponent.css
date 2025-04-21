@@ -47,7 +47,9 @@
     padding: 0.75rem;
     border: 1px solid #d1d5db;
     font-size: 0.95rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition:
+        border-color 0.3s,
+        box-shadow 0.3s;
 }
 
 [data-amplify-authenticator] input:focus {

@@ -1,151 +1,151 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Invitación Beta - [TBD]</title>
+        <style>
+            :root {
+                --color-primary: #3e4b56;
+                --color-secondary: #91b6ca;
+                --color-accent: #d4e2e2;
+                --color-light: #edf1ef;
+            }
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invitación Beta - [TBD]</title>
-    <style>
-        :root {
-            --color-primary: #3e4b56;
-            --color-secondary: #91b6ca;
-            --color-accent: #d4e2e2;
-            --color-light: #edf1ef;
-        }
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: var(--color-light);
+                font-family: 'Segoe UI', sans-serif;
+                color: var(--color-primary);
+            }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--color-light);
-            font-family: 'Segoe UI', sans-serif;
-            color: var(--color-primary);
-        }
+            .email-wrapper {
+                max-width: 600px;
+                margin: 40px auto;
+                background-color: #ffffff;
+                padding: 32px;
+                border-radius: 10px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            }
 
-        .email-wrapper {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: #ffffff;
-            padding: 32px;
-            border-radius: 10px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-        }
+            .logo,
+            .hero-image {
+                text-align: center;
+                margin-bottom: 24px;
+            }
 
-        .logo,
-        .hero-image {
-            text-align: center;
-            margin-bottom: 24px;
-        }
+            .hero-image img {
+                width: 180px;
+                max-width: 100%;
+                height: auto;
+            }
 
-        .hero-image img {
-            width: 180px;
-            max-width: 100%;
-            height: auto;
-        }
+            h1 {
+                font-size: 22px;
+                text-align: center;
+                color: var(--color-primary);
+                margin-bottom: 4px;
+            }
 
-        h1 {
-            font-size: 22px;
-            text-align: center;
-            color: var(--color-primary);
-            margin-bottom: 4px;
-        }
+            h2 {
+                font-size: 16px;
+                text-align: center;
+                color: var(--color-secondary);
+                font-weight: normal;
+                margin-top: 0;
+                margin-bottom: 24px;
+            }
 
-        h2 {
-            font-size: 16px;
-            text-align: center;
-            color: var(--color-secondary);
-            font-weight: normal;
-            margin-top: 0;
-            margin-bottom: 24px;
-        }
+            p {
+                font-size: 15px;
+                line-height: 1.6;
+                text-align: center;
+                margin: 0 0 16px;
+            }
 
-        p {
-            font-size: 15px;
-            line-height: 1.6;
-            text-align: center;
-            margin: 0 0 16px;
-        }
+            .credentials {
+                background-color: var(--color-accent);
+                padding: 16px;
+                border-radius: 8px;
+                text-align: center;
+                font-family: monospace;
+                margin: 24px 0;
+                font-size: 15px;
+                color: var(--color-primary);
+            }
 
-        .credentials {
-            background-color: var(--color-accent);
-            padding: 16px;
-            border-radius: 8px;
-            text-align: center;
-            font-family: monospace;
-            margin: 24px 0;
-            font-size: 15px;
-            color: var(--color-primary);
-        }
+            .cta-button {
+                display: inline-block;
+                background-color: var(--color-primary);
+                color: #ffffff;
+                padding: 12px 28px;
+                text-decoration: none;
+                font-weight: 600;
+                border-radius: 6px;
+                margin-top: 16px;
+                transition: background-color 0.3s ease;
+            }
 
-        .cta-button {
-            display: inline-block;
-            background-color: var(--color-primary);
-            color: #ffffff;
-            padding: 12px 28px;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 6px;
-            margin-top: 16px;
-            transition: background-color 0.3s ease;
-        }
+            .cta-button:hover {
+                background-color: #2e3a44;
+            }
 
-        .cta-button:hover {
-            background-color: #2e3a44;
-        }
+            .footer {
+                font-size: 12px;
+                color: #777;
+                text-align: center;
+                margin-top: 40px;
+                line-height: 1.5;
+            }
 
-        .footer {
-            font-size: 12px;
-            color: #777;
-            text-align: center;
-            margin-top: 40px;
-            line-height: 1.5;
-        }
+            .footer a {
+                color: var(--color-primary);
+                text-decoration: none;
+            }
+        </style>
+    </head>
 
-        .footer a {
-            color: var(--color-primary);
-            text-decoration: none;
-        }
-    </style>
-</head>
+    <body>
+        <div class="email-wrapper">
+            <div class="hero-image">
+                <img src="src/assets/undraw_steps_s8km.png" alt="Ilustración de invitación" />
+            </div>
 
-<body>
-    <div class="email-wrapper">
-        <div class="hero-image">
-            <img src="src/assets/undraw_steps_s8km.png" alt="Ilustración de invitación" />
-        </div>
+            <h1>¡Bienvenido a la Beta de [TBD]!</h1>
+            <h2>IA para la Práctica Legal</h2>
 
-        <h1>¡Bienvenido a la Beta de [TBD]!</h1>
-        <h2>IA para la Práctica Legal</h2>
-
-        <p>
-            Te damos acceso exclusivo para que descubras cómo [TBD] transforma el análisis jurídico con tecnología de
-            vanguardia.
-        </p>
-
-        <div class="credentials">
-            Email: beta@[TBD]<br />
-            Contraseña: invitado2024
-        </div>
-
-        <p>
-            Accede a documentos legales en segundos, automatiza tareas y garantiza la seguridad de tu información con
-            cifrado avanzado.
-        </p>
-
-        <div style="text-align: center;">
-            <a class="cta-button" href="https://[TBD]/login" target="_blank">Acceder a la Plataforma</a>
-        </div>
-
-        <div class="footer">
             <p>
-                ¿Tienes dudas? Contáctanos en
-                <a href="mailto:contacto@[TBD]">contacto@[TBD]</a>
+                Te damos acceso exclusivo para que descubras cómo [TBD] transforma el análisis
+                jurídico con tecnología de vanguardia.
             </p>
-            <p>
-                [TBD] · Ciudad de México<br />
-                &copy; 2024 [TBD]. Todos los derechos reservados.
-            </p>
-        </div>
-    </div>
-</body>
 
+            <div class="credentials">
+                Email: beta@[TBD]<br />
+                Contraseña: invitado2024
+            </div>
+
+            <p>
+                Accede a documentos legales en segundos, automatiza tareas y garantiza la seguridad
+                de tu información con cifrado avanzado.
+            </p>
+
+            <div style="text-align: center">
+                <a class="cta-button" href="https://[TBD]/login" target="_blank"
+                    >Acceder a la Plataforma</a
+                >
+            </div>
+
+            <div class="footer">
+                <p>
+                    ¿Tienes dudas? Contáctanos en
+                    <a href="mailto:contacto@[TBD]">contacto@[TBD]</a>
+                </p>
+                <p>
+                    [TBD] · Ciudad de México<br />
+                    &copy; 2024 [TBD]. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </body>
 </html>
